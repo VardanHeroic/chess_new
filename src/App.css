@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+@font-face {
+	font-family: 'Conv_Chess Regular';
+	src: url('../font/Chess Regular.eot');
+	src: local('☺'), url('../font/Chess Regular.woff') format('woff'), url('../font/Chess Regular.ttf') format('truetype'), url('../font/Chess Regular.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+i{
+    font-style: normal;
+}
+
+body{
+	margin: 0;
+	font-family: 'Poppins', sans-serif;
+}
+
+.wcell{
+    width: 50px;
+    height: 50px;
+    background: #D1B79A; 
+    font-size: 50px;
+    text-align: center;
+    line-height: 50px;
+    user-select: none;
+    -moz-user-select: none;
+    
+
+}
+
+.bcell{
+    width: 50px;
+    height: 50px;
+    background: #642D1C;
+    font-size: 50px;
+    text-align: center;
+    line-height: 50px;
+    user-select: none;
+    -moz-user-select: none;
+    
+}
+
+.step{
+	color: rgb(0, 0, 0,.5);
+	font-size: 0.7em;
+	position: relative;	
+	bottom: 7px;
+}
+
+.black{
+    color: #000;
+}
+
+.white{
+    color: #fff;
+}
+
+.bcell i , .wcell i{
+    cursor: pointer;
+} 
+
+.row{
+    display: flex;
+}
+
+.board{
+    width: calc(50px * 8);
+    display: block;
+    font-family: 'Conv_Chess Regular';
+	float: left;	
+}
+
+
+.modal-bg{
+	width: 100vw;
+	height: 100vh;
+	background: #00000088;
+	position: fixed;
+	z-index: 10;
+/*	transition: all 1s; */
+	animation: modal-bg-transition 0.5s; 
+}
+
+.modal-box{
+	width: 60vh;
+	height: 60vh;
+	position: absolute;
+	border-radius: 15px;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	background: #fcfcfc;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 1fr);
+	grid-column-gap: 30px;
+	grid-row-gap: 30px;
+	padding: 30px;
+	animation: modal-box-transition 0.5s;
+}
+
+.modal-btn{
+	font-family: 'Conv_Chess Regular';
+	color: #181818;
+	font-size: 20vh;
+	border: none;
+	border-radius: 15px;
+	background: #fcfcfc;
+	transition: 0.5s;
+}
+
+.modal-btn:hover{
+	background-color: #181818;
+	color:#fcfcfc;
+}
+
+.reverse{
+	animation: modal-bg-transition-reverse 0.5s ;
+}
+
+@keyframes modal-bg-transition{
+	from {background: #00000000;}
+	to {background: #00000088;}
+}
+
+@keyframes modal-bg-transition-reverse{
+	to {opacity: 0;}
+	from {opacity: 1;}
+}
+
+
+@keyframes modal-box-transition{
+	from{bottom: 40vh;opacity: 0;}
+	to {bottom: 0;opacity: 1;}
+} 
+
+.reset{
+	transition: 0.25s;
+	display: block;
+	margin: 0 auto;
+	margin-top: 20px;
+	border: none;
+	background: #181818;
+	color: #fcfcfc;
+	height: 40px;
+	width: 80px;
+	border: 2px black solid;
+	border-radius: 10px;
+	cursor: pointer;
+	font-family: 'Poppins', sans-serif;
+	font-size: 1.4em;
+	clear:both;
+	
+}
+.reset:hover{
+	background: #fcfcfc;
+	color: #181818;	
+}
+
+.game{
+	margin-left: calc(50vw - 200px );
+	padding-top: 20px;		
+}
+
+.timer{
+	padding-left: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	width: 100px;
+	align-items: center;
+	font-size: 2em;
+	font-weight: bold;
+	height: 400px;	
+		
+}
+
+
+.whiteTimer{
+	color: #181818;
+	background: #fcfcfc;
+	border: 2px solid #181818;
+	width: 100px;
+	text-align: center;
+	display: block;
+	border-radius: 10px;
+}
+
+.blackTimer{
+	color: #fcfcfc;
+	background: #181818;
+	border: 2px solid #fcfcfc;
+	width: 100px;
+	text-align: center;
+	display: block;
+	border-radius: 10px;
+}
