@@ -7,7 +7,7 @@ class Step extends Component {
 		super(props)
 		this.state = {}
 	}
-	
+
 	change(){
 		let {x,y,isStart,...rest} = this.props.initiatorProps
 		this.props.changeFig([this.props.x,this.props.y,{...rest, x: this.props.x, y: this.props.y}])
@@ -17,22 +17,22 @@ class Step extends Component {
 		let play = async () => {
 			let sound = null
 			if (this.props.victim && this.props.victim.name !== 'Step' ) {
-				sound = await import(`audio/Capture.WAV`)
+				sound = await import(`./audio/Capture.WAV`)
 			}
 			else{
-				sound = await import(`audio/Move_Piece (${Math.floor(Math.random()*5+1)}).WAV`)
+				sound = await import(`./audio/Move_Piece (${Math.floor(Math.random()*5+1)}).WAV`)
 			}
 			new Audio(sound.default).play()
 		}
 		play()
-		setTimeout(this.props.changeCurrent,50)		
+		setTimeout(this.props.changeCurrent,50)
 		setTimeout(this.props.calculateCheckDirections,100)
 		setTimeout(this.props.findStaleMate,150)
 	}
 
 	render() {
 		return (
-			<i className='step' onClick={() => this.change()} >●</i> 	
+			<i className='step' onClick={() => this.change()} >●</i>
 		)
 	}
 }
