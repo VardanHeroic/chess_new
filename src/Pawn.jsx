@@ -123,11 +123,8 @@ class Pawn extends Component {
         })
 
         pins.forEach(pin => {
-            // console.log(pin,props.matrix[props.x][props.y]);
             if(pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)){
-                console.log(freeCells,pin);
-                freeCells = freeCells.filter(freeCell => pin.includes(freeCell))
-                console.log(freeCells);
+                freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
             }
         })
 

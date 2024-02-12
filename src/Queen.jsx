@@ -172,14 +172,13 @@ class Queen extends Component {
                         if (cellY > blockYmin && cellY <= props.y) {
                             checkDirectionsNegY.push(cell)
                         }
-                        if (cellY < pinBlockYmax && cellY >= props.y && props.matrix[props.x][pinBlockYmin + 1].fig?.name === "King") {
+                        if (cellY < pinBlockYmax && cellY >= props.y && props.matrix[props.x][pinBlockYmax - 1].fig?.name === "King") {
                             pinRayPosY.push(cell)
                         }
                         if (cellY > pinBlockYmin && cellY <= props.y && props.matrix[props.x][pinBlockYmin + 1].fig?.name === "King") {
                             pinRayNegY.push(cell)
                         }
                     }
-
                 }
             })
         })
@@ -356,7 +355,7 @@ class Queen extends Component {
 
         pins.forEach(pin => {
             if (pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)) {
-                freeCells = freeCells.filter(freeCell => pin.includes(freeCell))
+                freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
             }
         })
 
@@ -406,7 +405,6 @@ class Queen extends Component {
 
     render() {
         let newProps = { ...this.props }
-        this.cells = this.findFreeCells(this.props)
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.checkRays = this.cells.checkRays

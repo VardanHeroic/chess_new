@@ -13,7 +13,6 @@ class Step extends Component {
 		this.props.changeFig([this.props.x,this.props.y,{...rest, x: this.props.x, y: this.props.y}])
 		this.props.changeFig([x,y,null])
 		this.props.killSteps()
-		console.log(this.props.victim);
 		let play = async () => {
 			let sound = null
 			if (this.props.victim && this.props.victim.name !== 'Step' ) {
@@ -25,7 +24,7 @@ class Step extends Component {
 			new Audio(sound.default).play()
 		}
 		play()
-		setTimeout(this.props.changeCurrent,50)
+		this.props.changeCurrent()
 		setTimeout(this.props.calculateCheckDirections,100)
 		setTimeout(this.props.findStaleMate,150)
 	}

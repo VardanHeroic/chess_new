@@ -184,7 +184,7 @@ class Rook extends Component {
 
         pins.forEach(pin => {
             if(pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)){
-                freeCells = freeCells.filter(freeCell => pin.includes(freeCell))
+                freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
             }
         })
 
@@ -209,7 +209,7 @@ class Rook extends Component {
     UNSAFE_componentWillReceiveProps(props) {
         if (this.props.current !== props.current || Object.keys(this.props.checkRay[0]).length !== Object.keys(props.checkRay[0]).length) {
             this.cells = this.findFreeCells(props)
-            //	console.log(props);
+         //   console.log(props,this.props);
             this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
             this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
             this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
@@ -227,7 +227,6 @@ class Rook extends Component {
 
     render() {
         let newProps = { ...this.props }
-        this.cells = this.findFreeCells(this.props)
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.checkRays = this.cells.checkRays

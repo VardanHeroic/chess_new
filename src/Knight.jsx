@@ -70,7 +70,7 @@ class Knight extends Component {
 
         pins.forEach(pin => {
             if(pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)){
-                freeCells = freeCells.filter(freeCell => pin.includes(freeCell))
+                freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
             }
         })
 

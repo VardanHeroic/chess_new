@@ -37,10 +37,14 @@ class Bishop extends Component {
         let checkRayTR = []
         let checkRayBL = []
         let checkRayBR = []
+        let pinRayTL = []
+        let pinRayTR = []
+        let pinRayBL = []
+        let pinRayBR = []
         props.matrix.map((row, cellX) => {
             row.map((cell, cellY) => {
                 for (let n = 0; n < 8; n++) {
-                    if (props.y + n == cellY && props.x + n == cellX && props.y != cellY && props.x != cellX) {
+                    if (props.y + n == cellY && props.x + n == cellX) {
                         directions.push(cell)
                         if (cell.fig && cell.fig.name != 'Step') {
                             blockCells.push(cell)
@@ -49,7 +53,7 @@ class Bishop extends Component {
                             }
                         }
                     }
-                    if (props.y - n == cellY && props.x + n == cellX && props.y != cellY && props.x != cellX) {
+                    if (props.y - n == cellY && props.x + n == cellX) {
                         directions.push(cell)
                         if (cell.fig && cell.fig.name != 'Step') {
                             blockCells.push(cell)
@@ -58,7 +62,7 @@ class Bishop extends Component {
                             }
                         }
                     }
-                    if (props.y + n == cellY && props.x - n == cellX && props.y != cellY && props.x != cellX) {
+                    if (props.y + n == cellY && props.x - n == cellX) {
                         directions.push(cell)
                         if (cell.fig && cell.fig.name != 'Step') {
                             blockCells.push(cell)
@@ -67,7 +71,7 @@ class Bishop extends Component {
                             }
                         }
                     }
-                    if (props.y - n == cellY && props.x - n == cellX && props.y != cellY && props.x != cellX) {
+                    if (props.y - n == cellY && props.x - n == cellX) {
                         directions.push(cell)
                         if (cell.fig && cell.fig.name != 'Step') {
                             blockCells.push(cell)
@@ -100,19 +104,19 @@ class Bishop extends Component {
         })
 
         blockCells.map(cell => {
-            if ((pinBlockTL.x < cell.x && cell.x < props.x) && (pinBlockTL.y < cell.y && cell.y < props.y) && (cell.x  !== blockTL.x) && (cell.y  !== blockTL.y)) {
+            if ((pinBlockTL.x < cell.x && cell.x < props.x) && (pinBlockTL.y < cell.y && cell.y < props.y) && (cell.x !== blockTL.x) && (cell.y !== blockTL.y)) {
                 pinBlockTL.x = cell.x
                 pinBlockTL.y = cell.y
             }
-            if ((pinBlockBR.x > cell.x && cell.x > props.x) && (pinBlockBR.y > cell.y && cell.y > props.y) && (cell.x  !== blockBR.x) && (cell.y  !== blockBR.y)) {
+            if ((pinBlockBR.x > cell.x && cell.x > props.x) && (pinBlockBR.y > cell.y && cell.y > props.y) && (cell.x !== blockBR.x) && (cell.y !== blockBR.y)) {
                 pinBlockBR.x = cell.x
                 pinBlockBR.y = cell.y
             }
-            if ((pinBlockTR.x < cell.x && cell.x < props.x) && (pinBlockTR.y > cell.y && cell.y > props.y) && (cell.x  !== blockTR.x) && (cell.y  !== blockTR.y)) {
+            if ((pinBlockTR.x < cell.x && cell.x < props.x) && (pinBlockTR.y > cell.y && cell.y > props.y) && (cell.x !== blockTR.x) && (cell.y !== blockTR.y)) {
                 pinBlockTR.x = cell.x
                 pinBlockTR.y = cell.y
             }
-            if ((pinBlockBL.x > cell.x && cell.x > props.x) && (pinBlockBL.y < cell.y && cell.y < props.y) && (cell.x  !== blockBL.x) && (cell.y  !== blockBL.y)) {
+            if ((pinBlockBL.x > cell.x && cell.x > props.x) && (pinBlockBL.y < cell.y && cell.y < props.y) && (cell.x !== blockBL.x) && (cell.y !== blockBL.y)) {
                 pinBlockBL.x = cell.x
                 pinBlockBL.y = cell.y
             }
@@ -130,6 +134,7 @@ class Bishop extends Component {
         if (props.matrix[blockTR.x]?.[blockTR.y]?.fig?.color === props.color) {
             pinBlockTR = blockTR
         }
+
 
         checkBlockCells.map(cell => {
             if ((checkBlockTL.x < cell.x && cell.x < props.x) && (checkBlockTL.y < cell.y && cell.y < props.y)) {
@@ -220,13 +225,37 @@ class Bishop extends Component {
                     if ((cellX > props.x && cellY < props.y) && (cellX <= blockBL.x && cellY >= blockBL.y)) {
                         checkRayBL.push(cell)
                     }
+                    if ((cellX < props.x && cellY < props.y) && (cellX >= pinBlockTL.x && cellY >= pinBlockTL.y) && props.matrix[pinBlockTL.x]?.[pinBlockTL.y]?.fig?.name === "King") {
+                        if (!pinRayTL.includes(props.matrix[props.x][props.y])) {
+                            pinRayTL.push(props.matrix[props.x][props.y])
+                        }
+                        pinRayTL.push(cell)
+                    }
+                    if ((cellX > props.x && cellY > props.y) && (cellX <= pinBlockBR.x && cellY <= pinBlockBR.y) && props.matrix[pinBlockBR.x]?.[pinBlockBR.y]?.fig?.name === "King") {
+                        if (!pinRayBR.includes(props.matrix[props.x][props.y])) {
+                            pinRayTL.push(props.matrix[props.x][props.y])
+                        }
+                        pinRayBR.push(cell)
+                    }
+                    if ((cellX < props.x && cellY > props.y) && (cellX >= pinBlockTR.x && cellY <= pinBlockTR.y) && props.matrix[pinBlockTR.x]?.[pinBlockTR.y]?.fig?.name === "King") {
+                        if(!pinRayTR.includes(props.matrix[props.x][props.y])){
+                            pinRayTR.push(props.matrix[props.x][props.y])
+                        }
+                        pinRayTR.push(cell)
+                    }
+                    if ((cellX > props.x && cellY < props.y) && (cellX <= pinBlockBL.x && cellY >= pinBlockBL.y) && props.matrix[pinBlockBL.x]?.[pinBlockBL.y]?.fig?.name === "King") {
+                        if(!pinRayBL.includes(props.matrix[props.x][props.y])){
+                            pinRayBL.push(props.matrix[props.x][props.y])
+                        }
+                        pinRayBL.push(cell)
+                    }
                 }
             })
         })
 
         pins.forEach(pin => {
             if (pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)) {
-                freeCells = freeCells.filter(freeCell => pin.includes(freeCell))
+                freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
             }
         })	//	checkRayBL.push(props.matrix[props.x][props.y])
         //	checkRayBR.push(props.matrix[props.x][props.y])
@@ -240,6 +269,12 @@ class Bishop extends Component {
                 checkRayBR,
                 checkRayTL,
                 checkRayTR,
+            ],
+            pinRays: [
+                pinRayBL,
+                pinRayBR,
+                pinRayTL,
+                pinRayTR,
             ]
         }
     }
@@ -250,6 +285,7 @@ class Bishop extends Component {
             this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
             this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
             this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
+            this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])
 
         }
     }
@@ -259,11 +295,11 @@ class Bishop extends Component {
         this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
         this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
         this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
+        this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])
     }
 
     render() {
         let newProps = { ...this.props }
-        this.cells = this.findFreeCells(this.props)
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.checkRays = this.cells.checkRays
