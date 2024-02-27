@@ -209,11 +209,13 @@ class Rook extends Component {
     UNSAFE_componentWillReceiveProps(props) {
         if (this.props.current !== props.current || Object.keys(this.props.checkRay[0]).length !== Object.keys(props.checkRay[0]).length) {
             this.cells = this.findFreeCells(props)
-         //   console.log(props,this.props);
-            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
-            this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
-            this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
             this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])
+        }
+        if(JSON.stringify(this.props.pinsBlack) !== JSON.stringify(props.pinsBlack) || JSON.stringify(this.props.pinsWhite) !== JSON.stringify(props.pinsWhite)){
+     //      this.cells = this.findFreeCells(props)
+      //      this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
+       //     this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
+        //    this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
         }
     }
 
@@ -227,6 +229,7 @@ class Rook extends Component {
 
     render() {
         let newProps = { ...this.props }
+        this.cells = this.cells = this.findFreeCells(this.props)
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.checkRays = this.cells.checkRays

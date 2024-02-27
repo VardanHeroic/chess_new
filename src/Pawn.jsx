@@ -9,7 +9,7 @@ class Pawn extends Component {
         this.color = this.props.color
         this.x = this.props.x
         this.y = this.props.y
-        //	this.cells = this.findFreeCells()
+        this.cells = this.findFreeCells(this.props)
     }
 
     componentDidMount() {
@@ -133,7 +133,7 @@ class Pawn extends Component {
 
 
     UNSAFE_componentWillReceiveProps(props) {
-        if (this.props.current !== props.current || Object.keys(this.props.checkRay[0]).length !== Object.keys(props.checkRay[0]).length || this.props.promotionName !== props.promotionName) {
+        if (this.props.pinsBlack !== props.pinsBlack || this.props.pinsWhite !== props.pinsWhite || Object.keys(this.props.checkRay[0]).length !== Object.keys(props.checkRay[0]).length || this.props.promotionName !== props.promotionName) {
             if (((this.props.color === 'white' && this.props.x === 0) || (this.props.color === 'black' && this.props.x === 7)) && this.props.promotionName !== props.promotionName) {
                 this.props.changeFigProps([this.x, this.y, props.promotionName, 'name'])
                 setTimeout(() => {
@@ -152,10 +152,9 @@ class Pawn extends Component {
 
     render() {
         let newProps = { ...this.props }
-        let cells = this.findFreeCells(this.props)
-        newProps.checkDirections = cells.checkDirections
-        newProps.freeCells = cells.freeCells
-        return <i className={this.color} onClick={() => this.props.move(newProps, cells)} >o</i>
+        newProps.checkDirections = this.cells.checkDirections
+        newProps.freeCells = this.cells.freeCells
+        return <i className={this.color} onClick={() => this.props.move(newProps, this.cells)} >o</i>
 
     }
 }

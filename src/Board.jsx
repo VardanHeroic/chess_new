@@ -25,38 +25,36 @@ class Board extends Component {
 			"Queen": Queen,
 		}
 	}
-	
+
 	componentDidMount(){
 		this.props.initMatrix()
 	}
-	
-	move(props,freeCells){
+
+	move(props,cells){
 		if(props.current !== props.color){
-			return	
+			return
 		}
 		props.killSteps()
 		if(props.x*10+props.y === props.chosen){
-			props.chooseFigure(null)	
+			props.chooseFigure(null)
 			return
 		}
 
 		props.chooseFigure(props.x*10+props.y)
-
-		let {chosen,matrix,current,chooseFigure,changeFig,killSteps,move,changeFigProps,calculateCheckDirections,checkDirectionsWhite,checkDirectionsBlack,...rest} = props	
+		let {pinsBlack,pinsWhite,proptionName,freeCells,checkRay,checkDirections,checkInitator,setPromotionName,setStatusPromotion,status,chosen,matrix,current,chooseFigure,changeFig,killSteps,move,changeFigProps,calculateCheckDirections,checkDirectionsWhite,checkDirectionsBlack,...rest} = props
 		let initiatorProps = {...rest}
-
-		freeCells.freeCells.forEach(cellProps => {	
+		cells.freeCells.forEach(cellProps => {
 			props.changeFig([cellProps.x,cellProps.y,{x: cellProps.x, y: cellProps.y , name: 'Step',victim: cellProps.fig,initiatorProps: initiatorProps } ])
 		})
-	
+
 
 	}
 
 
-	render() {	
-		return 	(	
-			<div className="board">		
-			{	
+	render() {
+		return 	(
+			<div className="board">
+			{
 				this.props.matrix.map((row,i) => {
 					return <div className="row" key={i}>{
 						row.map(props => {
@@ -68,8 +66,8 @@ class Board extends Component {
 							return <Cell {...rest} ></Cell>
 						})
 					}</div>
-				}) 
-			} 
+				})
+			}
 			</div>
 
 		)

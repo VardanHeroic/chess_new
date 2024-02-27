@@ -102,11 +102,7 @@ export const matrixSlice = createSlice({
             });
         },
 
-        calculateCheckDirections(state, action) {
-            let isRayChosen = false
-            let checkCount = 0
-            let whiteArr = []
-            let blackArr = []
+        findPins(state, action){
             let whitePinArr = []
             let blackPinArr = []
             state.value.map(row => {
@@ -121,8 +117,21 @@ export const matrixSlice = createSlice({
                             }
                         }
                     })
+                })
+            })
 
+            state.pinsWhite = whitePinArr;
+            state.pinsBlack = blackPinArr;
 
+        },
+
+        calculateCheckDirections(state, action) {
+            let isRayChosen = false
+            let checkCount = 0
+            let whiteArr = []
+            let blackArr = []
+            state.value.map(row => {
+                row.map(cellProps => {
                     cellProps.fig?.checkDirections?.forEach(checkCell => {
                         if (checkCell.fig?.name === 'King' && checkCell.fig.color !== cellProps.fig.color) {
                             state.status = 'check';
@@ -163,8 +172,6 @@ export const matrixSlice = createSlice({
 
             state.checkDirectionsBlack = blackArr;
             state.checkDirectionsWhite = whiteArr;
-            state.pinsWhite = whitePinArr;
-            state.pinsBlack = blackPinArr;
 
         },
 

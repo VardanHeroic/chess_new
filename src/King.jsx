@@ -8,11 +8,11 @@ class King extends Component {
 		this.color = this.props.color
 		this.x = this.props.x
 		this.y = this.props.y
-		this.cells = null
+		this.cells = this.findFreeCells(this.props)
 
 	}
 
-	findFreeCells(props){ 
+	findFreeCells(props){
         let freeCells = []
         let directions = []
 		let checkDirections = []
@@ -33,7 +33,7 @@ class King extends Component {
                 pseudoDirections.forEach(cord => {
                     if(cord.x === cellX && cord.y === cellY){
                         directions.push(cell)
-                    }   
+                    }
                 })
             })
         })
@@ -49,37 +49,37 @@ class King extends Component {
         props.matrix.forEach((row,cellX) => {
             row.forEach((cell,cellY) => {
 				if(directions.includes(cell) && ( !cell.fig || attackedCells.includes(cell) )  ){
-					freeCells.push(cell)	
-				}	 
-            })  
+					freeCells.push(cell)
+				}
+            })
         })
-		
+
 		if (props.color === 'white') {
 			props.checkDirectionsBlack.forEach(checkCell => {
 				freeCells = freeCells.filter(cell => cell.key !== checkCell.key)
-			})	
+			})
 		}
 		if (props.color === 'black') {
 			props.checkDirectionsWhite.forEach(checkCell => {
-				freeCells = freeCells.filter(cell => cell.key !== checkCell.key)	
-			})	
-		}	
-	
+				freeCells = freeCells.filter(cell => cell.key !== checkCell.key)
+			})
+		}
+
 
 		this.props.matrix.forEach((row,cellX) => {
             row.forEach((cell,cellY) => {
                 if(directions.includes(cell) || attackedCells.includes(cell)    ) {
                     checkDirections.push(cell)
                 }
-            })  
-        })	
+            })
+        })
 
 
         return {freeCells:freeCells,checkDirections:checkDirections}
     }
-	
+
 	UNSAFE_componentWillReceiveProps(props) {
-		if (this.props.current !== props.current || this.props.checkDirectionsWhite !== props.checkDirectionsWhite || this.props.checkDirectionsBlack !== props.checkDirectionsBlack || this.props.status !== props.status  ) {
+		if (this.props.checkDirectionsWhite !== props.checkDirectionsWhite || this.props.checkDirectionsBlack !== props.checkDirectionsBlack || this.props.status !== props.status  ) {
 			this.cells =  this.findFreeCells(props)
 			this.props.changeFigProps([this.x,this.y,this.cells.checkDirections,'checkDirections'])
 			this.props.changeFigProps([this.x,this.y,this.cells.freeCells,'freeCells'])
@@ -88,7 +88,6 @@ class King extends Component {
 
 	render() {
 		let newProps = {...this.props}
-		this.cells = this.findFreeCells(this.props)
 		newProps.checkDirections = this.cells.checkDirections
 		newProps.freeCells = this.cells.freeCells
 		return <i className={this.color} onClick={() => this.props.move(newProps,this.cells) } >l</i>

@@ -10,6 +10,7 @@ class Step extends Component {
 
 	change(){
 		let {x,y,isStart,...rest} = this.props.initiatorProps
+        console.log(this.props.initiatorProps);
 		this.props.changeFig([this.props.x,this.props.y,{...rest, x: this.props.x, y: this.props.y}])
 		this.props.changeFig([x,y,null])
 		this.props.killSteps()
@@ -25,8 +26,8 @@ class Step extends Component {
 		}
 		play()
 		this.props.changeCurrent()
-		setTimeout(this.props.calculateCheckDirections,100)
-		setTimeout(this.props.findStaleMate,150)
+	//	setTimeout(this.props.calculateCheckDirections,100)
+		setTimeout(this.props.findStaleMate,1000)
 	}
 
 	render() {
@@ -45,6 +46,7 @@ export default connect(
 		changeFig: (data) => dispatch(matrixActions.changeFig(data)),
 		killSteps: () => dispatch(matrixActions.killSteps()),
 		calculateCheckDirections: () => dispatch(matrixActions.calculateCheckDirections()),
+        findPins: () => dispatch(matrixActions.findPins()),
 		findStaleMate: () => {dispatch(matrixActions.findStaleMate())}
 	})
 )(Step)
