@@ -2,30 +2,30 @@ let key = 0
 let pinkey = 0
 
 const componentActionTrackerMiddleware = store => next => action => {
-    // Let the action pass through the middleware
-    // Check if the action is the one you're interested in
     let matrixReducer = store.getState().matrixReducer
     if (action.type === 'matrixReducer/changeFigProps') {
 
         if (action?.payload[3] === 'pinRays') {
             if (pinkey <= Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== 77) {
-             //   console.log('pin', action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), pinkey);
+               console.log('pin', action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), pinkey);
                 pinkey = Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key)
             }
             else if (matrixReducer.value[action?.payload[0]][action?.payload[1]].fig.name !== 'King') {
-                // console.log('vsyopin', pinkey, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key));
+                console.log('vsyopin', pinkey, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key));
                 pinkey = 0
+                key = 0
                 store.dispatch({ type: 'matrixReducer/findPins' });
             }
         }
-        if (action?.payload[3] === 'freeCells' && matrixReducer.value[action?.payload[0]][action?.payload[1]].fig.name !== 'King') {
+        else if (action?.payload[3] === 'freeCells' && matrixReducer.value[action?.payload[0]][action?.payload[1]].fig.name !== 'King') {
 
-            if (key <= Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== 77) {
-                // console.log(action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), key);
+            if (   key <= Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== 77) {
+                console.log(action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), key,action);
                 key = Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key)
             }
-            else if (matrixReducer.value[action?.payload[0]][action?.payload[1]].fig.name !== 'King') {
-                // console.log('vsyo', key, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key));
+            else {
+                console.log('vsyo', key, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key),action);
+                key = 0
                 store.dispatch({ type: 'matrixReducer/calculateCheckDirections' });
             }
 
@@ -41,8 +41,6 @@ const componentActionTrackerMiddleware = store => next => action => {
         // Dispatch the final action
 
     }
-    pinkey = 0
-    key = 0
     next(action);
 };
 

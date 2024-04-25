@@ -90,7 +90,7 @@ class King extends Component {
 		let newProps = {...this.props}
 		newProps.checkDirections = this.cells.checkDirections
 		newProps.freeCells = this.cells.freeCells
-		return <i className={this.color} onClick={() => this.props.move(newProps,this.cells) } >l</i>
+		return <i className={this.color} onClick={() => this.props.move(newProps) } >l</i>
 
 	}
 

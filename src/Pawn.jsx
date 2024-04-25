@@ -122,11 +122,11 @@ class Pawn extends Component {
             })
         })
 
-        pins.forEach(pin => {
-            if(pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)){
-                freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
-            }
-        })
+        // pins.forEach(pin => {
+        //     if(pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)){
+        //         freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
+        //     }
+        // })
 
         return { freeCells: freeCells, checkDirections: attackDirections }
     }
@@ -152,6 +152,7 @@ class Pawn extends Component {
 
     render() {
         let newProps = { ...this.props }
+        this.cells = this.findFreeCells(this.props)
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         return <i className={this.color} onClick={() => this.props.move(newProps, this.cells)} >o</i>

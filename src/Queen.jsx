@@ -386,31 +386,31 @@ class Queen extends Component {
 
     UNSAFE_componentWillReceiveProps(props) {
         if (this.props.current !== props.current || Object.keys(this.props.checkRay[0]).length !== Object.keys(props.checkRay[0]).length) {
-            this.cells = this.findFreeCells(props)
+            // this.cells = this.findFreeCells(props)
             this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])
         }
         if (JSON.stringify(this.props.pinsBlack) !== JSON.stringify(props.pinsBlack) || JSON.stringify(this.props.pinsWhite) !== JSON.stringify(props.pinsWhite)) {
-            // this.cells = this.findFreeCells(props)
-            // this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
-            // this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
-            // this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
+            this.cells = this.findFreeCells(props)
+            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
+            this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
+            this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
         }
     }
 
-    componentDidMount() {
-        this.cells = this.findFreeCells(this.props)
-        this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
-        this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
-        this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
-        this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])
-    }
+    // componentDidMount() {
+    //     this.cells = this.findFreeCells(this.props)
+    //     this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
+    //     // this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
+    //     this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
+    //     // this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])
+    // }
 
     render() {
         let newProps = { ...this.props }
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.checkRays = this.cells.checkRays
-        return <i className={this.color} onClick={() => this.props.move(newProps, this.cells)} >w</i>
+        return <i className={this.color} onClick={() => this.props.move(newProps)} >w</i>
     }
 }
 

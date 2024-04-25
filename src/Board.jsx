@@ -43,7 +43,7 @@ class Board extends Component {
 		props.chooseFigure(props.x*10+props.y)
 		let {pinsBlack,pinsWhite,proptionName,freeCells,checkRay,checkDirections,checkInitator,setPromotionName,setStatusPromotion,status,chosen,matrix,current,chooseFigure,changeFig,killSteps,move,changeFigProps,calculateCheckDirections,checkDirectionsWhite,checkDirectionsBlack,...rest} = props
 		let initiatorProps = {...rest}
-		cells.freeCells.forEach(cellProps => {
+		freeCells.forEach(cellProps => {
 			props.changeFig([cellProps.x,cellProps.y,{x: cellProps.x, y: cellProps.y , name: 'Step',victim: cellProps.fig,initiatorProps: initiatorProps } ])
 		})
 
