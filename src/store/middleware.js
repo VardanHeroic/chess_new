@@ -7,11 +7,11 @@ const componentActionTrackerMiddleware = store => next => action => {
 
         if (action?.payload[3] === 'pinRays') {
             if (pinkey <= Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== 77) {
-               console.log('pin', action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), pinkey);
+               // console.log('pin', action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), pinkey);
                 pinkey = Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key)
             }
             else if (matrixReducer.value[action?.payload[0]][action?.payload[1]].fig.name !== 'King') {
-                console.log('vsyopin', pinkey, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key));
+                // console.log('vsyopin', pinkey, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key));
                 pinkey = 0
                 key = 0
                 store.dispatch({ type: 'matrixReducer/findPins' });
@@ -20,11 +20,11 @@ const componentActionTrackerMiddleware = store => next => action => {
         else if (action?.payload[3] === 'freeCells' && matrixReducer.value[action?.payload[0]][action?.payload[1]].fig.name !== 'King') {
 
             if (   key <= Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== 77) {
-                console.log(action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), key,action);
+                // console.log(action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), key,action);
                 key = Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key)
             }
             else {
-                console.log('vsyo', key, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key),action);
+                // console.log('vsyo', key, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key),action);
                 key = 0
                 store.dispatch({ type: 'matrixReducer/calculateCheckDirections' });
             }

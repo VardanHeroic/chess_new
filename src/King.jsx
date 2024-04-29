@@ -49,19 +49,19 @@ class King extends Component {
         props.matrix.forEach((row,cellX) => {
             row.forEach((cell,cellY) => {
 				if(directions.includes(cell) && ( !cell.fig || attackedCells.includes(cell) )  ){
-					freeCells.push(cell)
+					freeCells.push({x: cell.x, y: cell.y})
 				}
             })
         })
 
 		if (props.color === 'white') {
 			props.checkDirectionsBlack.forEach(checkCell => {
-				freeCells = freeCells.filter(cell => cell.key !== checkCell.key)
+				freeCells = freeCells.filter(cell => cell.x *10 + cell.y !== checkCell.x*10 +checkCell.y)
 			})
 		}
 		if (props.color === 'black') {
 			props.checkDirectionsWhite.forEach(checkCell => {
-				freeCells = freeCells.filter(cell => cell.key !== checkCell.key)
+				freeCells = freeCells.filter(cell => cell.x *10 + cell.y !== checkCell.x*10 + checkCell.y)
 			})
 		}
 
@@ -69,7 +69,7 @@ class King extends Component {
 		this.props.matrix.forEach((row,cellX) => {
             row.forEach((cell,cellY) => {
                 if(directions.includes(cell) || attackedCells.includes(cell)    ) {
-                    checkDirections.push(cell)
+                    checkDirections.push({x: cell.x, y: cell.y})
                 }
             })
         })
@@ -85,6 +85,12 @@ class King extends Component {
 			this.props.changeFigProps([this.x,this.y,this.cells.freeCells,'freeCells'])
 		}
 	}
+
+    componentDidMount() {
+        this.cells = this.findFreeCells(this.props)
+        this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
+        this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
+    }
 
 	render() {
 		let newProps = {...this.props}

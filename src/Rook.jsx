@@ -134,37 +134,37 @@ class Rook extends Component {
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
                 if ((cellX > checkBlockXmin && cellX < checkBlockXmax) && (cellY > checkBlockYmin && cellY < checkBlockYmax) && (directions.includes(cell) || attackedCells.includes(cell))) {
-                    checkDirections.push(cell)
+                    checkDirections.push({x: cell.x, y: cell.y})
                 }
 
                 if ((directions.includes(cell) || attackedCells.includes(cell)) && (!cell.fig || cell.fig.key === props.key)) {
                     if (cellY === props.y) {
                         if (cellX < blockXmax && cellX >= props.x) {
-                            checkRayPosX.push(cell)
+                            checkRayPosX.push({x: cell.x, y: cell.y})
                         }
                         if (cellX > blockXmin && cellX <= props.x) {
-                            checkRayNegX.push(cell)
+                            checkRayNegX.push({x: cell.x, y: cell.y})
                         }
                         if (cellX < pinBlockXmax && cellX >= props.x && props.matrix[pinBlockXmax - 1][props.y].fig?.name === "King") {
-                            pinRayPosX.push(cell)
+                            pinRayPosX.push({x: cell.x, y: cell.y})
                         }
                         if (cellX > pinBlockXmin && cellX <= props.x && props.matrix[pinBlockXmin + 1][props.y].fig?.name === "King") {
-                            pinRayNegX.push(cell)
+                            pinRayNegX.push({x: cell.x, y: cell.y})
                         }
 
                     }
                     if (cellX === props.x) {
                         if (cellY < blockYmax && cellY >= props.y) {
-                            checkRayPosY.push(cell)
+                            checkRayPosY.push({x: cell.x, y: cell.y})
                         }
                         if (cellY > blockYmin && cellY <= props.y) {
-                            checkRayNegY.push(cell)
+                            checkRayNegY.push({x: cell.x, y: cell.y})
                         }
                         if (cellY < pinBlockYmax && cellY >= props.y && props.matrix[props.x][pinBlockYmax - 1].fig?.name === "King") {
-                            pinRayPosY.push(cell)
+                            pinRayPosY.push({x: cell.x, y: cell.y})
                         }
                         if (cellY > pinBlockYmin && cellY <= props.y && props.matrix[props.x][pinBlockYmin + 1].fig?.name === "King") {
-                            pinRayNegY.push(cell)
+                            pinRayNegY.push({x: cell.x, y: cell.y})
                         }
                     }
 
@@ -175,8 +175,8 @@ class Rook extends Component {
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
                 props.checkRay.forEach(checkRayCell => {
-                    if ((cellX > blockXmin && cellX < blockXmax) && (cellY > blockYmin && cellY < blockYmax) && directions.includes(cell) && (!cell.fig || attackedCells.includes(cell)) && (props.status !== 'check' || checkRayCell.key === cell.key || cell.key === props.checkInitator.key)) {
-                        freeCells.push(cell)
+                    if ((cellX > blockXmin && cellX < blockXmax) && (cellY > blockYmin && cellY < blockYmax) && directions.includes(cell) && (!cell.fig || attackedCells.includes(cell)) && (props.status !== 'check' || checkRayCell.x*10+checkRayCell.y === cell.x*10+cell.y || cell.x*10+cell.y === props.checkInitator.x*10+props.checkInitator.y)) {
+                        freeCells.push({x: cell.x, y: cell.y})
                     }
                 })
             })
@@ -212,7 +212,7 @@ class Rook extends Component {
             this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])
         }
         if(JSON.stringify(this.props.pinsBlack) !== JSON.stringify(props.pinsBlack) || JSON.stringify(this.props.pinsWhite) !== JSON.stringify(props.pinsWhite)){
-     //      this.cells = this.findFreeCells(props)
+          this.cells = this.findFreeCells(props)
            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
            this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
            this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])

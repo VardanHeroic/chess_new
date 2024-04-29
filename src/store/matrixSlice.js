@@ -18,6 +18,7 @@ export const matrixSlice = createSlice({
         chosen: null,
         whiteTimer: 600,
         blackTimer: 600,
+        pinScan: false,
     },
     reducers: {
         chooseFigure: (state, action) => {
@@ -122,6 +123,7 @@ export const matrixSlice = createSlice({
 
             state.pinsWhite = whitePinArr;
             state.pinsBlack = blackPinArr;
+            state.pinScan = true
 
         },
 
@@ -132,16 +134,17 @@ export const matrixSlice = createSlice({
             let blackArr = []
             state.value.map(row => {
                 row.map(cellProps => {
-                    cellProps.fig?.checkDirections?.forEach(checkCell => {
+                    cellProps.fig?.checkDirections?.forEach(checkCellCord => {
+                        let checkCell = state.value[checkCellCord.x][checkCellCord.y]
                         if (checkCell.fig?.name === 'King' && checkCell.fig.color !== cellProps.fig.color) {
                             state.status = 'check';
                             new Audio(checkSound).play()
                             checkCount++
-                            state.checkInitator = cellProps
+                            state.checkInitator = {x: cellProps.x, y: cellProps.y}
                             if (cellProps.fig.checkRays && checkCount < 2) {
                                 cellProps.fig.checkRays.forEach(ray => {
                                     ray.forEach(cell => {
-                                        if (cell.key === checkCell.key && !isRayChosen) {
+                                        if (cell.x*10+cell.y === checkCell.key && !isRayChosen) {
                                             state.checkRay = ray;
                                             isRayChosen = true;
                                         }
@@ -159,17 +162,17 @@ export const matrixSlice = createSlice({
 
 
                         if (cellProps.fig?.color === 'white') {
-                            whiteArr.push(checkCell);
+                            whiteArr.push(checkCellCord);
                         }
 
                         else {
-                            blackArr.push(checkCell);
+                            blackArr.push(checkCellCord);
                         }
 
                     })
                 })
             })
-
+            state.pinScan = false
             state.checkDirectionsBlack = blackArr;
             state.checkDirectionsWhite = whiteArr;
 

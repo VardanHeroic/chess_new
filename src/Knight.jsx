@@ -58,11 +58,11 @@ class Knight extends Component {
                         (attackedCells.includes(cell) || !cell.fig) &&
                         (
                             props.status !== 'check' ||
-                            checkRayCell.key === cell.key ||
-                            cell.key === props.checkInitator.key
+                            checkRayCell.x*10+checkRayCell.y === cell.x*10+cell.y ||
+                            cell.x*10+cell.y === props.checkInitator.x*10+props.checkInitator.y
                         )
                     ) {
-                        freeCells.push(cell)
+                        freeCells.push({x: cell.x, y: cell.y})
                     }
                 })
             })
@@ -79,23 +79,22 @@ class Knight extends Component {
         this.props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
                 if (directions.includes(cell) || attackedCells.includes(cell)) {
-                    checkDirections.push(cell)
+                    checkDirections.push({x: cell.x, y: cell.y})
                 }
             })
         })
-
         return { freeCells: freeCells, checkDirections: checkDirections }
     }
 
-    // componentDidMount() {
-    //     this.cells = this.findFreeCells(this.props)
-    //     this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
-    //     this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
-    // }
+    componentDidMount() {
+        this.cells = this.findFreeCells(this.props)
+        this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
+        this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
+    }
 
 
     UNSAFE_componentWillReceiveProps(props) {
-        if (JSON.stringify(this.props.pinsBlack) !== JSON.stringify(props.pinsBlack) || Object.keys(this.props.checkRay[0]).length !== Object.keys(props.checkRay[0]).length) {
+        if (props.pinScan) {
             this.cells = this.findFreeCells(props)
             this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
             this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
@@ -123,6 +122,7 @@ export default connect(
         checkInitator: state.matrixReducer.checkInitator,
         pinsWhite: state.matrixReducer.pinsWhite,
         pinsBlack: state.matrixReducer.pinsBlack,
+        pinScan: state.matrixReducer.pinScan
     }),
     (dispatch) => ({
         chooseFigure: (fig) => dispatch(matrixActions.chooseFigure(fig)),

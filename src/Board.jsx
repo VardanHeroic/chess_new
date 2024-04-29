@@ -30,7 +30,7 @@ class Board extends Component {
 		this.props.initMatrix()
 	}
 
-	move(props,cells){
+	move(props){
 		if(props.current !== props.color){
 			return
 		}
@@ -41,12 +41,11 @@ class Board extends Component {
 		}
 
 		props.chooseFigure(props.x*10+props.y)
-		let {pinsBlack,pinsWhite,proptionName,freeCells,checkRay,checkDirections,checkInitator,setPromotionName,setStatusPromotion,status,chosen,matrix,current,chooseFigure,changeFig,killSteps,move,changeFigProps,calculateCheckDirections,checkDirectionsWhite,checkDirectionsBlack,...rest} = props
+		let {promotionName,findStaleMate,pinsBlack,pinsWhite,proptionName,freeCells,checkRay,checkDirections,checkInitator,setPromotionName,setStatusPromotion,status,chosen,matrix,current,chooseFigure,changeFig,killSteps,move,changeFigProps,calculateCheckDirections,checkDirectionsWhite,checkDirectionsBlack,...rest} = props
 		let initiatorProps = {...rest}
 		freeCells.forEach(cellProps => {
-			props.changeFig([cellProps.x,cellProps.y,{x: cellProps.x, y: cellProps.y , name: 'Step',victim: cellProps.fig,initiatorProps: initiatorProps } ])
+			props.changeFig([cellProps.x,cellProps.y,{x: cellProps.x, y: cellProps.y , name: 'Step',victim: matrix[cellProps.x][cellProps.y].fig,initiatorProps: initiatorProps } ])
 		})
-
 
 	}
 
