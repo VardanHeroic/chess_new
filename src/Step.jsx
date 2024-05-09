@@ -13,6 +13,7 @@ class Step extends Component {
 		this.props.changeFig([this.props.x,this.props.y,{...rest, x: this.props.x, y: this.props.y}])
 		this.props.changeFig([x,y,null])
 		this.props.killSteps()
+        this.props.chooseFigure(10*this.props.x+this.props.y)
 		let play = async () => {
 			let sound = null
 			if (this.props.victim && this.props.victim.name !== 'Step' ) {
@@ -25,8 +26,6 @@ class Step extends Component {
 		}
 		play()
 		this.props.changeCurrent()
-	//	setTimeout(this.props.calculateCheckDirections,100)
-		// setTimeout(this.props.findStaleMate,1000)
 	}
 
 	render() {
@@ -44,8 +43,6 @@ export default connect(
 		changeCurrent: () => dispatch(matrixActions.changeCurrent()),
 		changeFig: (data) => dispatch(matrixActions.changeFig(data)),
 		killSteps: () => dispatch(matrixActions.killSteps()),
-		calculateCheckDirections: () => dispatch(matrixActions.calculateCheckDirections()),
-        findPins: () => dispatch(matrixActions.findPins()),
-		findStaleMate: () => {dispatch(matrixActions.findStaleMate())}
+        chooseFigure: (fig) => dispatch(matrixActions.chooseFigure(fig)),
 	})
 )(Step)

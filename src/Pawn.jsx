@@ -13,6 +13,8 @@ class Pawn extends Component {
     }
 
     componentDidMount() {
+        let cells = this.findFreeCells(this.props)
+        this.props.changeFigProps([this.x, this.y, cells.checkDirections, 'checkDirections'])
         if ((this.props.color === 'white' && this.props.x === 0) || (this.props.color === 'black' && this.props.x === 7)) {
             this.props.setStatusPromotion('promotion')
         }
@@ -43,7 +45,7 @@ class Pawn extends Component {
                         directions.push(cell)
                     }
                     if (cellX === this.props.x - 1 && (this.props.y + 1 === cellY || this.props.y - 1 === cellY)) {
-                        attackDirections.push({x: cell.x, y: cell.y})
+                        attackDirections.push({ x: cell.x, y: cell.y })
                         directions.push(cell)
                     }
 
@@ -58,7 +60,7 @@ class Pawn extends Component {
                         directions.push(cell)
                     }
                     if (cellX === this.props.x + 1 && (this.props.y + 1 === cellY || this.props.y - 1 === cellY)) {
-                        attackDirections.push({x: cell.x, y: cell.y})
+                        attackDirections.push({ x: cell.x, y: cell.y })
                         directions.push(cell)
                     }
 
@@ -104,26 +106,26 @@ class Pawn extends Component {
                         (
                             (
                                 moveDirections.includes(cell) &&
-                                (props.status !== 'check' || checkRayCell.x*10+checkRayCell.y === cell.x*10+cell.y) &&
+                                (props.status !== 'check' || checkRayCell.x * 10 + checkRayCell.y === cell.x * 10 + cell.y) &&
                                 (!cell.fig || cell.fig.name === 'Step')
                             ) || (
                                 cell.fig &&
                                 attackedCells.includes(cell) &&
-                                (props.status !== 'check' || props.checkInitator.x*10+props.checkInitator.y === cell.x*10+cell.y)
+                                (props.status !== 'check' || props.checkInitator.x * 10 + props.checkInitator.y === cell.x * 10 + cell.y)
                             )
                         ) &&
                         (cellX > blockXmin && cellX < blockXmax) &&
                         (cellY > blockYmin && cellY < blockYmax)
 
                     ) {
-                        freeCells.push({x: cell.x, y: cell.y})
+                        freeCells.push({ x: cell.x, y: cell.y })
                     }
                 })
             })
         })
 
         pins.forEach(pin => {
-            if(pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)){
+            if (pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)) {
                 freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
             }
         })
@@ -132,6 +134,10 @@ class Pawn extends Component {
 
 
     UNSAFE_componentWillReceiveProps(props) {
+        if (this.props.current !== props.current ){
+            this.cells = this.findFreeCells(props)
+            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
+        }
         if (props.pinScan || this.props.promotionName !== props.promotionName) {
             if (((this.props.color === 'white' && this.props.x === 0) || (this.props.color === 'black' && this.props.x === 7)) && this.props.promotionName !== props.promotionName) {
                 this.props.changeFigProps([this.x, this.y, props.promotionName, 'name'])
@@ -143,7 +149,6 @@ class Pawn extends Component {
 
             }
             let cells = this.findFreeCells(props)
-            this.props.changeFigProps([this.x, this.y, cells.checkDirections, 'checkDirections'])
             this.props.changeFigProps([this.x, this.y, cells.freeCells, 'freeCells'])
 
         }

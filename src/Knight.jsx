@@ -89,16 +89,18 @@ class Knight extends Component {
     componentDidMount() {
         this.cells = this.findFreeCells(this.props)
         this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
-        this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
     }
 
 
     UNSAFE_componentWillReceiveProps(props) {
         if (props.pinScan) {
             this.cells = this.findFreeCells(props)
-            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
             this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
 
+        }
+        if (this.props.current !== props.current ){
+            this.cells = this.findFreeCells(props)
+            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
         }
     }
 

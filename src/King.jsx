@@ -79,17 +79,20 @@ class King extends Component {
     }
 
 	UNSAFE_componentWillReceiveProps(props) {
-		if (this.props.checkDirectionsWhite !== props.checkDirectionsWhite || this.props.checkDirectionsBlack !== props.checkDirectionsBlack || this.props.status !== props.status  ) {
-			this.cells =  this.findFreeCells(props)
-			this.props.changeFigProps([this.x,this.y,this.cells.checkDirections,'checkDirections'])
-			this.props.changeFigProps([this.x,this.y,this.cells.freeCells,'freeCells'])
-		}
+        if (props.pinScan) {
+            this.cells = this.findFreeCells(props)
+            this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
+
+        }
+        if (this.props.current !== props.current ){
+            this.cells = this.findFreeCells(props)
+            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
+        }
 	}
 
     componentDidMount() {
         this.cells = this.findFreeCells(this.props)
         this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
-        this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
     }
 
 	render() {
@@ -110,6 +113,7 @@ export default connect(
 		current: state.matrixReducer.current,
 		checkDirectionsWhite: state.matrixReducer.checkDirectionsWhite,
 		checkDirectionsBlack: state.matrixReducer.checkDirectionsBlack,
+        pinScan: state.matrixReducer.pinScan
 	}),
 	(dispatch) => ({
 		chooseFigure: (fig) => dispatch(matrixActions.chooseFigure(fig)),

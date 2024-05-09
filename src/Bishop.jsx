@@ -279,22 +279,21 @@ class Bishop extends Component {
     UNSAFE_componentWillReceiveProps(props) {
         if (this.props.current !== props.current || Object.keys(this.props.checkRay[0]).length !== Object.keys(props.checkRay[0]).length) {
             this.cells = this.findFreeCells(props)
+            this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
             this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])
+            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
         }
         if(props.pinScan){
             this.cells = this.findFreeCells(props)
-            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
-            this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
             this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
         }
     }
 
     componentDidMount() {
         this.cells = this.findFreeCells(this.props)
-        this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
-        this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
         this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
         this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])
+        this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
     }
 
     render() {

@@ -103,7 +103,8 @@ export const matrixSlice = createSlice({
             });
         },
 
-        findPins(state, action){
+
+        calculateCheckDirections(state, action) {
             let whitePinArr = []
             let blackPinArr = []
             state.value.map(row => {
@@ -123,11 +124,16 @@ export const matrixSlice = createSlice({
 
             state.pinsWhite = whitePinArr;
             state.pinsBlack = blackPinArr;
-            state.pinScan = true
 
-        },
 
-        calculateCheckDirections(state, action) {
+
+
+
+
+
+
+
+
             let isRayChosen = false
             let checkCount = 0
             let whiteArr = []
@@ -140,11 +146,11 @@ export const matrixSlice = createSlice({
                             state.status = 'check';
                             new Audio(checkSound).play()
                             checkCount++
-                            state.checkInitator = {x: cellProps.x, y: cellProps.y}
+                            state.checkInitator = { x: cellProps.x, y: cellProps.y }
                             if (cellProps.fig.checkRays && checkCount < 2) {
                                 cellProps.fig.checkRays.forEach(ray => {
                                     ray.forEach(cell => {
-                                        if (cell.x*10+cell.y === checkCell.key && !isRayChosen) {
+                                        if (cell.x * 10 + cell.y === checkCell.key && !isRayChosen) {
                                             state.checkRay = ray;
                                             isRayChosen = true;
                                         }
@@ -172,13 +178,13 @@ export const matrixSlice = createSlice({
                     })
                 })
             })
-            state.pinScan = false
             state.checkDirectionsBlack = blackArr;
             state.checkDirectionsWhite = whiteArr;
-
+            state.pinScan = true
         },
 
         findStaleMate(state, action) {
+            state.pinScan = false
             let whiteFreeArr = [];
             let blackFreeArr = [];
             state.value.map(row => {
