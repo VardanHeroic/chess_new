@@ -3,28 +3,54 @@ let pinkey = 0
 
 const componentActionTrackerMiddleware = store => next => action => {
     let matrixReducer = store.getState().matrixReducer
+    let lastFig = null
+    let penultimateFig = null
     if (action.type === 'matrixReducer/changeFigProps') {
 
+        for (const row of matrixReducer.value.toReversed()) {
+            if (row.filter(cell => cell.fig)) {
+                if (!lastFig) {
+                    lastFig = row.toReversed().filter(cell => cell.fig)[0].key
+                }
+
+                if (row.filter(cell => cell.fig).length > 1) {
+                    if (row.filter(cell => cell.fig).some(cell => cell.key === lastFig)) {
+                        penultimateFig = row.toReversed().filter(cell => cell.fig)[1].key
+                        break
+                    }
+                    else {
+                        penultimateFig = row.toReversed().filter(cell => cell.fig)[0].key
+                        break
+                    }
+                }
+                else if (row.filter(cell => cell.fig)[0].key !== lastFig) {
+                    penultimateFig = row.filter(cell => cell.fig)[0].key
+                    break
+
+
+                }
+            }
+        }
+
         if (action?.payload[3] === 'checkDirections') {
-            if (pinkey <= Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== 77) {
-               console.log('checkdir', action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), pinkey);
+            console.log('checkdir', action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), pinkey, lastFig, penultimateFig);
+            if ( (matrixReducer.chosen === lastFig && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== penultimateFig) || (matrixReducer.chosen !== lastFig && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== lastFig) ) {
                 pinkey = Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key)
             }
-            else if (pinkey !== matrixReducer.chosen) {
+            else if(matrixReducer.chosen !== pinkey)   {
                 console.log('vsyocheck', pinkey, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key));
                 pinkey = 0
                 key = 0
                 store.dispatch({ type: 'matrixReducer/calculateCheckDirections' });
             }
         }
-        else if (action?.payload[3] === 'freeCells' ) {
-
-            if (   key <= Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== 77) {
-                console.log(action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), key,action);
+        else if (action?.payload[3] === 'freeCells') {
+            console.log(action.payload, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), key,action);
+            if (key <= Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== lastFig) {
                 key = Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key)
             }
             else {
-                console.log('vsyo', key, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key),action);
+                console.log('vsyo', key, Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key), action);
                 key = 0
                 store.dispatch({ type: 'matrixReducer/findStaleMate' });
             }

@@ -9,6 +9,7 @@ class Knight extends Component {
         this.color = this.props.color
         this.x = this.props.x
         this.y = this.props.y
+        this.isVictim = this.props.isVictim
         this.cells = this.findFreeCells(this.props)
     }
 
@@ -58,18 +59,18 @@ class Knight extends Component {
                         (attackedCells.includes(cell) || !cell.fig) &&
                         (
                             props.status !== 'check' ||
-                            checkRayCell.x*10+checkRayCell.y === cell.x*10+cell.y ||
-                            cell.x*10+cell.y === props.checkInitator.x*10+props.checkInitator.y
+                            checkRayCell.x * 10 + checkRayCell.y === cell.x * 10 + cell.y ||
+                            cell.x * 10 + cell.y === props.checkInitator.x * 10 + props.checkInitator.y
                         )
                     ) {
-                        freeCells.push({x: cell.x, y: cell.y})
+                        freeCells.push({ x: cell.x, y: cell.y })
                     }
                 })
             })
         })
 
         pins.forEach(pin => {
-            if(pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)){
+            if (pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)) {
                 freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
             }
         })
@@ -79,7 +80,7 @@ class Knight extends Component {
         this.props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
                 if (directions.includes(cell) || attackedCells.includes(cell)) {
-                    checkDirections.push({x: cell.x, y: cell.y})
+                    checkDirections.push({ x: cell.x, y: cell.y })
                 }
             })
         })
@@ -87,8 +88,12 @@ class Knight extends Component {
     }
 
     componentDidMount() {
-        this.cells = this.findFreeCells(this.props)
-        this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
+
+        if (!this.isVictim) {
+            this.cells = this.findFreeCells(this.props)
+            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
+            this.isVictim = false
+        }
     }
 
 
@@ -98,7 +103,7 @@ class Knight extends Component {
             this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
 
         }
-        if (this.props.current !== props.current ){
+        if (this.props.current !== props.current) {
             this.cells = this.findFreeCells(props)
             this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
         }

@@ -10,6 +10,7 @@ class Rook extends Component {
         this.y = this.props.y
         this.color = this.props.color
         this.cells = this.findFreeCells(this.props)
+        this.isVictim = this.props.isVictim
     }
 
 
@@ -207,7 +208,7 @@ class Rook extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(props) {
-        if (this.props.current !== props.current || Object.keys(this.props.checkRay[0]).length !== Object.keys(props.checkRay[0]).length) {
+        if (this.props.current !== props.current ) {
             this.cells = this.findFreeCells(props)
            this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
             this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])

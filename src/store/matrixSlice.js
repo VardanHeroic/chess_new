@@ -84,6 +84,9 @@ export const matrixSlice = createSlice({
             state.checkInitator = null;
             state.blackTimer = 600;
             state.whiteTimer = 600;
+            state.pinScan = false;
+            state.pinsBlack = []
+            state.pinsWhite = []
 
         },
 

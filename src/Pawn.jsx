@@ -10,13 +10,17 @@ class Pawn extends Component {
         this.x = this.props.x
         this.y = this.props.y
         this.cells = this.findFreeCells(this.props)
+        this.isVictim = this.props.isVictim
     }
 
     componentDidMount() {
-        let cells = this.findFreeCells(this.props)
-        this.props.changeFigProps([this.x, this.y, cells.checkDirections, 'checkDirections'])
-        if ((this.props.color === 'white' && this.props.x === 0) || (this.props.color === 'black' && this.props.x === 7)) {
-            this.props.setStatusPromotion('promotion')
+        if (!this.isVictim) {
+            let cells = this.findFreeCells(this.props)
+            this.props.changeFigProps([this.x, this.y, cells.checkDirections, 'checkDirections'])
+            if ((this.props.color === 'white' && this.props.x === 0) || (this.props.color === 'black' && this.props.x === 7)) {
+                this.props.setStatusPromotion('promotion')
+            }
+            this.isVictim = false
         }
     }
 
@@ -134,11 +138,15 @@ class Pawn extends Component {
 
 
     UNSAFE_componentWillReceiveProps(props) {
-        if (this.props.current !== props.current ){
+        if (this.props.current !== props.current) {
             this.cells = this.findFreeCells(props)
             this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
         }
-        if (props.pinScan || this.props.promotionName !== props.promotionName) {
+        if (props.pinScan) {
+            let cells = this.findFreeCells(props)
+            this.props.changeFigProps([this.x, this.y, cells.freeCells, 'freeCells'])
+        }
+        if (this.props.promotionName !== props.promotionName) {
             if (((this.props.color === 'white' && this.props.x === 0) || (this.props.color === 'black' && this.props.x === 7)) && this.props.promotionName !== props.promotionName) {
                 this.props.changeFigProps([this.x, this.y, props.promotionName, 'name'])
                 setTimeout(() => {
@@ -159,6 +167,7 @@ class Pawn extends Component {
         this.cells = this.findFreeCells(this.props)
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
+        newProps.isVictim = this.isVictim
         return <i className={this.color} onClick={() => this.props.move(newProps)} >o</i>
 
     }
