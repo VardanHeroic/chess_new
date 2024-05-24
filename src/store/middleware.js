@@ -9,7 +9,7 @@ const componentActionTrackerMiddleware = store => next => action => {
 
         for (const row of matrixReducer.value.toReversed()) {
             if (row.filter(cell => cell.fig)) {
-                if (!lastFig) {
+                if (!lastFig && row.some(cell => cell.fig) ){
                     lastFig = row.toReversed().filter(cell => cell.fig)[0].key
                 }
 
@@ -23,7 +23,7 @@ const componentActionTrackerMiddleware = store => next => action => {
                         break
                     }
                 }
-                else if (row.filter(cell => cell.fig)[0].key !== lastFig) {
+                else if (row.filter(cell => cell.fig)[0] && row.filter(cell => cell.fig)[0].key !== lastFig) {
                     penultimateFig = row.filter(cell => cell.fig)[0].key
                     break
 
