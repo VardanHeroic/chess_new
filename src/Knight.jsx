@@ -114,7 +114,7 @@ class Knight extends Component {
         let newProps = { ...this.props }
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
-        return <i className={this.color} onClick={() => this.props.move(newProps)} >j</i>
+        return <i className={this.color} onClick={() => this.props.move(newProps)}role={"button"} >j</i>
 
     }
 }

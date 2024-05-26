@@ -302,7 +302,7 @@ class Bishop extends Component {
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.checkRays = this.cells.checkRays
-        return <i className={this.color} onClick={() => this.props.move(newProps)} >n</i>
+        return <i className={this.color} onClick={() => this.props.move(newProps)} role={"button"}>n</i>
     }
 }
 

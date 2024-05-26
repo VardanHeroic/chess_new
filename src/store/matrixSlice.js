@@ -49,10 +49,10 @@ export const matrixSlice = createSlice({
 
             }
 
-            matrix[0][7] = { color: 'bcell', x: 0, y: 7, key: (0 * 10 + 7), fig: { name: "Rook", color: 'black', checkDirections: [] } }
-            matrix[7][0] = { color: 'bcell', x: 7, y: 0, key: (7 * 10 + 0), fig: { name: "Rook", color: 'white', checkDirections: [] } }
-            matrix[0][0] = { color: 'wcell', x: 0, y: 0, key: (0 * 10 + 0), fig: { name: "Rook", color: 'black', checkDirections: [] } }
-            matrix[7][7] = { color: 'wcell', x: 7, y: 7, key: (7 * 10 + 7), fig: { name: "Rook", color: 'white', checkDirections: [] } }
+            matrix[0][7] = { color: 'bcell', x: 0, y: 7, key: (0 * 10 + 7), fig: { name: "Rook", color: 'black', checkDirections: [], untouched: true } }
+            matrix[7][0] = { color: 'bcell', x: 7, y: 0, key: (7 * 10 + 0), fig: { name: "Rook", color: 'white', checkDirections: [], untouched: true } }
+            matrix[0][0] = { color: 'wcell', x: 0, y: 0, key: (0 * 10 + 0), fig: { name: "Rook", color: 'black', checkDirections: [], untouched: true } }
+            matrix[7][7] = { color: 'wcell', x: 7, y: 7, key: (7 * 10 + 7), fig: { name: "Rook", color: 'white', checkDirections: [], untouched: true } }
 
 
             matrix[0][5] = { color: 'bcell', x: 0, y: 5, key: (0 * 10 + 5), fig: { name: "Bishop", color: 'black' } }
@@ -65,8 +65,8 @@ export const matrixSlice = createSlice({
             matrix[0][3] = { color: 'bcell', x: 0, y: 3, key: (0 * 10 + 3), fig: { name: "Queen", color: 'black', checkDirections: [] } }
             matrix[7][3] = { color: 'wcell', x: 7, y: 3, key: (7 * 10 + 3), fig: { name: "Queen", color: 'white', checkDirections: [] } }
 
-            matrix[0][4] = { color: 'wcell', x: 0, y: 4, key: (0 * 10 + 4), fig: { name: "King", color: 'black', checkDirections: [] } }
-            matrix[7][4] = { color: 'bcell', x: 7, y: 4, key: (7 * 10 + 4), fig: { name: "King", color: 'white', checkDirections: [] } }
+            matrix[0][4] = { color: 'wcell', x: 0, y: 4, key: (0 * 10 + 4), fig: { name: "King", color: 'black', checkDirections: [], untouched: true } }
+            matrix[7][4] = { color: 'bcell', x: 7, y: 4, key: (7 * 10 + 4), fig: { name: "King", color: 'white', checkDirections: [], untouched: true } }
 
             matrix[0][6] = { color: 'wcell', x: 0, y: 6, key: (0 * 10 + 6), fig: { name: 'Knight', color: 'black', checkDirections: [] } }
             matrix[7][1] = { color: 'wcell', x: 7, y: 1, key: (7 * 10 + 1), fig: { name: 'Knight', color: 'white', checkDirections: [] } }

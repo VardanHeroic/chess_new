@@ -168,7 +168,7 @@ class Pawn extends Component {
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.isVictim = this.isVictim
-        return <i className={this.color} onClick={() => this.props.move(newProps)} >o</i>
+        return <i className={this.color} role={"button"} onClick={() => this.props.move(newProps)} >o</i>
 
     }
 }

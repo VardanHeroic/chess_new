@@ -135,37 +135,37 @@ class Rook extends Component {
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
                 if ((cellX > checkBlockXmin && cellX < checkBlockXmax) && (cellY > checkBlockYmin && cellY < checkBlockYmax) && (directions.includes(cell) || attackedCells.includes(cell))) {
-                    checkDirections.push({x: cell.x, y: cell.y})
+                    checkDirections.push({ x: cell.x, y: cell.y })
                 }
 
                 if ((directions.includes(cell) || attackedCells.includes(cell)) && (!cell.fig || cell.fig.key === props.key)) {
                     if (cellY === props.y) {
                         if (cellX < blockXmax && cellX >= props.x) {
-                            checkRayPosX.push({x: cell.x, y: cell.y})
+                            checkRayPosX.push({ x: cell.x, y: cell.y })
                         }
                         if (cellX > blockXmin && cellX <= props.x) {
-                            checkRayNegX.push({x: cell.x, y: cell.y})
+                            checkRayNegX.push({ x: cell.x, y: cell.y })
                         }
                         if (cellX < pinBlockXmax && cellX >= props.x && props.matrix[pinBlockXmax - 1][props.y].fig?.name === "King") {
-                            pinRayPosX.push({x: cell.x, y: cell.y})
+                            pinRayPosX.push({ x: cell.x, y: cell.y })
                         }
                         if (cellX > pinBlockXmin && cellX <= props.x && props.matrix[pinBlockXmin + 1][props.y].fig?.name === "King") {
-                            pinRayNegX.push({x: cell.x, y: cell.y})
+                            pinRayNegX.push({ x: cell.x, y: cell.y })
                         }
 
                     }
                     if (cellX === props.x) {
                         if (cellY < blockYmax && cellY >= props.y) {
-                            checkRayPosY.push({x: cell.x, y: cell.y})
+                            checkRayPosY.push({ x: cell.x, y: cell.y })
                         }
                         if (cellY > blockYmin && cellY <= props.y) {
-                            checkRayNegY.push({x: cell.x, y: cell.y})
+                            checkRayNegY.push({ x: cell.x, y: cell.y })
                         }
                         if (cellY < pinBlockYmax && cellY >= props.y && props.matrix[props.x][pinBlockYmax - 1].fig?.name === "King") {
-                            pinRayPosY.push({x: cell.x, y: cell.y})
+                            pinRayPosY.push({ x: cell.x, y: cell.y })
                         }
                         if (cellY > pinBlockYmin && cellY <= props.y && props.matrix[props.x][pinBlockYmin + 1].fig?.name === "King") {
-                            pinRayNegY.push({x: cell.x, y: cell.y})
+                            pinRayNegY.push({ x: cell.x, y: cell.y })
                         }
                     }
 
@@ -176,15 +176,15 @@ class Rook extends Component {
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
                 props.checkRay.forEach(checkRayCell => {
-                    if ((cellX > blockXmin && cellX < blockXmax) && (cellY > blockYmin && cellY < blockYmax) && directions.includes(cell) && (!cell.fig || attackedCells.includes(cell)) && (props.status !== 'check' || checkRayCell.x*10+checkRayCell.y === cell.x*10+cell.y || cell.x*10+cell.y === props.checkInitator.x*10+props.checkInitator.y)) {
-                        freeCells.push({x: cell.x, y: cell.y})
+                    if ((cellX > blockXmin && cellX < blockXmax) && (cellY > blockYmin && cellY < blockYmax) && directions.includes(cell) && (!cell.fig || attackedCells.includes(cell)) && (props.status !== 'check' || checkRayCell.x * 10 + checkRayCell.y === cell.x * 10 + cell.y || cell.x * 10 + cell.y === props.checkInitator.x * 10 + props.checkInitator.y)) {
+                        freeCells.push({ x: cell.x, y: cell.y })
                     }
                 })
             })
         })
 
         pins.forEach(pin => {
-            if(pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)){
+            if (pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)) {
                 freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
             }
         })
@@ -208,15 +208,15 @@ class Rook extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(props) {
-        if (this.props.current !== props.current ) {
+        if (this.props.current !== props.current) {
             this.cells = this.findFreeCells(props)
-           this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
+            this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
             this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])
-           this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
+            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
         }
-        if(props.pinScan){
-          this.cells = this.findFreeCells(props)
-           this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
+        if (props.pinScan) {
+            this.cells = this.findFreeCells(props)
+            this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
         }
     }
 
@@ -233,7 +233,7 @@ class Rook extends Component {
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.checkRays = this.cells.checkRays
-        return <i className={this.color} onClick={() => this.props.move(newProps)} >t</i>
+        return <i className={this.color} onClick={() => this.props.move(newProps)} role={"button"}>t</i>
     }
 }
 
