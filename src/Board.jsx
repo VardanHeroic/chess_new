@@ -41,7 +41,7 @@ class Board extends Component {
         }
 
         props.chooseFigure(props.x * 10 + props.y)
-        let { promotionName, findStaleMate, pinsBlack, pinsWhite, proptionName, freeCells, checkRay, checkDirections, checkInitator, setPromotionName, setStatusPromotion, status, chosen, matrix, current, chooseFigure, changeFig, killSteps, move, changeFigProps, calculateCheckDirections, checkDirectionsWhite, checkDirectionsBlack, ...rest } = props
+        let {pinScan, promotionName, findStaleMate, pinsBlack, pinsWhite, proptionName, freeCells, checkRay, checkDirections, checkInitator, setPromotionName, setStatusPromotion, status, chosen, matrix, current, chooseFigure, changeFig, killSteps, move, changeFigProps, calculateCheckDirections, checkDirectionsWhite, checkDirectionsBlack, ...rest } = props
         let initiatorProps = { ...rest }
         freeCells.forEach(cellProps => {
             let victimProps = JSON.parse(JSON.stringify(matrix[cellProps.x][cellProps.y].fig))

@@ -1,6 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import winSound from "../audio/Checkmate_Win.WAV";
 import checkSound from "../audio/Check.WAV";
+import drawSound from "../audio/Checkmate_Lose.WAV"
 
 export const matrixSlice = createSlice({
     name: 'matrixReducer',
@@ -19,6 +20,7 @@ export const matrixSlice = createSlice({
         whiteTimer: 600,
         blackTimer: 600,
         pinScan: false,
+        allFreeCells: [],
     },
     reducers: {
         chooseFigure: (state, action) => {
@@ -87,6 +89,7 @@ export const matrixSlice = createSlice({
             state.pinScan = false;
             state.pinsBlack = []
             state.pinsWhite = []
+            state.allFreeCells = []
 
         },
 
@@ -129,14 +132,6 @@ export const matrixSlice = createSlice({
             state.pinsBlack = blackPinArr;
 
 
-
-
-
-
-
-
-
-
             let isRayChosen = false
             let checkCount = 0
             let whiteArr = []
@@ -147,7 +142,6 @@ export const matrixSlice = createSlice({
                         let checkCell = state.value[checkCellCord.x][checkCellCord.y]
                         if (checkCell.fig?.name === 'King' && checkCell.fig.color !== cellProps.fig.color) {
                             state.status = 'check';
-                            new Audio(checkSound).play()
                             checkCount++
                             state.checkInitator = { x: cellProps.x, y: cellProps.y }
                             if (cellProps.fig.checkRays && checkCount < 2) {
@@ -205,10 +199,19 @@ export const matrixSlice = createSlice({
                 });
             });
 
+            state.allFreeCells.push(blackFreeArr.concat(whiteFreeArr))
+            let whitePositionCount = state.allFreeCells.reduce((count, freeCells, index) => JSON.stringify(blackFreeArr.concat(whiteFreeArr)) === JSON.stringify(freeCells) && index % 2 === 1 ? count + 1 : count, 0)
+            let blackPositonCount = state.allFreeCells.reduce((count, freeCells, index) => JSON.stringify(blackFreeArr.concat(whiteFreeArr)) === JSON.stringify(freeCells) && index % 2 === 0 ? count + 1 : count, 0)
+
+            if (whitePositionCount === 3 || blackPositonCount === 3) {
+                state.status = 'draw by repeatition';
+                new Audio(drawSound).play()
+                return;
+            }
 
             if ((blackFreeArr.length === 0 || whiteFreeArr.length === 0) && state.status !== 'check') {
                 state.status = 'draw by stalemate';
-                alert('end');
+                new Audio(drawSound).play()
                 return;
             }
             if (state.status === 'check') {
@@ -222,7 +225,7 @@ export const matrixSlice = createSlice({
                     new Audio(winSound).play()
                     return;
                 }
-
+                new Audio(checkSound).play()
             }
             if (state.blackTimer <= 0) {
                 state.status = 'white won by time';

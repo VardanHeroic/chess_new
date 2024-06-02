@@ -9,10 +9,32 @@ class Step extends Component {
     }
 
     change() {
-        let { x, y, isStart,untouched, ...rest } = this.props.initiatorProps
+        let { x, y, isStart, untouched, ...rest } = this.props.initiatorProps
 
         if (untouched) {
             untouched = false
+        }
+
+        if (this.props.initiatorProps.name === "King" && Math.abs(y - this.props.y) === 2) {
+            if (this.props.x === 0 && this.props.y === 2) {
+                this.props.changeFig([this.props.x, this.props.y+1, { name:'Rook', color: 'black', isVictim:false , x: this.props.x, y: this.props.y+1, untouched: untouched }])
+                this.props.changeFig([0, 0, null])
+            }
+
+            if (this.props.x === 0 && this.props.y === 6) {
+                this.props.changeFig([this.props.x, this.props.y-1, { name:'Rook', color: 'black', isVictim:false , x: this.props.x, y: this.props.y-1, untouched: untouched }])
+                this.props.changeFig([0, 7, null])
+            }
+
+            if (this.props.x === 7 && this.props.y === 2) {
+                this.props.changeFig([this.props.x, this.props.y+1, { name:'Rook', color: 'white', isVictim:false , x: this.props.x, y: this.props.y+1, untouched: untouched }])
+                this.props.changeFig([7, 0, null])
+            }
+
+            if (this.props.x === 7 && this.props.y === 6) {
+                this.props.changeFig([this.props.x, this.props.y-1, { name:'Rook', color: 'white', isVictim:false , x: this.props.x, y: this.props.y-1, untouched: untouched }])
+                this.props.changeFig([7, 7, null])
+            }
         }
 
         this.props.changeFig([this.props.x, this.props.y, { ...rest, x: this.props.x, y: this.props.y, untouched: untouched }])
@@ -35,7 +57,7 @@ class Step extends Component {
 
     render() {
         return (
-            <i className='step' onClick={() => this.change()} role={"button"}>●</i>
+            <i className='step' onClick={() => this.change()} role={"button"}>⬤</i>
         )
     }
 }
