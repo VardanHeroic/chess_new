@@ -47,33 +47,33 @@ export const matrixSlice = createSlice({
 
             }
             for (let cell of matrix[6]) {
-                cell.fig = { name: 'Pawn', color: 'white', isStart: true }
+                // cell.fig = { name: 'Pawn', color: 'white', isStart: true }
 
             }
 
-            matrix[0][7] = { color: 'bcell', x: 0, y: 7, key: (0 * 10 + 7), fig: { name: "Rook", color: 'black', checkDirections: [], untouched: true } }
-            matrix[7][0] = { color: 'bcell', x: 7, y: 0, key: (7 * 10 + 0), fig: { name: "Rook", color: 'white', checkDirections: [], untouched: true } }
-            matrix[0][0] = { color: 'wcell', x: 0, y: 0, key: (0 * 10 + 0), fig: { name: "Rook", color: 'black', checkDirections: [], untouched: true } }
-            matrix[7][7] = { color: 'wcell', x: 7, y: 7, key: (7 * 10 + 7), fig: { name: "Rook", color: 'white', checkDirections: [], untouched: true } }
+            // matrix[0][7] = { color: 'bcell', x: 0, y: 7, key: (0 * 10 + 7), fig: { name: "Rook", color: 'black', checkDirections: [], untouched: true } }
+            // matrix[7][0] = { color: 'bcell', x: 7, y: 0, key: (7 * 10 + 0), fig: { name: "Rook", color: 'white', checkDirections: [], untouched: true } }
+            // matrix[0][0] = { color: 'wcell', x: 0, y: 0, key: (0 * 10 + 0), fig: { name: "Rook", color: 'black', checkDirections: [], untouched: true } }
+            // matrix[7][7] = { color: 'wcell', x: 7, y: 7, key: (7 * 10 + 7), fig: { name: "Rook", color: 'white', checkDirections: [], untouched: true } }
 
 
-            matrix[0][5] = { color: 'bcell', x: 0, y: 5, key: (0 * 10 + 5), fig: { name: "Bishop", color: 'black' } }
-            matrix[7][2] = { color: 'bcell', x: 7, y: 2, key: (7 * 10 + 2), fig: { name: "Bishop", color: 'white' } }
-            matrix[0][2] = { color: 'wcell', x: 0, y: 2, key: (0 * 10 + 2), fig: { name: "Bishop", color: 'black' } }
-            matrix[7][5] = { color: 'wcell', x: 7, y: 5, key: (7 * 10 + 5), fig: { name: "Bishop", color: 'white' } }
+            // matrix[0][5] = { color: 'bcell', x: 0, y: 5, key: (0 * 10 + 5), fig: { name: "Bishop", color: 'black' } }
+            // matrix[7][2] = { color: 'bcell', x: 7, y: 2, key: (7 * 10 + 2), fig: { name: "Bishop", color: 'white' } }
+            // matrix[0][2] = { color: 'wcell', x: 0, y: 2, key: (0 * 10 + 2), fig: { name: "Bishop", color: 'black' } }
+            // matrix[7][5] = { color: 'wcell', x: 7, y: 5, key: (7 * 10 + 5), fig: { name: "Bishop", color: 'white' } }
 
 
 
-            matrix[0][3] = { color: 'bcell', x: 0, y: 3, key: (0 * 10 + 3), fig: { name: "Queen", color: 'black', checkDirections: [] } }
-            matrix[7][3] = { color: 'wcell', x: 7, y: 3, key: (7 * 10 + 3), fig: { name: "Queen", color: 'white', checkDirections: [] } }
+            // matrix[0][3] = { color: 'bcell', x: 0, y: 3, key: (0 * 10 + 3), fig: { name: "Queen", color: 'black', checkDirections: [] } }
+            // matrix[7][3] = { color: 'wcell', x: 7, y: 3, key: (7 * 10 + 3), fig: { name: "Queen", color: 'white', checkDirections: [] } }
 
             matrix[0][4] = { color: 'wcell', x: 0, y: 4, key: (0 * 10 + 4), fig: { name: "King", color: 'black', checkDirections: [], untouched: true } }
             matrix[7][4] = { color: 'bcell', x: 7, y: 4, key: (7 * 10 + 4), fig: { name: "King", color: 'white', checkDirections: [], untouched: true } }
 
-            matrix[0][6] = { color: 'wcell', x: 0, y: 6, key: (0 * 10 + 6), fig: { name: 'Knight', color: 'black', checkDirections: [] } }
-            matrix[7][1] = { color: 'wcell', x: 7, y: 1, key: (7 * 10 + 1), fig: { name: 'Knight', color: 'white', checkDirections: [] } }
-            matrix[0][1] = { color: 'bcell', x: 0, y: 1, key: (0 * 10 + 1), fig: { name: 'Knight', color: 'black', checkDirections: [] } }
-            matrix[7][6] = { color: 'bcell', x: 7, y: 6, key: (7 * 10 + 6), fig: { name: 'Knight', color: 'white', checkDirections: [] } }
+            // matrix[0][6] = { color: 'wcell', x: 0, y: 6, key: (0 * 10 + 6), fig: { name: 'Knight', color: 'black', checkDirections: [] } }
+            // matrix[7][1] = { color: 'wcell', x: 7, y: 1, key: (7 * 10 + 1), fig: { name: 'Knight', color: 'white', checkDirections: [] } }
+            // matrix[0][1] = { color: 'bcell', x: 0, y: 1, key: (0 * 10 + 1), fig: { name: 'Knight', color: 'black', checkDirections: [] } }
+            // matrix[7][6] = { color: 'bcell', x: 7, y: 6, key: (7 * 10 + 6), fig: { name: 'Knight', color: 'white', checkDirections: [] } }
 
             state.status = 'none';
             state.value = matrix;
@@ -180,12 +180,22 @@ export const matrixSlice = createSlice({
             state.pinScan = true
         },
 
-        findStaleMate(state, action) {
+        findStaleMate(state) {
             state.pinScan = false
             let whiteFreeArr = [];
             let blackFreeArr = [];
+            let whiteMaterial = [];
+            let blackMaterial = [];
             state.value.map(row => {
                 row.map(cellProps => {
+                    switch (cellProps.fig?.color) {
+                        case 'white':
+                            whiteMaterial.push(cellProps)
+                            break;
+                        case 'black':
+                            blackMaterial.push(cellProps)
+                            break;
+                    }
                     cellProps.fig?.freeCells?.map(checkCell => {
                         if (cellProps.fig?.color === 'white') {
                             whiteFreeArr.push(checkCell);
@@ -205,12 +215,28 @@ export const matrixSlice = createSlice({
 
             if (whitePositionCount === 3 || blackPositonCount === 3) {
                 state.status = 'draw by repeatition';
+                console.log('rep');
+                new Audio(drawSound).play()
+                return;
+            }
+
+            let allMaterial = whiteMaterial.concat(blackMaterial)
+            let hasQueenRookPawn = allMaterial.some(cellProps => cellProps.fig.name === 'Queen' || cellProps.fig.name === 'Pawn' || cellProps.fig.name === 'Rook')
+            let bishopCount = allMaterial.filter(cellProps => cellProps.fig.name === 'Bishop' )
+            let areSameSidedBishops = bishopCount.length + 2 === allMaterial.length && (bishopCount.every(cellProps => (cellProps.x + cellProps.y) % 2 === 0) || bishopCount.every(cellProps => (cellProps.x + cellProps.y) % 2 === 1))
+            let isOneBishop = bishopCount.length === 1
+            let isOneKnight = allMaterial.filter(cellProps => cellProps.fig.name === 'Knight' ).length  === 1;
+            // console.log(!hasQueenRookPawn,allMaterial.length);
+            if(!hasQueenRookPawn && (areSameSidedBishops || (allMaterial.length === 3 && (isOneBishop || isOneKnight)) || allMaterial.length === 2 )){
+                state.status = 'draw by lack of material';
+                console.log('material');
                 new Audio(drawSound).play()
                 return;
             }
 
             if ((blackFreeArr.length === 0 || whiteFreeArr.length === 0) && state.status !== 'check') {
                 state.status = 'draw by stalemate';
+                console.log('mate');
                 new Audio(drawSound).play()
                 return;
             }

@@ -88,7 +88,6 @@ class Knight extends Component {
     }
 
     componentDidMount() {
-
         if (!this.isVictim) {
             this.cells = this.findFreeCells(this.props)
             this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])

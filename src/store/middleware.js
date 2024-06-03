@@ -33,21 +33,24 @@ const componentActionTrackerMiddleware = store => next => action => {
         }
 
         if (action?.payload[3] === 'checkDirections') {
+            console.log(pinkey,lastFig,penultimateFig,matrixReducer.chosen);
             if ( (matrixReducer.chosen === lastFig && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== penultimateFig) || (matrixReducer.chosen !== lastFig && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== lastFig) ) {
                 pinkey = Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key)
             }
             else if(matrixReducer.chosen !== pinkey)   {
                 pinkey = 0
                 key = 0
+                console.log(matrixReducer.value[action?.payload[0]][action?.payload[1]].key,'vsyopin');
                 store.dispatch({ type: 'matrixReducer/calculateCheckDirections' });
             }
         }
         else if (action?.payload[3] === 'freeCells') {
-            if (key <= Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== lastFig) {
+            if (Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== lastFig) {
                 key = Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key)
             }
             else {
                 key = 0
+                next(action);
                 store.dispatch({ type: 'matrixReducer/findStaleMate' });
             }
 
