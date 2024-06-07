@@ -22,52 +22,59 @@ class Queen extends Component {
         let blockCellsBishop = []
         let checkBlockCellsBishop = []
         let attackedCellsBishop = []
+
         let blockTL = { x: -1, y: -1 }
         let blockTR = { x: -1, y: 8 }
         let blockBL = { x: 8, y: -1 }
         let blockBR = { x: 8, y: 8 }
+
         let checkBlockTL = { x: -1, y: -1 }
         let checkBlockTR = { x: -1, y: 8 }
         let checkBlockBL = { x: 8, y: -1 }
         let checkBlockBR = { x: 8, y: 8 }
+
         let checkRayTL = []
         let checkRayTR = []
         let checkRayBL = []
         let checkRayBR = []
+
         let attackedCellsRook = []
         let directionsRook = []
         let blockCellsRook = []
-        let chessBlockCellsRook = []
+        let checkBlockCellsRook = []
+
         let checkDirectionsPosX = []
         let checkDirectionsNegX = []
         let checkDirectionsPosY = []
         let checkDirectionsNegY = []
+
         let pinRayPosX = []
         let pinRayNegX = []
         let pinRayPosY = []
         let pinRayNegY = []
+
         let blockXmin = -1
         let blockXmax = 8
         let blockYmin = -1
         let blockYmax = 8
+
         let checkBlockXmin = -1
         let checkBlockXmax = 8
         let checkBlockYmin = -1
         let checkBlockYmax = 8
+
         let pinBlockXmin = -1
         let pinBlockXmax = 8
         let pinBlockYmin = -1
         let pinBlockYmax = 8
 
-
-
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
-                if (props.y === cellY || props.x === cellX) {
+                if (props.y === cellY ^ props.x === cellX) {
                     directionsRook.push(cell)
                     if (cell.fig && cell.fig.name !== "Step") {
                         if (cell.fig.name !== 'King') {
-                            chessBlockCellsRook.push(cell)
+                            checkBlockCellsRook.push(cell)
                         }
                         blockCellsRook.push(cell)
                     }
@@ -89,7 +96,7 @@ class Queen extends Component {
                 blockYmax = cell.y + 1
             }
         })
-        chessBlockCellsRook.forEach(cell => {
+        checkBlockCellsRook.forEach(cell => {
             if (checkBlockXmin < cell.x && cell.x < props.x) {
                 checkBlockXmin = cell.x - 1
             }

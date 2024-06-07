@@ -51,7 +51,7 @@ class Rook extends Component {
 
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
-                if (props.y === cellY || props.x === cellX) {
+                if (props.y === cellY ^ props.x === cellX) {
                     directions.push(cell)
                     if (cell.fig && cell.fig.name != 'Step') {
                         if (cell.fig.name !== 'King') {

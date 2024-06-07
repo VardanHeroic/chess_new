@@ -9,20 +9,20 @@ class Timer extends Component {
 	}
 
 	componentDidMount(){
-		// let timer = setInterval(() => {
-		// 	if (this.props.whiteTimer <= 0 || this.props.blackTimer <= 0) {
-		// 		this.props.findStaleMate()
-		// 		clearInterval(timer)
-		// 	}
-		// 	if (this.props.status !== 'promotion') {
-		// 		if (this.props.current ===  'white') {
-		// 			this.props.whiteDecrement()
-		// 		}
-		// 		if (this.props.current === 'black') {
-		// 			this.props.blackDecrement()
-		// 		}
-		// 	}
-		// },1000)
+		let timer = setInterval(() => {
+			if (this.props.whiteTimer <= 0 || this.props.blackTimer <= 0) {
+				this.props.findStaleMate()
+				clearInterval(timer)
+			}
+			if (this.props.status !== 'promotion') {
+				if (this.props.current ===  'white') {
+					this.props.whiteDecrement()
+				}
+				if (this.props.current === 'black') {
+					this.props.blackDecrement()
+				}
+			}
+		},1000)
 	}
 
 	render() {
