@@ -70,10 +70,10 @@ class Queen extends Component {
 
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
-                if (props.y === cellY ^ props.x === cellX) {
+                if (props.y === cellY || props.x === cellX) {
                     directionsRook.push(cell)
                     if (cell.fig && cell.fig.name !== "Step") {
-                        if (cell.fig.name !== 'King') {
+                        if (!(cell.fig.name === "King" && cell.fig.color !== props.color)) {
                             checkBlockCellsRook.push(cell)
                         }
                         blockCellsRook.push(cell)
@@ -154,7 +154,7 @@ class Queen extends Component {
 
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
-                if ((cellX > checkBlockXmin && cellX < checkBlockXmax) && (cellY > checkBlockYmin && cellY < checkBlockYmax) && (directionsRook.includes(cell) || attackedCellsRook.includes(cell))) {
+                if ((cellX > checkBlockXmin && cellX < checkBlockXmax) && (cellY > checkBlockYmin && cellY < checkBlockYmax) && (directionsRook.includes(cell) || attackedCellsRook.includes(cell) ) && !(cellX === props.x && cellY === props.y) ) {
                     checkDirections.push({x: cell.x, y: cell.y})
                 }
                 if ((directionsRook.includes(cell) || attackedCellsRook.includes(cell)) && (!cell.fig || cell.fig.key === props.key)) {
@@ -166,10 +166,10 @@ class Queen extends Component {
                             checkDirectionsNegX.push({x: cell.x, y: cell.y})
                         }
 
-                        if (cellX < pinBlockXmax && cellX >= props.x && props.matrix[pinBlockXmax - 1][props.y].fig?.name === "King") {
+                        if (cellX < pinBlockXmax && cellX >= props.x && props.matrix[pinBlockXmax - 1][props.y].fig?.name === "King"&& props.matrix[pinBlockXmax - 1][props.y].fig?.color !== props.color) {
                             pinRayPosX.push({x: cell.x, y: cell.y})
                         }
-                        if (cellX > pinBlockXmin && cellX <= props.x && props.matrix[pinBlockXmin + 1][props.y].fig?.name === "King") {
+                        if (cellX > pinBlockXmin && cellX <= props.x && props.matrix[pinBlockXmin + 1][props.y].fig?.name === "King"&& props.matrix[pinBlockXmin + 1][props.y].fig?.color !== props.color) {
                             pinRayNegX.push({x: cell.x, y: cell.y})
                         }
                     }
@@ -180,10 +180,10 @@ class Queen extends Component {
                         if (cellY > blockYmin && cellY <= props.y) {
                             checkDirectionsNegY.push({x: cell.x, y: cell.y})
                         }
-                        if (cellY < pinBlockYmax && cellY >= props.y && props.matrix[props.x][pinBlockYmax - 1].fig?.name === "King") {
+                        if (cellY < pinBlockYmax && cellY >= props.y && props.matrix[props.x][pinBlockYmax - 1].fig?.name === "King"&& props.matrix[props.x][pinBlockYmax - 1].fig?.color !== props.color) {
                             pinRayPosY.push({x: cell.x, y: cell.y})
                         }
-                        if (cellY > pinBlockYmin && cellY <= props.y && props.matrix[props.x][pinBlockYmin + 1].fig?.name === "King") {
+                        if (cellY > pinBlockYmin && cellY <= props.y && props.matrix[props.x][pinBlockYmin + 1].fig?.name === "King"&& props.matrix[props.x][pinBlockYmin + 1].fig?.color !== props.color) {
                             pinRayNegY.push({x: cell.x, y: cell.y})
                         }
                     }
@@ -214,7 +214,7 @@ class Queen extends Component {
                         directionsBishop.push(cell)
                         if (cell.fig && cell.fig.name != 'Step') {
                             blockCellsBishop.push(cell)
-                            if (cell.fig.name !== "King") {
+                            if (!(cell.fig.name === "King" && cell.fig.color !== props.color)) {
                                 checkBlockCellsBishop.push(cell)
                             }
                         }
@@ -223,7 +223,7 @@ class Queen extends Component {
                         directionsBishop.push(cell)
                         if (cell.fig && cell.fig.name != 'Step') {
                             blockCellsBishop.push(cell)
-                            if (cell.fig.name !== "King") {
+                            if (!(cell.fig.name === "King" && cell.fig.color !== props.color)) {
                                 checkBlockCellsBishop.push(cell)
                             }
                         }
@@ -232,7 +232,7 @@ class Queen extends Component {
                         directionsBishop.push(cell)
                         if (cell.fig && cell.fig.name != 'Step') {
                             blockCellsBishop.push(cell)
-                            if (cell.fig.name !== "King") {
+                            if (!(cell.fig.name === "King" && cell.fig.color !== props.color)) {
                                 checkBlockCellsBishop.push(cell)
                             }
                         }
@@ -241,7 +241,7 @@ class Queen extends Component {
                         directionsBishop.push(cell)
                         if (cell.fig && cell.fig.name != 'Step') {
                             blockCellsBishop.push(cell)
-                            if (cell.fig.name !== "King") {
+                            if (!(cell.fig.name === "King" && cell.fig.color !== props.color)) {
                                 checkBlockCellsBishop.push(cell)
                             }
                         }

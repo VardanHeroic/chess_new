@@ -54,7 +54,7 @@ class Rook extends Component {
                 if (props.y === cellY ^ props.x === cellX) {
                     directions.push(cell)
                     if (cell.fig && cell.fig.name != 'Step') {
-                        if (cell.fig.name !== 'King') {
+                        if (!(cell.fig.name === "King" && cell.fig.color !== props.color)) {
                             checkBlockCells.push(cell)
                         }
                         blockCells.push(cell)
@@ -134,7 +134,7 @@ class Rook extends Component {
 
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
-                if ((cellX > checkBlockXmin && cellX < checkBlockXmax) && (cellY > checkBlockYmin && cellY < checkBlockYmax) && (directions.includes(cell) || attackedCells.includes(cell))) {
+                if ((cellX > checkBlockXmin && cellX < checkBlockXmax) && (cellY > checkBlockYmin && cellY < checkBlockYmax) && (directions.includes(cell) || attackedCells.includes(cell)) && !(cellX === props.x && cellY === props.y)) {
                     checkDirections.push({ x: cell.x, y: cell.y })
                 }
 
@@ -146,10 +146,10 @@ class Rook extends Component {
                         if (cellX > blockXmin && cellX <= props.x) {
                             checkRayNegX.push({ x: cell.x, y: cell.y })
                         }
-                        if (cellX < pinBlockXmax && cellX >= props.x && props.matrix[pinBlockXmax - 1][props.y].fig?.name === "King") {
+                        if (cellX < pinBlockXmax && cellX >= props.x && props.matrix[pinBlockXmax - 1][props.y].fig?.name === "King"&& props.matrix[pinBlockXmax - 1][props.y].fig?.color !== props.color) {
                             pinRayPosX.push({ x: cell.x, y: cell.y })
                         }
-                        if (cellX > pinBlockXmin && cellX <= props.x && props.matrix[pinBlockXmin + 1][props.y].fig?.name === "King") {
+                        if (cellX > pinBlockXmin && cellX <= props.x && props.matrix[pinBlockXmin + 1][props.y].fig?.name === "King"&& props.matrix[pinBlockXmin + 1][props.y].fig?.color !== props.color) {
                             pinRayNegX.push({ x: cell.x, y: cell.y })
                         }
 
@@ -161,10 +161,10 @@ class Rook extends Component {
                         if (cellY > blockYmin && cellY <= props.y) {
                             checkRayNegY.push({ x: cell.x, y: cell.y })
                         }
-                        if (cellY < pinBlockYmax && cellY >= props.y && props.matrix[props.x][pinBlockYmax - 1].fig?.name === "King") {
+                        if (cellY < pinBlockYmax && cellY >= props.y && props.matrix[props.x][pinBlockYmax - 1].fig?.name === "King" && props.matrix[props.x][pinBlockYmax - 1].fig?.color !== props.color) {
                             pinRayPosY.push({ x: cell.x, y: cell.y })
                         }
-                        if (cellY > pinBlockYmin && cellY <= props.y && props.matrix[props.x][pinBlockYmin + 1].fig?.name === "King") {
+                        if (cellY > pinBlockYmin && cellY <= props.y && props.matrix[props.x][pinBlockYmin + 1].fig?.name === "King"&& props.matrix[props.x][pinBlockYmin + 1].fig?.color !== props.color) {
                             pinRayNegY.push({ x: cell.x, y: cell.y })
                         }
                     }

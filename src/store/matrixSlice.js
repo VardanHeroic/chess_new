@@ -21,6 +21,7 @@ export const matrixSlice = createSlice({
         blackTimer: 600,
         pinScan: false,
         allFreeCells: [],
+        seventyFiveMoveCounter: 0,
     },
     reducers: {
         chooseFigure: (state, action) => {
@@ -90,12 +91,13 @@ export const matrixSlice = createSlice({
             state.pinsBlack = []
             state.pinsWhite = []
             state.allFreeCells = []
+            state.seventyFiveMoveCounter = 0
 
         },
 
 
 
-        killSteps(state, action) {
+        killSteps(state) {
             state.value.forEach(row => {
                 row.forEach(cellProps => {
                     if (cellProps.fig?.name === 'Step') {
@@ -240,13 +242,20 @@ export const matrixSlice = createSlice({
                 new Audio(drawSound).play()
                 return;
             }
+
+            if(state.seventyFiveMoveCounter >= 75){
+                state.status = 'draw by 75 move rule';
+                new Audio(drawSound).play()
+                return;
+            }
+
             if (state.status === 'check') {
-                if (blackFreeArr.length === 0) {
+                if (blackFreeArr.length === 0 && state.current === 'black') {
                     state.status = 'white won by checkmate';
                     new Audio(winSound).play()
                     return;
                 }
-                if (whiteFreeArr.length === 0) {
+                if (whiteFreeArr.length === 0 && state.current === 'white') {
                     state.status = 'black won by checkmate';
                     new Audio(winSound).play()
                     return;
@@ -280,7 +289,7 @@ export const matrixSlice = createSlice({
 
         },
 
-        changeCurrent: (state, action) => {
+        changeCurrent: (state) => {
             if (state.current === 'white') {
                 state.current = 'black';
                 return;
@@ -305,12 +314,15 @@ export const matrixSlice = createSlice({
         setPromotionName(state, action) {
             state.promotionName = action.payload
         },
-        whiteDecrement(state, action) {
+        whiteDecrement(state) {
             state.whiteTimer--
         },
-        blackDecrement(state, action) {
+        blackDecrement(state) {
             state.blackTimer--
         },
+        setSeventyFiveMoveCounter(state,action){
+            state.seventyFiveMoveCounter = action.payload
+        }
 
     }
 

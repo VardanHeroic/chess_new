@@ -17,26 +17,32 @@ class Step extends Component {
 
         if (this.props.initiatorProps.name === "King" && Math.abs(y - this.props.y) === 2) {
             if (this.props.x === 0 && this.props.y === 2) {
-                this.props.changeFig([this.props.x, this.props.y+1, { name:'Rook', color: 'black', isVictim:false , x: this.props.x, y: this.props.y+1, untouched: untouched }])
+                this.props.changeFig([this.props.x, this.props.y + 1, { name: 'Rook', color: 'black', isVictim: false, x: this.props.x, y: this.props.y + 1, untouched: untouched }])
                 this.props.changeFig([0, 0, null])
             }
 
             if (this.props.x === 0 && this.props.y === 6) {
-                this.props.changeFig([this.props.x, this.props.y-1, { name:'Rook', color: 'black', isVictim:false , x: this.props.x, y: this.props.y-1, untouched: untouched }])
+                this.props.changeFig([this.props.x, this.props.y - 1, { name: 'Rook', color: 'black', isVictim: false, x: this.props.x, y: this.props.y - 1, untouched: untouched }])
                 this.props.changeFig([0, 7, null])
             }
 
             if (this.props.x === 7 && this.props.y === 2) {
-                this.props.changeFig([this.props.x, this.props.y+1, { name:'Rook', color: 'white', isVictim:false , x: this.props.x, y: this.props.y+1, untouched: untouched }])
+                this.props.changeFig([this.props.x, this.props.y + 1, { name: 'Rook', color: 'white', isVictim: false, x: this.props.x, y: this.props.y + 1, untouched: untouched }])
                 this.props.changeFig([7, 0, null])
             }
 
             if (this.props.x === 7 && this.props.y === 6) {
-                this.props.changeFig([this.props.x, this.props.y-1, { name:'Rook', color: 'white', isVictim:false , x: this.props.x, y: this.props.y-1, untouched: untouched }])
+                this.props.changeFig([this.props.x, this.props.y - 1, { name: 'Rook', color: 'white', isVictim: false, x: this.props.x, y: this.props.y - 1, untouched: untouched }])
                 this.props.changeFig([7, 7, null])
             }
         }
 
+        if (this.props.initiatorProps.name === 'Pawn' || (this.props.victim && this.props.victim.name !== 'Step')) {
+            this.props.setSeventyFiveMoveCounter(0)
+        }
+        else {
+            this.props.setSeventyFiveMoveCounter(this.props.seventyFiveMoveCounter + 1)
+        }
         this.props.changeFig([this.props.x, this.props.y, { ...rest, x: this.props.x, y: this.props.y, untouched: untouched }])
         this.props.changeFig([x, y, null])
         this.props.killSteps()
@@ -65,11 +71,13 @@ class Step extends Component {
 export default connect(
     (state) => ({
         matrix: state.matrixReducer.value,
+        seventyFiveMoveCounter: state.matrixReducer.seventyFiveMoveCounter
     }),
     (dispatch) => ({
         changeCurrent: () => dispatch(matrixActions.changeCurrent()),
         changeFig: (data) => dispatch(matrixActions.changeFig(data)),
         killSteps: () => dispatch(matrixActions.killSteps()),
         chooseFigure: (fig) => dispatch(matrixActions.chooseFigure(fig)),
+        setSeventyFiveMoveCounter: (number) => dispatch(matrixActions.setSeventyFiveMoveCounter(number))
     })
 )(Step)

@@ -14,12 +14,13 @@ class Pawn extends Component {
     }
 
     componentDidMount() {
+
+        if ((this.props.color === 'white' && this.props.x === 0) || (this.props.color === 'black' && this.props.x === 7)) {
+            this.props.setStatusPromotion('promotion')
+        }
         if (!this.isVictim) {
             let cells = this.findFreeCells(this.props)
             this.props.changeFigProps([this.x, this.y, cells.checkDirections, 'checkDirections'])
-            if ((this.props.color === 'white' && this.props.x === 0) || (this.props.color === 'black' && this.props.x === 7)) {
-                this.props.setStatusPromotion('promotion')
-            }
             this.isVictim = false
         }
     }
