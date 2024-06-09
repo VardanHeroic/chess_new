@@ -22,13 +22,14 @@ export const matrixSlice = createSlice({
         pinScan: false,
         allFreeCells: [],
         seventyFiveMoveCounter: 0,
+        lastMove: null,
     },
     reducers: {
         chooseFigure: (state, action) => {
             state.chosen = action.payload;
         },
 
-        initMatrix: (state, action) => {
+        initMatrix: (state) => {
             let matrix = []
             for (let i = 0; i < 8; i++) {
                 matrix[i] = []
@@ -92,6 +93,7 @@ export const matrixSlice = createSlice({
             state.pinsWhite = []
             state.allFreeCells = []
             state.seventyFiveMoveCounter = 0
+            state.lastMove = null
 
         },
 
@@ -322,7 +324,10 @@ export const matrixSlice = createSlice({
         },
         setSeventyFiveMoveCounter(state,action){
             state.seventyFiveMoveCounter = action.payload
-        }
+        },
+        setLastMove(state,action){
+            state.lastMove = action.payload
+        },
 
     }
 

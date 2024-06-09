@@ -15,7 +15,6 @@ class King extends Component {
     findFreeCells(props) {
         let freeCells = []
         let directions = []
-        let checkDirections = []
         let pseudoDirections = [
             { x: props.x - 1, y: props.y - 1 },
             { x: props.x - 1, y: props.y },
@@ -87,15 +86,8 @@ class King extends Component {
             })
         }
 
-        props.matrix.forEach((row, cellX) => {
-            row.forEach((cell, cellY) => {
-                if (directions.includes(cell) || attackedCells.includes(cell)) {
-                    checkDirections.push({ x: cell.x, y: cell.y })
-                }
-            })
-        })
 
-        return { freeCells: freeCells, checkDirections: checkDirections }
+        return { freeCells: freeCells, checkDirections: directions }
     }
 
     UNSAFE_componentWillReceiveProps(props) {

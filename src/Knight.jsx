@@ -19,7 +19,6 @@ class Knight extends Component {
         let pins = props.color === 'black' ? props.pinsWhite : props.pinsBlack
         let freeCells = []
         let directions = []
-        let checkDirections = []
         let pseudoDirections = [
             { x: this.x - 2, y: this.y - 1 },
             { x: this.x - 1, y: this.y - 2 },
@@ -32,8 +31,8 @@ class Knight extends Component {
         ]
         let attackedCells = []
 
-        props.matrix.forEach((row, cellX) => {
-            row.forEach((cell, cellY) => {
+        props.matrix.forEach((row) => {
+            row.forEach((cell) => {
                 pseudoDirections.forEach(cord => {
                     if (cord.x === cell.x && cord.y === cell.y) {
                         directions.push(cell)
@@ -42,8 +41,8 @@ class Knight extends Component {
             })
         })
 
-        props.matrix.forEach((row, cellX) => {
-            row.forEach((cell, cellY) => {
+        props.matrix.forEach((row) => {
+            row.forEach((cell) => {
                 if ((cell.fig?.color !== props.color) && directions.includes(cell)) {
                     attackedCells.push(cell)
 
@@ -51,8 +50,8 @@ class Knight extends Component {
             })
         })
 
-        props.matrix.forEach((row, cellX) => {
-            row.forEach((cell, cellY) => {
+        props.matrix.forEach((row) => {
+            row.forEach((cell) => {
                 props.checkRay.forEach(checkRayCell => {
                     if (
                         directions.includes(cell) &&
@@ -75,16 +74,7 @@ class Knight extends Component {
             }
         })
 
-
-
-        this.props.matrix.forEach((row, cellX) => {
-            row.forEach((cell, cellY) => {
-                if (directions.includes(cell) || attackedCells.includes(cell)) {
-                    checkDirections.push({ x: cell.x, y: cell.y })
-                }
-            })
-        })
-        return { freeCells: freeCells, checkDirections: checkDirections }
+        return { freeCells: freeCells, checkDirections: directions }
     }
 
     componentDidMount() {

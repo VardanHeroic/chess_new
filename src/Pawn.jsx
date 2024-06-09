@@ -125,11 +125,28 @@ class Pawn extends Component {
             })
         })
 
+        if (props.matrix?.[props.lastMove?.x]?.[props.lastMove?.y].fig.name === 'Pawn') {
+            switch (props.color) {
+                case 'white':
+                    if (props.x === 3 && props.lastMove.x === 3 && (props.lastMove.y === props.y + 1 || props.lastMove.y === props.y - 1)) {
+                        freeCells.push({ x: props.x - 1, y: props.lastMove.y })
+                    }
+                    break;
+
+                case 'black':
+                    if (props.x === 4 && props.lastMove.x === 4 && (props.lastMove.y === props.y + 1 || props.lastMove.y === props.y - 1)) {
+                        freeCells.push({ x: props.x + 1, y: props.lastMove.y })
+                    }
+                    break;
+            }
+        }
         pins.forEach(pin => {
             if (pin.some(pinCell => pinCell.x === props.x && pinCell.y === props.y)) {
                 freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
             }
         })
+
+
         return { freeCells: freeCells, checkDirections: attackDirections }
     }
 
@@ -140,14 +157,13 @@ class Pawn extends Component {
             this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
         }
         if (props.pinScan) {
-            let cells = this.findFreeCells(props)
-            this.props.changeFigProps([this.x, this.y, cells.freeCells, 'freeCells'])
+            this.cells = this.findFreeCells(props)
+            this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
         }
     }
 
     render() {
         let newProps = { ...this.props }
-        this.cells = this.findFreeCells(this.props)
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.isVictim = this.isVictim
@@ -166,7 +182,8 @@ export default connect(
         checkInitator: state.matrixReducer.checkInitator,
         pinsWhite: state.matrixReducer.pinsWhite,
         pinsBlack: state.matrixReducer.pinsBlack,
-        pinScan: state.matrixReducer.pinScan
+        pinScan: state.matrixReducer.pinScan,
+        lastMove: state.matrixReducer.lastMove
     }),
     (dispatch) => ({
         chooseFigure: (fig) => dispatch(matrixActions.chooseFigure(fig)),

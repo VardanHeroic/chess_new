@@ -7,6 +7,7 @@ class Step extends Component {
         super(props)
         this.state = {}
         this.pressed = false
+        this.isEnPassant = false
     }
 
     UNSAFE_componentWillReceiveProps(props) {
@@ -26,7 +27,7 @@ class Step extends Component {
         this.props.chooseFigure(10 * this.props.x + this.props.y)
         let play = async () => {
             let sound = null
-            if (this.props.victim && this.props.victim.name !== 'Step') {
+            if ((this.props.victim && this.props.victim.name !== 'Step') || this.isEnPassant ){
                 sound = await import(`./audio/Capture.WAV`)
             }
             else {
@@ -35,8 +36,11 @@ class Step extends Component {
             new Audio(sound.default).play()
         }
         play()
+
         this.props.changeCurrent()
+        this.props.setLastMove({x: this.props.x , y: this.props.y})
         this.pressed = false
+        this.isEnPassant = false
     }
 
     change() {
@@ -79,6 +83,12 @@ class Step extends Component {
                         this.props.setStatus('promotion')
                         break;
                     }
+
+                    if(this.props.lastMove?.y === this.props.y && this.props.lastMove?.x+1 === this.props.x && !this.props.victim){
+                        this.props.changeFig([this.props.lastMove.x, this.props.lastMove.y, null])
+                        this.isEnPassant = true
+                    }
+
                     this.regularChange(this.props.initiatorProps);
                     break;
                 case 'white':
@@ -86,6 +96,12 @@ class Step extends Component {
                         this.props.setStatus('promotion')
                         break;
                     }
+
+                    if(this.props.lastMove?.y === this.props.y && this.props.lastMove?.x-1 === this.props.x && !this.props.victim){
+                        this.props.changeFig([this.props.lastMove.x, this.props.lastMove.y, null])
+                        this.isEnPassant = true
+                    }
+
                     this.regularChange(this.props.initiatorProps);
                     break;
             }
@@ -108,6 +124,7 @@ export default connect(
         matrix: state.matrixReducer.value,
         seventyFiveMoveCounter: state.matrixReducer.seventyFiveMoveCounter,
         promotionName: state.matrixReducer.promotionName,
+        lastMove: state.matrixReducer.lastMove
     }),
     (dispatch) => ({
         changeCurrent: () => dispatch(matrixActions.changeCurrent()),
@@ -116,6 +133,7 @@ export default connect(
         chooseFigure: (fig) => dispatch(matrixActions.chooseFigure(fig)),
         setSeventyFiveMoveCounter: (number) => dispatch(matrixActions.setSeventyFiveMoveCounter(number)),
         setStatus: (name) => { dispatch(matrixActions.setStatus(name)) },
-        setPromotionName: (name) => { dispatch(matrixActions.setPromotionName(name)) }
+        setPromotionName: (name) => { dispatch(matrixActions.setPromotionName(name)) },
+        setLastMove: (cords) => dispatch(matrixActions.setLastMove(cords))
     })
 )(Step)
