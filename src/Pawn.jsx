@@ -14,10 +14,6 @@ class Pawn extends Component {
     }
 
     componentDidMount() {
-
-        if ((this.props.color === 'white' && this.props.x === 0) || (this.props.color === 'black' && this.props.x === 7)) {
-            this.props.setStatusPromotion('promotion')
-        }
         if (!this.isVictim) {
             let cells = this.findFreeCells(this.props)
             this.props.changeFigProps([this.x, this.y, cells.checkDirections, 'checkDirections'])
@@ -93,8 +89,8 @@ class Pawn extends Component {
             })
         })
 
-        this.props.matrix.map((row, cellX) => {
-            row.map((cell, cellY) => {
+        this.props.matrix.map(row => {
+            row.map(cell => {
                 if (cell.fig?.name !== 'Step') {
                     if (!(cell.fig?.color === this.props.color) && attackDirections.some(attackDirectionCell => attackDirectionCell.x === cell.x && attackDirectionCell.y === cell.y)) {
                         attackedCells.push(cell)
@@ -147,20 +143,6 @@ class Pawn extends Component {
             let cells = this.findFreeCells(props)
             this.props.changeFigProps([this.x, this.y, cells.freeCells, 'freeCells'])
         }
-        if (this.props.promotionName !== props.promotionName) {
-            if (((this.props.color === 'white' && this.props.x === 0) || (this.props.color === 'black' && this.props.x === 7)) && this.props.promotionName !== props.promotionName) {
-                this.props.changeFigProps([this.x, this.y, props.promotionName, 'name'])
-                setTimeout(() => {
-                    this.props.setPromotionName('Pawn')
-                    this.props.calculateCheckDirections()
-                    return
-                }, 500)
-
-            }
-            let cells = this.findFreeCells(props)
-            this.props.changeFigProps([this.x, this.y, cells.freeCells, 'freeCells'])
-
-        }
     }
 
     render() {
@@ -181,20 +163,15 @@ export default connect(
         current: state.matrixReducer.current,
         checkRay: state.matrixReducer.checkRay,
         status: state.matrixReducer.status,
-        promotionName: state.matrixReducer.promotionName,
         checkInitator: state.matrixReducer.checkInitator,
         pinsWhite: state.matrixReducer.pinsWhite,
         pinsBlack: state.matrixReducer.pinsBlack,
         pinScan: state.matrixReducer.pinScan
     }),
     (dispatch) => ({
-        findStaleMate: () => dispatch(matrixActions.findStaleMate()),
-        calculateCheckDirections: () => dispatch(matrixActions.calculateCheckDirections()),
         chooseFigure: (fig) => dispatch(matrixActions.chooseFigure(fig)),
         changeFig: (data) => dispatch(matrixActions.changeFig(data)),
         killSteps: () => dispatch(matrixActions.killSteps()),
         changeFigProps: (data) => dispatch(matrixActions.changeFigProps(data)),
-        setStatusPromotion: (name) => { dispatch(matrixActions.setStatus(name)) },
-        setPromotionName: (name) => { dispatch(matrixActions.setPromotionName(name)) }
     })
 )(Pawn)

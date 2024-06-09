@@ -33,10 +33,20 @@ class Queen extends Component {
         let checkBlockBL = { x: 8, y: -1 }
         let checkBlockBR = { x: 8, y: 8 }
 
+        let pinBlockTL = { x: -1, y: -1 }
+        let pinBlockTR = { x: -1, y: 8 }
+        let pinBlockBL = { x: 8, y: -1 }
+        let pinBlockBR = { x: 8, y: 8 }
+
         let checkRayTL = []
         let checkRayTR = []
         let checkRayBL = []
         let checkRayBR = []
+
+        let pinRayTL = []
+        let pinRayTR = []
+        let pinRayBL = []
+        let pinRayBR = []
 
         let attackedCellsRook = []
         let directionsRook = []
@@ -154,37 +164,37 @@ class Queen extends Component {
 
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
-                if ((cellX > checkBlockXmin && cellX < checkBlockXmax) && (cellY > checkBlockYmin && cellY < checkBlockYmax) && (directionsRook.includes(cell) || attackedCellsRook.includes(cell) ) && !(cellX === props.x && cellY === props.y) ) {
-                    checkDirections.push({x: cell.x, y: cell.y})
+                if ((cellX > checkBlockXmin && cellX < checkBlockXmax) && (cellY > checkBlockYmin && cellY < checkBlockYmax) && (directionsRook.includes(cell) || attackedCellsRook.includes(cell)) && !(cellX === props.x && cellY === props.y)) {
+                    checkDirections.push({ x: cell.x, y: cell.y })
                 }
                 if ((directionsRook.includes(cell) || attackedCellsRook.includes(cell)) && (!cell.fig || cell.fig.key === props.key)) {
                     if (cellY === props.y) {
                         if (cellX < blockXmax && cellX >= props.x) {
-                            checkDirectionsPosX.push({x: cell.x, y: cell.y})
+                            checkDirectionsPosX.push({ x: cell.x, y: cell.y })
                         }
                         if (cellX > blockXmin && cellX <= props.x) {
-                            checkDirectionsNegX.push({x: cell.x, y: cell.y})
+                            checkDirectionsNegX.push({ x: cell.x, y: cell.y })
                         }
 
-                        if (cellX < pinBlockXmax && cellX >= props.x && props.matrix[pinBlockXmax - 1][props.y].fig?.name === "King"&& props.matrix[pinBlockXmax - 1][props.y].fig?.color !== props.color) {
-                            pinRayPosX.push({x: cell.x, y: cell.y})
+                        if (cellX < pinBlockXmax && cellX >= props.x && props.matrix[pinBlockXmax - 1][props.y].fig?.name === "King" && props.matrix[pinBlockXmax - 1][props.y].fig?.color !== props.color) {
+                            pinRayPosX.push({ x: cell.x, y: cell.y })
                         }
-                        if (cellX > pinBlockXmin && cellX <= props.x && props.matrix[pinBlockXmin + 1][props.y].fig?.name === "King"&& props.matrix[pinBlockXmin + 1][props.y].fig?.color !== props.color) {
-                            pinRayNegX.push({x: cell.x, y: cell.y})
+                        if (cellX > pinBlockXmin && cellX <= props.x && props.matrix[pinBlockXmin + 1][props.y].fig?.name === "King" && props.matrix[pinBlockXmin + 1][props.y].fig?.color !== props.color) {
+                            pinRayNegX.push({ x: cell.x, y: cell.y })
                         }
                     }
                     if (cellX === props.x) {
                         if (cellY < blockYmax && cellY >= props.y) {
-                            checkDirectionsPosY.push({x: cell.x, y: cell.y})
+                            checkDirectionsPosY.push({ x: cell.x, y: cell.y })
                         }
                         if (cellY > blockYmin && cellY <= props.y) {
-                            checkDirectionsNegY.push({x: cell.x, y: cell.y})
+                            checkDirectionsNegY.push({ x: cell.x, y: cell.y })
                         }
-                        if (cellY < pinBlockYmax && cellY >= props.y && props.matrix[props.x][pinBlockYmax - 1].fig?.name === "King"&& props.matrix[props.x][pinBlockYmax - 1].fig?.color !== props.color) {
-                            pinRayPosY.push({x: cell.x, y: cell.y})
+                        if (cellY < pinBlockYmax && cellY >= props.y && props.matrix[props.x][pinBlockYmax - 1].fig?.name === "King" && props.matrix[props.x][pinBlockYmax - 1].fig?.color !== props.color) {
+                            pinRayPosY.push({ x: cell.x, y: cell.y })
                         }
-                        if (cellY > pinBlockYmin && cellY <= props.y && props.matrix[props.x][pinBlockYmin + 1].fig?.name === "King"&& props.matrix[props.x][pinBlockYmin + 1].fig?.color !== props.color) {
-                            pinRayNegY.push({x: cell.x, y: cell.y})
+                        if (cellY > pinBlockYmin && cellY <= props.y && props.matrix[props.x][pinBlockYmin + 1].fig?.name === "King" && props.matrix[props.x][pinBlockYmin + 1].fig?.color !== props.color) {
+                            pinRayNegY.push({ x: cell.x, y: cell.y })
                         }
                     }
                 }
@@ -194,8 +204,8 @@ class Queen extends Component {
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
                 props.checkRay.forEach(checkRayCell => {
-                    if ((cellX > blockXmin && cellX < blockXmax) && (cellY > blockYmin && cellY < blockYmax) && directionsRook.includes(cell) && (!cell.fig || attackedCellsRook.includes(cell)) && (props.status !== 'check' || checkRayCell.key === cell.x*10+cell.y || cell.x*10+cell.y === props.checkInitator.key)) {
-                        freeCells.push({x: cell.x, y: cell.y})
+                    if ((cellX > blockXmin && cellX < blockXmax) && (cellY > blockYmin && cellY < blockYmax) && directionsRook.includes(cell) && (!cell.fig || attackedCellsRook.includes(cell)) && (props.status !== 'check' || checkRayCell.key === cell.x * 10 + cell.y || cell.x * 10 + cell.y === props.checkInitator.key)) {
+                        freeCells.push({ x: cell.x, y: cell.y })
                     }
                 })
             })
@@ -265,6 +275,40 @@ class Queen extends Component {
                         blockBL.y = cell.y
                     }
                 })
+
+
+                blockCellsBishop.map(cell => {
+                    if ((pinBlockTL.x < cell.x && cell.x < props.x) && (pinBlockTL.y < cell.y && cell.y < props.y) && (cell.x !== blockTL.x) && (cell.y !== blockTL.y)) {
+                        pinBlockTL.x = cell.x
+                        pinBlockTL.y = cell.y
+                    }
+                    if ((pinBlockBR.x > cell.x && cell.x > props.x) && (pinBlockBR.y > cell.y && cell.y > props.y) && (cell.x !== blockBR.x) && (cell.y !== blockBR.y)) {
+                        pinBlockBR.x = cell.x
+                        pinBlockBR.y = cell.y
+                    }
+                    if ((pinBlockTR.x < cell.x && cell.x < props.x) && (pinBlockTR.y > cell.y && cell.y > props.y) && (cell.x !== blockTR.x) && (cell.y !== blockTR.y)) {
+                        pinBlockTR.x = cell.x
+                        pinBlockTR.y = cell.y
+                    }
+                    if ((pinBlockBL.x > cell.x && cell.x > props.x) && (pinBlockBL.y < cell.y && cell.y < props.y) && (cell.x !== blockBL.x) && (cell.y !== blockBL.y)) {
+                        pinBlockBL.x = cell.x
+                        pinBlockBL.y = cell.y
+                    }
+                })
+
+                if (props.matrix[blockTL.x]?.[blockTL.y]?.fig?.color === props.color) {
+                    pinBlockTL = blockTL
+                }
+                if (props.matrix[blockBR.x]?.[blockBR.y]?.fig?.color === props.color) {
+                    pinBlockBR = blockBR
+                }
+                if (props.matrix[blockBL.x]?.[blockBL.y]?.fig?.color === props.color) {
+                    pinBlockBL = blockBL
+                }
+                if (props.matrix[blockTR.x]?.[blockTR.y]?.fig?.color === props.color) {
+                    pinBlockTR = blockTR
+                }
+
                 checkBlockCellsBishop.map(cell => {
                     if ((checkBlockTL.x < cell.x && cell.x < props.x) && (checkBlockTL.y < cell.y && cell.y < props.y)) {
                         checkBlockTL.x = cell.x
@@ -310,18 +354,18 @@ class Queen extends Component {
         props.matrix.map((row, cellX) => {
             row.map((cell, cellY) => {
                 props.checkRay.forEach(checkRayCell => {
-                    if (directionsBishop.includes(cell) && (!cell.fig || attackedCellsBishop.includes(cell)) && (props.status !== 'check' || checkRayCell.x*10+checkRayCell.y === cell.x*10+cell.y || cell.x*10+cell.y === props.checkInitator.x*10+props.checkInitator.y)) {
+                    if (directionsBishop.includes(cell) && (!cell.fig || attackedCellsBishop.includes(cell)) && (props.status !== 'check' || checkRayCell.x * 10 + checkRayCell.y === cell.x * 10 + cell.y || cell.x * 10 + cell.y === props.checkInitator.x * 10 + props.checkInitator.y)) {
                         if ((cellX < props.x && cellY < props.y) && (cellX >= blockTL.x && cellY >= blockTL.y)) {
-                            freeCells.push({x: cell.x, y: cell.y})
+                            freeCells.push({ x: cell.x, y: cell.y })
                         }
                         if ((cellX > props.x && cellY > props.y) && (cellX <= blockBR.x && cellY <= blockBR.y)) {
-                            freeCells.push({x: cell.x, y: cell.y})
+                            freeCells.push({ x: cell.x, y: cell.y })
                         }
                         if ((cellX < props.x && cellY > props.y) && (cellX >= blockTR.x && cellY <= blockTR.y)) {
-                            freeCells.push({x: cell.x, y: cell.y})
+                            freeCells.push({ x: cell.x, y: cell.y })
                         }
                         if ((cellX > props.x && cellY < props.y) && (cellX <= blockBL.x && cellY >= blockBL.y)) {
-                            freeCells.push({x: cell.x, y: cell.y})
+                            freeCells.push({ x: cell.x, y: cell.y })
                         }
                     }
                 })
@@ -332,30 +376,55 @@ class Queen extends Component {
             row.map((cell, cellY) => {
                 if (directionsBishop.includes(cell) || attackedCellsBishop.includes(cell)) {
                     if ((cellX < props.x && cellY < props.y) && (cellX >= checkBlockTL.x && cellY >= checkBlockTL.y)) {
-                        checkDirections.push({x: cell.x, y: cell.y})
+                        checkDirections.push({ x: cell.x, y: cell.y })
                     }
                     if ((cellX > props.x && cellY > props.y) && (cellX <= checkBlockBR.x && cellY <= checkBlockBR.y)) {
-                        checkDirections.push({x: cell.x, y: cell.y})
+                        checkDirections.push({ x: cell.x, y: cell.y })
                     }
                     if ((cellX < props.x && cellY > props.y) && (cellX >= checkBlockTR.x && cellY <= checkBlockTR.y)) {
-                        checkDirections.push({x: cell.x, y: cell.y})
+                        checkDirections.push({ x: cell.x, y: cell.y })
                     }
                     if ((cellX > props.x && cellY < props.y) && (cellX <= checkBlockBL.x && cellY >= checkBlockBL.y)) {
-                        checkDirections.push({x: cell.x, y: cell.y})
+                        checkDirections.push({ x: cell.x, y: cell.y })
                     }
                 }
                 if ((directionsBishop.includes(cell) || attackedCellsBishop.includes(cell)) && (!cell.fig || cell.fig.key === props.key)) {
                     if ((cellX < props.x && cellY < props.y) && (cellX >= blockTL.x && cellY >= blockTL.y)) {
-                        checkRayTL.push({x: cell.x, y: cell.y})
+                        checkRayTL.push({ x: cell.x, y: cell.y })
                     }
                     if ((cellX > props.x && cellY > props.y) && (cellX <= blockBR.x && cellY <= blockBR.y)) {
-                        checkRayBR.push({x: cell.x, y: cell.y})
+                        checkRayBR.push({ x: cell.x, y: cell.y })
                     }
                     if ((cellX < props.x && cellY > props.y) && (cellX >= blockTR.x && cellY <= blockTR.y)) {
-                        checkRayTR.push({x: cell.x, y: cell.y})
+                        checkRayTR.push({ x: cell.x, y: cell.y })
                     }
                     if ((cellX > props.x && cellY < props.y) && (cellX <= blockBL.x && cellY >= blockBL.y)) {
-                        checkRayBL.push({x: cell.x, y: cell.y})
+                        checkRayBL.push({ x: cell.x, y: cell.y })
+                    }
+
+                    if ((cellX < props.x && cellY < props.y) && (cellX >= pinBlockTL.x && cellY >= pinBlockTL.y) && props.matrix[pinBlockTL.x]?.[pinBlockTL.y]?.fig?.name === "King") {
+                        if (!pinRayTL.some(pinRayCell => pinRayCell.x === props.x && pinRayCell.y === props.y)) {
+                            pinRayTL.push({ x: props.x, y: props.y })
+                        }
+                        pinRayTL.push({ x: cell.x, y: cell.y })
+                    }
+                    if ((cellX > props.x && cellY > props.y) && (cellX <= pinBlockBR.x && cellY <= pinBlockBR.y) && props.matrix[pinBlockBR.x]?.[pinBlockBR.y]?.fig?.name === "King") {
+                        if (!pinRayBR.some(pinRayCell => pinRayCell.x === props.x && pinRayCell.y === props.y)) {
+                            pinRayBR.push({ x: props.x, y: props.y })
+                        }
+                        pinRayBR.push({ x: cell.x, y: cell.y })
+                    }
+                    if ((cellX < props.x && cellY > props.y) && (cellX >= pinBlockTR.x && cellY <= pinBlockTR.y) && props.matrix[pinBlockTR.x]?.[pinBlockTR.y]?.fig?.name === "King") {
+                        if (!pinRayTR.some(pinRayCell => pinRayCell.x === props.x && pinRayCell.y === props.y)) {
+                            pinRayTR.push({ x: props.x, y: props.y })
+                        }
+                        pinRayTR.push({ x: cell.x, y: cell.y })
+                    }
+                    if ((cellX > props.x && cellY < props.y) && (cellX <= pinBlockBL.x && cellY >= pinBlockBL.y) && props.matrix[pinBlockBL.x]?.[pinBlockBL.y]?.fig?.name === "King") {
+                        if (!pinRayBL.some(pinRayCell => pinRayCell.x === props.x && pinRayCell.y === props.y)) {
+                            pinRayBL.push({ x: props.x, y: props.y })
+                        }
+                        pinRayBL.push({ x: cell.x, y: cell.y })
                     }
                 }
             })
@@ -384,7 +453,11 @@ class Queen extends Component {
                 pinRayNegX,
                 pinRayNegY,
                 pinRayPosX,
-                pinRayPosY
+                pinRayPosY,
+                pinRayBL,
+                pinRayBR,
+                pinRayTL,
+                pinRayTR,
             ]
         }
     }
@@ -392,7 +465,7 @@ class Queen extends Component {
 
 
     UNSAFE_componentWillReceiveProps(props) {
-        if (this.props.current !== props.current ) {
+        if (this.props.current !== props.current) {
             this.cells = this.findFreeCells(props)
             this.props.changeFigProps([this.x, this.y, this.cells.checkRays, 'checkRays'])
             this.props.changeFigProps([this.x, this.y, this.cells.pinRays, 'pinRays'])

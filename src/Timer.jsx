@@ -14,7 +14,7 @@ class Timer extends Component {
 				this.props.findStaleMate()
 				clearInterval(timer)
 			}
-			if (this.props.status !== 'promotion') {
+			if (this.props.status === 'none' || this.props.status === 'check') {
 				if (this.props.current ===  'white') {
 					this.props.whiteDecrement()
 				}

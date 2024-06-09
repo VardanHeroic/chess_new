@@ -6,14 +6,42 @@ class Step extends Component {
     constructor(props) {
         super(props)
         this.state = {}
+        this.pressed = false
+    }
+
+    UNSAFE_componentWillReceiveProps(props) {
+        if (props.promotionName !== 'Pawn' && this.pressed) {
+            let newInitiatorProps = JSON.parse(JSON.stringify(this.props.initiatorProps))
+            newInitiatorProps.name = props.promotionName
+            this.regularChange(newInitiatorProps)
+        }
+    }
+
+    regularChange(initiatorProps) {
+        let { x, y, isStart, untouched, ...rest } = initiatorProps
+
+        this.props.changeFig([this.props.x, this.props.y, { ...rest, x: this.props.x, y: this.props.y,}])
+        this.props.changeFig([x, y, null])
+        this.props.killSteps()
+        this.props.chooseFigure(10 * this.props.x + this.props.y)
+        let play = async () => {
+            let sound = null
+            if (this.props.victim && this.props.victim.name !== 'Step') {
+                sound = await import(`./audio/Capture.WAV`)
+            }
+            else {
+                sound = await import(`./audio/Move_Piece (${Math.floor(Math.random() * 5 + 1)}).WAV`)
+            }
+            new Audio(sound.default).play()
+        }
+        play()
+        this.props.changeCurrent()
+        this.pressed = false
     }
 
     change() {
-        let { x, y, isStart, untouched, ...rest } = this.props.initiatorProps
-
-        if (untouched) {
-            untouched = false
-        }
+        this.pressed = true
+        let { y, untouched } = this.props.initiatorProps
 
         if (this.props.initiatorProps.name === "King" && Math.abs(y - this.props.y) === 2) {
             if (this.props.x === 0 && this.props.y === 2) {
@@ -43,22 +71,29 @@ class Step extends Component {
         else {
             this.props.setSeventyFiveMoveCounter(this.props.seventyFiveMoveCounter + 1)
         }
-        this.props.changeFig([this.props.x, this.props.y, { ...rest, x: this.props.x, y: this.props.y, untouched: untouched }])
-        this.props.changeFig([x, y, null])
-        this.props.killSteps()
-        this.props.chooseFigure(10 * this.props.x + this.props.y)
-        let play = async () => {
-            let sound = null
-            if (this.props.victim && this.props.victim.name !== 'Step') {
-                sound = await import(`./audio/Capture.WAV`)
+
+        if (this.props.initiatorProps.name === 'Pawn') {
+            switch (this.props.initiatorProps.color) {
+                case 'black':
+                    if (this.props.x === 7) {
+                        this.props.setStatus('promotion')
+                        break;
+                    }
+                    this.regularChange(this.props.initiatorProps);
+                    break;
+                case 'white':
+                    if (this.props.x === 0) {
+                        this.props.setStatus('promotion')
+                        break;
+                    }
+                    this.regularChange(this.props.initiatorProps);
+                    break;
             }
-            else {
-                sound = await import(`./audio/Move_Piece (${Math.floor(Math.random() * 5 + 1)}).WAV`)
-            }
-            new Audio(sound.default).play()
         }
-        play()
-        this.props.changeCurrent()
+        else {
+            this.regularChange(this.props.initiatorProps)
+        }
+
     }
 
     render() {
@@ -71,13 +106,16 @@ class Step extends Component {
 export default connect(
     (state) => ({
         matrix: state.matrixReducer.value,
-        seventyFiveMoveCounter: state.matrixReducer.seventyFiveMoveCounter
+        seventyFiveMoveCounter: state.matrixReducer.seventyFiveMoveCounter,
+        promotionName: state.matrixReducer.promotionName,
     }),
     (dispatch) => ({
         changeCurrent: () => dispatch(matrixActions.changeCurrent()),
         changeFig: (data) => dispatch(matrixActions.changeFig(data)),
         killSteps: () => dispatch(matrixActions.killSteps()),
         chooseFigure: (fig) => dispatch(matrixActions.chooseFigure(fig)),
-        setSeventyFiveMoveCounter: (number) => dispatch(matrixActions.setSeventyFiveMoveCounter(number))
+        setSeventyFiveMoveCounter: (number) => dispatch(matrixActions.setSeventyFiveMoveCounter(number)),
+        setStatus: (name) => { dispatch(matrixActions.setStatus(name)) },
+        setPromotionName: (name) => { dispatch(matrixActions.setPromotionName(name)) }
     })
 )(Step)
