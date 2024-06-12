@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkchess=self.webpackChunkchess||[]).push([[899],{899:function(e,s,c){e.exports=c.p+"static/media/Capture.c6aee915f3be93f86142.WAV"}}]);
