@@ -28,7 +28,7 @@ class Timer extends Component {
 	render() {
 		return (
 			<div className="timer">
-				<div className="blackTimer">{ Math.floor(this.props.blackTimer/60) + ':' + (  ( Math.floor(this.props.blackTimer/60) * 60 - this.props.blackTimer )*-1 / 10 >= 1 ? ( Math.floor(this.props.blackTimer/60) * 60 - this.props.blackTimer )*-1   : '0' +( Math.floor(this.props.blackTimer/60) * 60 - this.props.blackTimer )*-1    )  }</div>
+				<div className="blackTimer">{this.props.blackTimer >= 0 ? Math.floor(this.props.blackTimer/60) + ':' + (  ( Math.floor(this.props.blackTimer/60) * 60 - this.props.blackTimer )*-1 / 10 >= 1 ? ( Math.floor(this.props.blackTimer/60) * 60 - this.props.blackTimer )*-1   : '0' +( Math.floor(this.props.blackTimer/60) * 60 - this.props.blackTimer )*-1    ) : '0:00'  }</div>
 				<div className="whiteTimer">{ Math.floor(this.props.whiteTimer/60) + ':' + (  ( Math.floor(this.props.whiteTimer/60) * 60 - this.props.whiteTimer )*-1 / 10 >= 1 ? ( Math.floor(this.props.whiteTimer/60) * 60 - this.props.whiteTimer )*-1   : '0' +( Math.floor(this.props.whiteTimer/60) * 60 - this.props.whiteTimer )*-1    )  }</div>
 
 			</div>
