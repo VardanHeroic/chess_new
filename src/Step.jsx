@@ -113,7 +113,7 @@ class Step extends Component {
 
     render() {
         return (
-            <i className='step' onClick={() => this.change()} role={"button"}>⬤</i>
+            <div className='step' onClick={() => this.change()} role={"button"}></div>
         )
     }
 }

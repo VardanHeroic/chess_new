@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @font-face {
 	font-family: 'Conv_Chess Regular';
@@ -13,6 +14,7 @@ i{
 }
 
 body{
+    background: #e5e5e5;
 	margin: 0;
 	font-family: 'Poppins', sans-serif;
 }
@@ -20,12 +22,15 @@ body{
 .wcell{
     width: 50px;
     height: 50px;
-    background: #D1B79A;
+    background: #E8EDF9;
     font-size: 50px;
     text-align: center;
     line-height: 50px;
     user-select: none;
     -moz-user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 
 }
@@ -33,28 +38,35 @@ body{
 .bcell{
     width: 50px;
     height: 50px;
-    background: #642D1C;
+    background: #B7C0D8;
     font-size: 50px;
     text-align: center;
     line-height: 50px;
     user-select: none;
     -moz-user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
 
 .step{
-	color: rgb(0, 0, 0,.5);
-	font-size: 0.6em;
-	position: relative;
-	bottom: 7px;
+    width: 40%;
+    height: 40%;
+    background: #7B61FF;
+    opacity: 0.5;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .black{
-    color: #000;
+    color: #34364C;
+    -webkit-text-stroke:1.7px #F4F7FA ;
 }
 
 .white{
-    color: #fff;
+    color: #F4F7FA;
+    -webkit-text-stroke:1.7px #34364C ;
 }
 
 .bcell i , .wcell i{
@@ -70,6 +82,8 @@ body{
     display: block;
     font-family: 'Conv_Chess Regular';
 	float: left;
+    border: 7px #F4F7FA solid;
+    border-radius: 8px
 }
 
 
@@ -93,7 +107,7 @@ body{
 	top: 0;
 	bottom: 0;
 	margin: auto;
-	background: #fcfcfc;
+	background: #F4F7FA;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-rows: repeat(2, 1fr);
@@ -105,17 +119,17 @@ body{
 
 .modal-btn{
 	font-family: 'Conv_Chess Regular';
-	color: #181818;
+	color: #7B61FF;
 	font-size: 20vh;
 	border: none;
 	border-radius: 15px;
-	background: #fcfcfc;
+	background: #F4F7FA;
 	transition: 0.5s;
 }
 
 .modal-btn:hover{
-	background-color: #181818;
-	color:#fcfcfc;
+	background-color: #7B61FF;
+	color:#F4F7FA;
 }
 
 .reverse{
@@ -144,11 +158,10 @@ body{
 	margin: 0 auto;
 	margin-top: 20px;
 	border: none;
-	background: #181818;
-	color: #fcfcfc;
+	background: #7B61FF;
+	color: #F4F7FA;
 	height: 40px;
 	width: 80px;
-	border: 2px black solid;
 	border-radius: 10px;
 	cursor: pointer;
 	font-family: 'Poppins', sans-serif;
@@ -157,16 +170,18 @@ body{
 
 }
 .reset:hover{
-	background: #fcfcfc;
-	color: #181818;
+	background: #F4F7FA;
+	color: #34364C;
 }
 
 .game{
 	margin-left: calc(50vw - 200px );
-	padding-top: 20px;
+	padding-top: 10vh;
 }
 
 .timer{
+    font-family: "Ubuntu Mono", monospace;
+    font-style: normal;
 	padding-left: 20px;
 	display: flex;
 	flex-wrap: wrap;
@@ -175,26 +190,44 @@ body{
 	font-size: 2em;
 	font-weight: bold;
 	height: 400px;
-
 }
 
 
 .whiteTimer{
-	color: #181818;
-	background: #fcfcfc;
-	border: 2px solid #181818;
+	color: #34364C;
+	background: #F4F7FA;
 	width: 100px;
 	text-align: center;
 	display: block;
 	border-radius: 10px;
+    padding: 6px 0;
 }
 
 .blackTimer{
-	color: #fcfcfc;
-	background: #181818;
-	border: 2px solid #fcfcfc;
+	color: #F4F7FA;
+	background: #34364C;
 	width: 100px;
-	text-align: center;
+text-align: center;
 	display: block;
 	border-radius: 10px;
+    padding: 6px 0;
+}
+
+@media all and (max-width: 720px){
+    .game{
+        margin: 0;
+    }
+
+    .board{
+        float: none;
+        margin: 0 auto;
+    }
+    .timer{
+        flex-wrap: nowrap;
+        width: 100%;
+        padding-top: 40px;
+        padding-left: 0;
+        height: fit-content;
+        justify-content: space-around;
+    }
 }
