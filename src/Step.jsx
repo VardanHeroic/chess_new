@@ -19,17 +19,17 @@ class Step extends Component {
     }
 
     regularChange(initiatorProps) {
-        let { x, y, isStart, untouched,isVictim, ...rest } = initiatorProps
-        this.props.changeFig([this.props.x, this.props.y, { ...rest, x: this.props.x, y: this.props.y,}])
+        let { x, y, isStart, untouched, isVictim, ...rest } = initiatorProps
+        this.props.changeFig([this.props.x, this.props.y, { ...rest, x: this.props.x, y: this.props.y, }])
         this.props.changeFig([x, y, null])
         this.props.killSteps()
         this.props.chooseFigure(10 * this.props.x + this.props.y)
         let play = async () => {
             let sound = null
-            if ((this.props.victim && this.props.victim.name !== 'Step') || this.isEnPassant ){
+            if ((this.props.victim && this.props.victim.name !== 'Step') || this.isEnPassant) {
                 sound = await import(`./audio/Capture.ogg`)
             }
-            else if(initiatorProps.name === "King" && Math.abs(y - this.props.y) === 2){
+            else if (initiatorProps.name === "King" && Math.abs(y - this.props.y) === 2) {
                 sound = await import('./audio/Castles.ogg')
             }
             else {
@@ -40,7 +40,7 @@ class Step extends Component {
         play()
 
         this.props.changeCurrent()
-        this.props.setLastMove({x: this.props.x , y: this.props.y})
+        this.props.setLastMove({ x: this.props.x, y: this.props.y })
         this.pressed = false
         this.isEnPassant = false
     }
@@ -86,7 +86,7 @@ class Step extends Component {
                         break;
                     }
 
-                    if(this.props.lastMove?.y === this.props.y && this.props.lastMove?.x+1 === this.props.x && !this.props.victim){
+                    if (this.props.lastMove?.y === this.props.y && this.props.lastMove?.x + 1 === this.props.x && !this.props.victim) {
                         this.props.changeFig([this.props.lastMove.x, this.props.lastMove.y, null])
                         this.isEnPassant = true
                     }
@@ -99,7 +99,7 @@ class Step extends Component {
                         break;
                     }
 
-                    if(this.props.lastMove?.y === this.props.y && this.props.lastMove?.x-1 === this.props.x && !this.props.victim){
+                    if (this.props.lastMove?.y === this.props.y && this.props.lastMove?.x - 1 === this.props.x && !this.props.victim) {
                         this.props.changeFig([this.props.lastMove.x, this.props.lastMove.y, null])
                         this.isEnPassant = true
                     }
@@ -115,8 +115,33 @@ class Step extends Component {
     }
 
     render() {
+        let fig;
+        switch (this.props.victim?.name) {
+            case 'Pawn':
+                fig = 'o'
+                break;
+            case 'Knight':
+                fig = 'j'
+                break;
+            case 'Queen':
+                fig = 'w'
+                break;
+            case 'Bishop':
+                fig = 'n'
+                break;
+            case 'Rook':
+                fig = 't'
+                break;
+            default:
+                break;
+        }
+
         return (
-            <div className='step' onClick={() => this.change()} role={"button"}></div>
+            <>
+                <div className={!this.props.victim ? 'step' : 'capture-step'} onClick={() => this.change()} role={"button"}></div>
+                <i className={this.props.victim?.color}>{fig}</i>
+
+            </>
         )
     }
 }

@@ -10,6 +10,8 @@
 
 i{
     font-style: normal;
+    display: inline;
+    vertical-align:top ;
 }
 
 body{
@@ -22,15 +24,14 @@ body{
     width: 50px;
     height: 50px;
     background: #E8EDF9;
-    font-size: 50px;
+    font-size: 46px;
     text-align: center;
-    line-height: 50px;
     user-select: none;
     -moz-user-select: none;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    position: relative;
 
 }
 
@@ -38,24 +39,34 @@ body{
     width: 50px;
     height: 50px;
     background: #B7C0D8;
-    font-size: 50px;
+    font-size: 46px;
     text-align: center;
-    line-height: 50px;
     user-select: none;
     -moz-user-select: none;
     display: flex;
     justify-content: center;
+    position: relative;
     align-items: center;
 
 }
 
-.step{
-    width: 40%;
-    height: 40%;
+.step, .capture-step{
+    position: absolute;
+    z-index: 10;
     background: #7B61FF;
     opacity: 0.5;
     border-radius: 50%;
     cursor: pointer;
+}
+
+.step{
+    width: 20px;
+    height: 20px;
+}
+
+.capture-step{
+    width: 47px;
+    height: 47px;
 }
 
 .black{
