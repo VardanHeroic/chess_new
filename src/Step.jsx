@@ -27,10 +27,13 @@ class Step extends Component {
         let play = async () => {
             let sound = null
             if ((this.props.victim && this.props.victim.name !== 'Step') || this.isEnPassant ){
-                sound = await import(`./audio/Capture.WAV`)
+                sound = await import(`./audio/Capture.ogg`)
+            }
+            else if(initiatorProps.name === "King" && Math.abs(y - this.props.y) === 2){
+                sound = await import('./audio/Castles.ogg')
             }
             else {
-                sound = await import(`./audio/Move_Piece (${Math.floor(Math.random() * 5 + 1)}).WAV`)
+                sound = await import(`./audio/Move.ogg`)
             }
             new Audio(sound.default).play()
         }

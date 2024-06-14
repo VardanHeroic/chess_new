@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import winSound from "../audio/Checkmate_Win.WAV";
-import checkSound from "../audio/Check.WAV";
-import drawSound from "../audio/Checkmate_Lose.WAV"
+import winSound from "../audio/Victory.ogg";
+import checkSound from "../audio/Check.ogg";
+import drawSound from "../audio/Draw.ogg"
+import lowTimeSound from "../audio/LowTime.ogg"
 
 export const matrixSlice = createSlice({
     name: 'matrixReducer',
@@ -223,7 +224,7 @@ export const matrixSlice = createSlice({
                 return;
             }
 
-            function isCheckMatePossible(array,kingCount) {
+            function isCheckMatePossible(array, kingCount) {
                 let hasQueenRookPawn = array.some(cellProps => cellProps.fig.name === 'Queen' || cellProps.fig.name === 'Pawn' || cellProps.fig.name === 'Rook')
                 let bishopCount = array.filter(cellProps => cellProps.fig.name === 'Bishop')
                 let areSameSidedBishops = bishopCount.length + kingCount === array.length && (bishopCount.every(cellProps => (cellProps.x + cellProps.y) % 2 === 0) || bishopCount.every(cellProps => (cellProps.x + cellProps.y) % 2 === 1))
@@ -233,7 +234,7 @@ export const matrixSlice = createSlice({
             }
 
 
-            if (isCheckMatePossible(whiteMaterial.concat(blackMaterial),2)) {
+            if (isCheckMatePossible(whiteMaterial.concat(blackMaterial), 2)) {
                 state.status = 'draw by lack of material';
                 new Audio(drawSound).play()
                 return;
@@ -245,7 +246,7 @@ export const matrixSlice = createSlice({
                 return;
             }
 
-            if(state.seventyFiveMoveCounter >= 75){
+            if (state.seventyFiveMoveCounter >= 75) {
                 state.status = 'draw by 75 move rule';
                 new Audio(drawSound).play()
                 return;
@@ -267,7 +268,7 @@ export const matrixSlice = createSlice({
 
 
             if (state.blackTimer <= 0) {
-                if (isCheckMatePossible(whiteMaterial,1)) {
+                if (isCheckMatePossible(whiteMaterial, 1)) {
                     state.status = 'draw by lack of material';
                     new Audio(drawSound).play()
                     return;
@@ -278,7 +279,7 @@ export const matrixSlice = createSlice({
                 return;
             }
             if (state.whiteTimer <= 0) {
-                if (isCheckMatePossible(blackMaterial,1)) {
+                if (isCheckMatePossible(blackMaterial, 1)) {
                     state.status = 'draw by lack of material';
                     new Audio(drawSound).play()
                     return;
@@ -318,14 +319,20 @@ export const matrixSlice = createSlice({
         },
         whiteDecrement(state) {
             state.whiteTimer--
+            if (state.whiteTimer === 60) {
+                new Audio(lowTimeSound).play()
+            }
         },
         blackDecrement(state) {
             state.blackTimer--
+            if (state.blackTimer === 60) {
+                new Audio(lowTimeSound).play()
+            }
         },
-        setSeventyFiveMoveCounter(state,action){
+        setSeventyFiveMoveCounter(state, action) {
             state.seventyFiveMoveCounter = action.payload
         },
-        setLastMove(state,action){
+        setLastMove(state, action) {
             state.lastMove = action.payload
         },
 

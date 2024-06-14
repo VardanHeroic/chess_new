@@ -200,11 +200,11 @@ class Queen extends Component {
                 }
             })
         })
-
+        console.log(props.checkInitator);
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
                 props.checkRay.forEach(checkRayCell => {
-                    if ((cellX > blockXmin && cellX < blockXmax) && (cellY > blockYmin && cellY < blockYmax) && directionsRook.includes(cell) && (!cell.fig || attackedCellsRook.includes(cell)) && (props.status !== 'check' || checkRayCell.key === cell.x * 10 + cell.y || cell.x * 10 + cell.y === props.checkInitator.key)) {
+                    if ((cellX > blockXmin && cellX < blockXmax) && (cellY > blockYmin && cellY < blockYmax) && directionsRook.includes(cell) && (!cell.fig || attackedCellsRook.includes(cell)) && (props.status !== 'check' || checkRayCell.x*10 + checkRayCell.y === cell.x * 10 + cell.y || cell.x * 10 + cell.y === props.checkInitator.x*10 + props.checkInitator.y)) {
                         freeCells.push({ x: cell.x, y: cell.y })
                     }
                 })
