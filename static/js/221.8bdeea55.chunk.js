@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkchess=self.webpackChunkchess||[]).push([[221],{221:function(e,s,c){e.exports=c.p+"static/media/Capture.9c51e8d0b9dda6cb9755.ogg"}}]);

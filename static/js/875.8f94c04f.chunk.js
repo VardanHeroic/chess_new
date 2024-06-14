@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkchess=self.webpackChunkchess||[]).push([[875],{179:function(s,e,c){s.exports=c.p+"static/media/Castles.c143199d89d6d47ba388.ogg"}}]);

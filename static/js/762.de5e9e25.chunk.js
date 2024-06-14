@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkchess=self.webpackChunkchess||[]).push([[762],{762:function(e,s,c){e.exports=c.p+"static/media/Move_Piece (5).eca5a75442db665e83fc.WAV"}}]);
