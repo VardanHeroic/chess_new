@@ -102,8 +102,7 @@ body{
 	height: 100vh;
 	background: #00000088;
 	position: fixed;
-	z-index: 10;
-/*	transition: all 1s; */
+	z-index: 20;
 	animation: modal-bg-transition 0.5s;
 }
 

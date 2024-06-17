@@ -200,7 +200,6 @@ class Queen extends Component {
                 }
             })
         })
-        console.log(props.checkInitator);
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
                 props.checkRay.forEach(checkRayCell => {
@@ -217,39 +216,39 @@ class Queen extends Component {
 
 
 
-        props.matrix.map((row, cellX) => {
-            row.map((cell, cellY) => {
+        props.matrix.forEach((row, cellX) => {
+            row.forEach((cell, cellY) => {
                 for (let n = 0; n < 8; n++) {
-                    if (props.y + n == cellY && props.x + n == cellX && props.y != cellY && props.x != cellX) {
+                    if (props.y + n === cellY && props.x + n === cellX && props.y !== cellY && props.x !== cellX) {
                         directionsBishop.push(cell)
-                        if (cell.fig && cell.fig.name != 'Step') {
+                        if (cell.fig && cell.fig.name !== 'Step') {
                             blockCellsBishop.push(cell)
                             if (!(cell.fig.name === "King" && cell.fig.color !== props.color)) {
                                 checkBlockCellsBishop.push(cell)
                             }
                         }
                     }
-                    if (props.y - n == cellY && props.x + n == cellX && props.y != cellY && props.x != cellX) {
+                    if (props.y - n === cellY && props.x + n === cellX && props.y !== cellY && props.x !== cellX) {
                         directionsBishop.push(cell)
-                        if (cell.fig && cell.fig.name != 'Step') {
+                        if (cell.fig && cell.fig.name !== 'Step') {
                             blockCellsBishop.push(cell)
                             if (!(cell.fig.name === "King" && cell.fig.color !== props.color)) {
                                 checkBlockCellsBishop.push(cell)
                             }
                         }
                     }
-                    if (props.y + n == cellY && props.x - n == cellX && props.y != cellY && props.x != cellX) {
+                    if (props.y + n === cellY && props.x - n === cellX && props.y !== cellY && props.x !== cellX) {
                         directionsBishop.push(cell)
-                        if (cell.fig && cell.fig.name != 'Step') {
+                        if (cell.fig && cell.fig.name !== 'Step') {
                             blockCellsBishop.push(cell)
                             if (!(cell.fig.name === "King" && cell.fig.color !== props.color)) {
                                 checkBlockCellsBishop.push(cell)
                             }
                         }
                     }
-                    if (props.y - n == cellY && props.x - n == cellX && props.y != cellY && props.x != cellX) {
+                    if (props.y - n === cellY && props.x - n === cellX && props.y !== cellY && props.x !== cellX) {
                         directionsBishop.push(cell)
-                        if (cell.fig && cell.fig.name != 'Step') {
+                        if (cell.fig && cell.fig.name !== 'Step') {
                             blockCellsBishop.push(cell)
                             if (!(cell.fig.name === "King" && cell.fig.color !== props.color)) {
                                 checkBlockCellsBishop.push(cell)
@@ -257,7 +256,7 @@ class Queen extends Component {
                         }
                     }
                 }
-                blockCellsBishop.map(cell => {
+                blockCellsBishop.forEach(cell => {
                     if ((blockTL.x < cell.x && cell.x < props.x) && (blockTL.y < cell.y && cell.y < props.y)) {
                         blockTL.x = cell.x
                         blockTL.y = cell.y
@@ -277,7 +276,7 @@ class Queen extends Component {
                 })
 
 
-                blockCellsBishop.map(cell => {
+                blockCellsBishop.forEach(cell => {
                     if ((pinBlockTL.x < cell.x && cell.x < props.x) && (pinBlockTL.y < cell.y && cell.y < props.y) && (cell.x !== blockTL.x) && (cell.y !== blockTL.y)) {
                         pinBlockTL.x = cell.x
                         pinBlockTL.y = cell.y
@@ -309,7 +308,7 @@ class Queen extends Component {
                     pinBlockTR = blockTR
                 }
 
-                checkBlockCellsBishop.map(cell => {
+                checkBlockCellsBishop.forEach(cell => {
                     if ((checkBlockTL.x < cell.x && cell.x < props.x) && (checkBlockTL.y < cell.y && cell.y < props.y)) {
                         checkBlockTL.x = cell.x
                         checkBlockTL.y = cell.y
@@ -330,10 +329,10 @@ class Queen extends Component {
             })
         })
 
-        props.matrix.map((row, cellX) => {
-            row.map((cell, cellY) => {
+        props.matrix.forEach((row, cellX) => {
+            row.forEach((cell, cellY) => {
                 if (cell.fig) {
-                    if (!(cell.fig.color == props.color) && directionsBishop.includes(cell)) {
+                    if (!(cell.fig.color === props.color) && directionsBishop.includes(cell)) {
                         if ((cellX < props.x && cellY < props.y) && (cellX >= blockTL.x && cellY >= blockTL.y)) {
                             attackedCellsBishop.push(cell)
                         }
@@ -351,8 +350,8 @@ class Queen extends Component {
             })
         })
 
-        props.matrix.map((row, cellX) => {
-            row.map((cell, cellY) => {
+        props.matrix.forEach((row, cellX) => {
+            row.forEach((cell, cellY) => {
                 props.checkRay.forEach(checkRayCell => {
                     if (directionsBishop.includes(cell) && (!cell.fig || attackedCellsBishop.includes(cell)) && (props.status !== 'check' || checkRayCell.x * 10 + checkRayCell.y === cell.x * 10 + cell.y || cell.x * 10 + cell.y === props.checkInitator.x * 10 + props.checkInitator.y)) {
                         if ((cellX < props.x && cellY < props.y) && (cellX >= blockTL.x && cellY >= blockTL.y)) {
@@ -372,8 +371,8 @@ class Queen extends Component {
             })
         })
 
-        props.matrix.map((row, cellX) => {
-            row.map((cell, cellY) => {
+        props.matrix.forEach((row, cellX) => {
+            row.forEach((cell, cellY) => {
                 if (directionsBishop.includes(cell) || attackedCellsBishop.includes(cell)) {
                     if ((cellX < props.x && cellY < props.y) && (cellX >= checkBlockTL.x && cellY >= checkBlockTL.y)) {
                         checkDirections.push({ x: cell.x, y: cell.y })

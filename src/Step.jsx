@@ -138,7 +138,7 @@ class Step extends Component {
 
         return (
             <>
-                <div className={!this.props.victim ? 'step' : 'capture-step'} onClick={() => this.change()} role={"button"}></div>
+                <div className={this.props.victim && this.props.victim.name !== 'Step' ?  'capture-step' : 'step'} onClick={() => this.change()} role={"button"}></div>
                 <i className={this.props.victim?.color}>{fig}</i>
 
             </>

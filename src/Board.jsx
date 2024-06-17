@@ -31,6 +31,9 @@ class Board extends Component {
     }
 
     move(props) {
+        if(!(props.status === 'none' || props.status === 'check')){
+            return
+        }
         if (props.current !== props.color) {
             return
         }
