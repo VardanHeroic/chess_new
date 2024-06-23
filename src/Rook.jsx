@@ -8,7 +8,6 @@ class Rook extends Component {
         super(props)
         this.x = this.props.x
         this.y = this.props.y
-        this.color = this.props.color
         this.cells = this.findFreeCells(this.props)
         this.isVictim = this.props.isVictim
     }
@@ -233,7 +232,7 @@ class Rook extends Component {
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.checkRays = this.cells.checkRays
-        return <i className={this.color} onClick={() => this.props.move(newProps)} role={"button"}>t</i>
+        return <i className={this.props.color} onClick={() => this.props.move(newProps)} role={"button"}>t</i>
     }
 }
 

@@ -8,7 +8,6 @@ class Bishop extends Component {
         super(props)
         this.x = this.props.x
         this.y = this.props.y
-        this.color = this.props.color
         this.isVictim = this.props.isVictim
         this.cells = this.findFreeCells(this.props)
     }
@@ -302,7 +301,7 @@ class Bishop extends Component {
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.checkRays = this.cells.checkRays
-        return <i className={this.color} onClick={() => this.props.move(newProps)} role={"button"}>n</i>
+        return <i className={this.props.color} onClick={() => this.props.move(newProps)} role={"button"}>n</i>
     }
 }
 

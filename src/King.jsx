@@ -5,7 +5,6 @@ import { actions as matrixActions } from './store/matrixSlice'
 class King extends Component {
     constructor(props) {
         super(props)
-        this.color = this.props.color
         this.x = this.props.x
         this.y = this.props.y
         this.cells = this.findFreeCells(this.props)
@@ -111,7 +110,7 @@ class King extends Component {
         let newProps = { ...this.props }
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
-        return <i className={this.color} onClick={() => this.props.move(newProps)} role={"button"} >l</i>
+        return <i className={this.props.color} onClick={() => this.props.move(newProps)} role={"button"} >l</i>
 
     }
 

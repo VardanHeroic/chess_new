@@ -6,7 +6,6 @@ import { actions as matrixActions } from './store/matrixSlice'
 class Pawn extends Component {
     constructor(props) {
         super(props)
-        this.color = this.props.color
         this.x = this.props.x
         this.y = this.props.y
         this.cells = this.findFreeCells(this.props)
@@ -167,7 +166,7 @@ class Pawn extends Component {
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
         newProps.isVictim = this.isVictim
-        return <i className={this.color} role={"button"} onClick={() => this.props.move(newProps)} >o</i>
+        return <i className={this.props.color} role={"button"} onClick={() => this.props.move(newProps)} >o</i>
 
     }
 }
