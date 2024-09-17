@@ -14,8 +14,8 @@ class Pawn extends Component {
 
     componentDidMount() {
         if (!this.isVictim) {
-            let cells = this.findFreeCells(this.props)
-            this.props.changeFigProps([this.x, this.y, cells.checkDirections, 'checkDirections'])
+            this.cells = this.findFreeCells(this.props)
+            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
             this.isVictim = false
         }
     }
@@ -23,7 +23,6 @@ class Pawn extends Component {
     findFreeCells(props) {
         let freeCells = []
         let moveDirections = []
-        let directions = []
         let blockCells = []
         let attackDirections = []
         let attackedCells = []
@@ -38,30 +37,24 @@ class Pawn extends Component {
                 if (props.color === 'white') {
                     if (cellX === this.props.x - 1 && this.props.y === cellY) {
                         moveDirections.push(cell)
-                        directions.push(cell)
                     }
                     if (cellX === this.props.x - 2 && this.props.y == cellY && this.props.isStart) {
                         moveDirections.push(cell)
-                        directions.push(cell)
                     }
                     if (cellX === this.props.x - 1 && (this.props.y + 1 === cellY || this.props.y - 1 === cellY)) {
                         attackDirections.push({ x: cell.x, y: cell.y })
-                        directions.push(cell)
                     }
 
                 }
                 else {
                     if (cellX === this.props.x + 1 && this.props.y === cellY) {
                         moveDirections.push(cell)
-                        directions.push(cell)
                     }
                     if (cellX === this.props.x + 2 && this.props.y === cellY && this.props.isStart) {
                         moveDirections.push(cell)
-                        directions.push(cell)
                     }
                     if (cellX === this.props.x + 1 && (this.props.y + 1 === cellY || this.props.y - 1 === cellY)) {
                         attackDirections.push({ x: cell.x, y: cell.y })
-                        directions.push(cell)
                     }
 
                 }
@@ -105,7 +98,7 @@ class Pawn extends Component {
 
                         (
                             (
-                                moveDirections.includes(cell) &&
+                                moveDirections.some(movecell => movecell.x*10+movecell.y === cell.x*10+cell.y) &&
                                 (props.status !== 'check' || checkRayCell.x * 10 + checkRayCell.y === cell.x * 10 + cell.y) &&
                                 (!cell.fig || cell.fig.name === 'Step')
                             ) || (
@@ -145,19 +138,18 @@ class Pawn extends Component {
             }
         })
 
-
         return { freeCells: freeCells, checkDirections: attackDirections }
     }
 
 
     UNSAFE_componentWillReceiveProps(props) {
-        if (this.props.current !== props.current) {
-            this.cells = this.findFreeCells(props)
-            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
-        }
         if (props.pinScan) {
             this.cells = this.findFreeCells(props)
             this.props.changeFigProps([this.x, this.y, this.cells.freeCells, 'freeCells'])
+        }
+        if (this.props.current !== props.current) {
+            this.cells = this.findFreeCells(props)
+            this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, 'checkDirections'])
         }
     }
 
@@ -165,7 +157,6 @@ class Pawn extends Component {
         let newProps = { ...this.props }
         newProps.checkDirections = this.cells.checkDirections
         newProps.freeCells = this.cells.freeCells
-        newProps.isVictim = this.isVictim
         return <i className={this.props.color} role={"button"} onClick={() => this.props.move(newProps)} >o</i>
 
     }

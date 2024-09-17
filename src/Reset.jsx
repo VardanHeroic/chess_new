@@ -6,6 +6,7 @@ const Reset = props => {
     return <button className="reset" onClick={() => {
         if (window.confirm('sure?')) {
             dispatch(matrixActions.initMatrix())
+            dispatch(matrixActions.calculateCheckDirections())
         }
     }
     }>Reset</button>
