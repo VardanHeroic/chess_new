@@ -3,11 +3,6 @@ import {connect} from 'react-redux'
 import {actions as matrixActions } from './store/matrixSlice'
 
 class Timer extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {}
-	}
-
 	componentDidMount(){
 		let timer = setInterval(() => {
 			if (this.props.whiteTimer <= 0 || this.props.blackTimer <= 0) {
@@ -26,6 +21,9 @@ class Timer extends Component {
 	}
 
 	render() {
+        if (this.props.matrix.length === 0) {
+           return null;
+        }
 		return (
 			<div className="timer">
 				<div className="blackTimer">{this.props.blackTimer >= 0 ? Math.floor(this.props.blackTimer/60) + ':' + (  ( Math.floor(this.props.blackTimer/60) * 60 - this.props.blackTimer )*-1 / 10 >= 1 ? ( Math.floor(this.props.blackTimer/60) * 60 - this.props.blackTimer )*-1   : '0' +( Math.floor(this.props.blackTimer/60) * 60 - this.props.blackTimer )*-1    ) : '0:00'  }</div>
@@ -42,6 +40,7 @@ export default connect(
 		blackTimer: state.matrixReducer.blackTimer,
 		current: state.matrixReducer.current,
 		status: state.matrixReducer.status,
+        matrix: state.matrixReducer.value,
 	}),
 	(dispatch) => ({
 		whiteDecrement: () => dispatch(matrixActions.whiteDecrement()),

@@ -54,29 +54,67 @@ export const matrixSlice = createSlice({
 
             }
 
-            matrix[0][7] = { color: 'bcell', x: 0, y: 7, key: (0 * 10 + 7), fig: { name: "Rook", color: 'black', checkDirections: [], untouched: true } }
-            matrix[7][0] = { color: 'bcell', x: 7, y: 0, key: (7 * 10 + 0), fig: { name: "Rook", color: 'white', checkDirections: [], untouched: true } }
-            matrix[0][0] = { color: 'wcell', x: 0, y: 0, key: (0 * 10 + 0), fig: { name: "Rook", color: 'black', checkDirections: [], untouched: true } }
-            matrix[7][7] = { color: 'wcell', x: 7, y: 7, key: (7 * 10 + 7), fig: { name: "Rook", color: 'white', checkDirections: [], untouched: true } }
+            const lastLine = [0,1,2,3,4,5,6,7]
+
+            const kingCord = Math.floor(Math.random()*6)+1
+            lastLine.splice(lastLine.indexOf(kingCord),1);
+
+            const leftRookCord = Math.floor(Math.random()*kingCord)
+            lastLine.splice(lastLine.indexOf(leftRookCord),1);
+
+            const rightRookCord = Math.floor(Math.random()*(7-kingCord))+kingCord+1
+            lastLine.splice(lastLine.indexOf(rightRookCord),1);
+
+            let blackCelledBishopCord = Math.floor(Math.random()*4)*2
+            while(!lastLine.includes(blackCelledBishopCord)){
+                blackCelledBishopCord = Math.floor(Math.random()*4)*2
+            }
+            lastLine.splice(lastLine.indexOf(blackCelledBishopCord),1);
+
+            let whiteCelledBishopCord = Math.floor(Math.random()*4)*2+1
+            while(!lastLine.includes(whiteCelledBishopCord)){
+                whiteCelledBishopCord = Math.floor(Math.random()*4)*2+1
+            }
+            lastLine.splice(lastLine.indexOf(whiteCelledBishopCord),1);
+
+            const firstKnightCord = lastLine[Math.floor(Math.random()*3)]
+            lastLine.splice(lastLine.indexOf(firstKnightCord),1)
+
+            const secondKnightCord = lastLine[Math.floor(Math.random()*2)]
+            lastLine.splice(lastLine.indexOf(secondKnightCord),1)
+
+            const queenCord = lastLine[0]
+            // console.log(whiteCelledBishopCord,blackCelledBishopCord,lastLine,leftRookCord,rightRookCord);
+
+            // let firstKnightCord = Math.floor(Math.random()*7)
+            // while(lastLine.includes(wh)){
+            //     firstKnightCord = Math.floor(Math.random()*7)
+            // }
+            // lastLine.splice(lastLine.indexOf(firstKnightCord),1);
+
+            matrix[0][rightRookCord].fig = { name: "Rook", color: 'black', checkDirections: [], untouched: true }
+            matrix[7][leftRookCord].fig  = { name: "Rook", color: 'white', checkDirections: [], untouched: true }
+            matrix[0][leftRookCord].fig  = { name: "Rook", color: 'black', checkDirections: [], untouched: true }
+            matrix[7][rightRookCord].fig = { name: "Rook", color: 'white', checkDirections: [], untouched: true }
 
 
-            matrix[0][5] = { color: 'bcell', x: 0, y: 5, key: (0 * 10 + 5), fig: { name: "Bishop", color: 'black' } }
-            matrix[7][2] = { color: 'bcell', x: 7, y: 2, key: (7 * 10 + 2), fig: { name: "Bishop", color: 'white' } }
-            matrix[0][2] = { color: 'wcell', x: 0, y: 2, key: (0 * 10 + 2), fig: { name: "Bishop", color: 'black' } }
-            matrix[7][5] = { color: 'wcell', x: 7, y: 5, key: (7 * 10 + 5), fig: { name: "Bishop", color: 'white' } }
+            matrix[0][whiteCelledBishopCord].fig = { name: "Bishop", color: 'black' }
+            matrix[7][blackCelledBishopCord].fig = { name: "Bishop", color: 'white' }
+            matrix[0][blackCelledBishopCord].fig = { name: "Bishop", color: 'black' }
+            matrix[7][whiteCelledBishopCord].fig = { name: "Bishop", color: 'white' }
 
 
 
-            matrix[0][3] = { color: 'bcell', x: 0, y: 3, key: (0 * 10 + 3), fig: { name: "Queen", color: 'black', checkDirections: [] } }
-            matrix[7][3] = { color: 'wcell', x: 7, y: 3, key: (7 * 10 + 3), fig: { name: "Queen", color: 'white', checkDirections: [] } }
+            matrix[0][queenCord].fig = { name: "Queen", color: 'black', checkDirections: [] }
+            matrix[7][queenCord].fig = { name: "Queen", color: 'white', checkDirections: [] }
 
-            matrix[0][4] = { color: 'wcell', x: 0, y: 4, key: (0 * 10 + 4), fig: { name: "King", color: 'black', checkDirections: [], untouched: true } }
-            matrix[7][4] = { color: 'bcell', x: 7, y: 4, key: (7 * 10 + 4), fig: { name: "King", color: 'white', checkDirections: [], untouched: true } }
+            matrix[0][kingCord].fig = { name: "King", color: 'black', checkDirections: [], untouched: true }
+            matrix[7][kingCord].fig = { name: "King", color: 'white', checkDirections: [], untouched: true }
 
-            matrix[0][6] = { color: 'wcell', x: 0, y: 6, key: (0 * 10 + 6), fig: { name: 'Knight', color: 'black', checkDirections: [] } }
-            matrix[7][1] = { color: 'wcell', x: 7, y: 1, key: (7 * 10 + 1), fig: { name: 'Knight', color: 'white', checkDirections: [] } }
-            matrix[0][1] = { color: 'bcell', x: 0, y: 1, key: (0 * 10 + 1), fig: { name: 'Knight', color: 'black', checkDirections: [] } }
-            matrix[7][6] = { color: 'bcell', x: 7, y: 6, key: (7 * 10 + 6), fig: { name: 'Knight', color: 'white', checkDirections: [] } }
+            matrix[0][secondKnightCord].fig = { name: 'Knight', color: 'black', checkDirections: [] }
+            matrix[7][firstKnightCord].fig  = { name: 'Knight', color: 'white', checkDirections: [] }
+            matrix[0][firstKnightCord].fig  = { name: 'Knight', color: 'black', checkDirections: [] }
+            matrix[7][secondKnightCord].fig = { name: 'Knight', color: 'white', checkDirections: [] }
 
             state.status = 'none';
             state.value = matrix;
@@ -118,8 +156,8 @@ export const matrixSlice = createSlice({
         calculateCheckDirections(state, action) {
             let whitePinArr = []
             let blackPinArr = []
-            state.value.map(row => {
-                row.map(cellProps => {
+            state.value.forEach(row => {
+                row.forEach(cellProps => {
                     cellProps.fig?.pinRays?.forEach(pinRay => {
                         if (pinRay.length !== 0) {
                             if (cellProps.fig.color === 'white') {
@@ -141,8 +179,8 @@ export const matrixSlice = createSlice({
             let checkCount = 0
             let whiteArr = []
             let blackArr = []
-            state.value.map(row => {
-                row.map(cellProps => {
+            state.value.forEach(row => {
+                row.forEach(cellProps => {
                     cellProps.fig?.checkDirections?.forEach(checkCellCord => {
                         let checkCell = state.value[checkCellCord.x][checkCellCord.y]
                         if (checkCell.fig?.name === 'King' && checkCell.fig.color !== cellProps.fig.color) {
@@ -191,8 +229,8 @@ export const matrixSlice = createSlice({
             let blackFreeArr = [];
             let whiteMaterial = [];
             let blackMaterial = [];
-            state.value.map(row => {
-                row.map(cellProps => {
+            state.value.forEach(row => {
+                row.forEach(cellProps => {
                     switch (cellProps.fig?.color) {
                         case 'white':
                             whiteMaterial.push(cellProps)
@@ -201,7 +239,7 @@ export const matrixSlice = createSlice({
                             blackMaterial.push(cellProps)
                             break;
                     }
-                    cellProps.fig?.freeCells?.map(checkCell => {
+                    cellProps.fig?.freeCells?.forEach(checkCell => {
                         if (cellProps.fig?.color === 'white') {
                             whiteFreeArr.push(checkCell);
                         }

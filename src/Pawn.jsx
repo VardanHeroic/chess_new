@@ -32,14 +32,14 @@ class Pawn extends Component {
         let blockYmax = 8
         let pins = props.color === 'black' ? props.pinsWhite : props.pinsBlack
 
-        props.matrix.map((row, cellX) => {
-            row.map((cell, cellY) => {
+        props.matrix.forEach((row, cellX) => {
+            row.forEach((cell, cellY) => {
                 if (props.color === 'white') {
                     if (cellX === this.props.x - 1 && this.props.y === cellY) {
-                        moveDirections.push(cell)
+                        moveDirections.push({ x: cell.x, y: cell.y })
                     }
-                    if (cellX === this.props.x - 2 && this.props.y == cellY && this.props.isStart) {
-                        moveDirections.push(cell)
+                    if (cellX === this.props.x - 2 && this.props.y === cellY && this.props.isStart) {
+                        moveDirections.push({ x: cell.x, y: cell.y })
                     }
                     if (cellX === this.props.x - 1 && (this.props.y + 1 === cellY || this.props.y - 1 === cellY)) {
                         attackDirections.push({ x: cell.x, y: cell.y })
@@ -48,10 +48,10 @@ class Pawn extends Component {
                 }
                 else {
                     if (cellX === this.props.x + 1 && this.props.y === cellY) {
-                        moveDirections.push(cell)
+                        moveDirections.push({ x: cell.x, y: cell.y })
                     }
                     if (cellX === this.props.x + 2 && this.props.y === cellY && this.props.isStart) {
-                        moveDirections.push(cell)
+                        moveDirections.push({ x: cell.x, y: cell.y })
                     }
                     if (cellX === this.props.x + 1 && (this.props.y + 1 === cellY || this.props.y - 1 === cellY)) {
                         attackDirections.push({ x: cell.x, y: cell.y })
@@ -63,7 +63,7 @@ class Pawn extends Component {
                     if (cell.fig && cell.fig.name !== 'Step') {
                         blockCells.push(cell)
                     }
-                    blockCells.map(cell => {
+                    blockCells.forEach(cell => {
                         if (blockXmin < cell.x && cell.x < this.props.x) {
                             blockXmin = cell.x - 1
                         }
@@ -81,8 +81,8 @@ class Pawn extends Component {
             })
         })
 
-        this.props.matrix.map(row => {
-            row.map(cell => {
+        this.props.matrix.forEach(row => {
+            row.forEach(cell => {
                 if (cell.fig?.name !== 'Step') {
                     if (!(cell.fig?.color === this.props.color) && attackDirections.some(attackDirectionCell => attackDirectionCell.x === cell.x && attackDirectionCell.y === cell.y)) {
                         attackedCells.push(cell)
@@ -91,8 +91,8 @@ class Pawn extends Component {
             })
         })
 
-        this.props.matrix.map((row, cellX) => {
-            row.map((cell, cellY) => {
+        this.props.matrix.forEach((row, cellX) => {
+            row.forEach((cell, cellY) => {
                 props.checkRay.forEach(checkRayCell => {
                     if (
 

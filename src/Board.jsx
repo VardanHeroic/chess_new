@@ -58,6 +58,9 @@ class Board extends Component {
 
 
     render() {
+        if (this.props.matrix.length === 0) {
+           return null;
+        }
         return (
             <div className="board">
                 {
