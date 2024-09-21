@@ -12,7 +12,7 @@ export const matrixSlice = createSlice({
         checkDirectionsBlack: [],
         pinsWhite: [],
         pinsBlack: [],
-        status: 'none',
+        status: 'begin',
         current: 'white',
         checkRay: [{}],
         checkInitator: null,
@@ -30,13 +30,12 @@ export const matrixSlice = createSlice({
             state.chosen = action.payload;
         },
 
-        initMatrix: (state) => {
+        initMatrix: (state, action) => {
             let matrix = []
             for (let i = 0; i < 8; i++) {
                 matrix[i] = []
                 for (let j = 0; j < 8; j++) {
-                    ;
-                    if ((i % 2 === 1 && j % 2 === 1) || (i % 2 === 0 && j % 2 === 0)) {
+                    if (i % 2 === j % 2) {
                         matrix[i][j] = { color: 'wcell', x: i, y: j, key: (i * 10 + j), fig: null }
                     }
                     else {
@@ -54,47 +53,52 @@ export const matrixSlice = createSlice({
 
             }
 
-            const lastLine = [0,1,2,3,4,5,6,7]
+            let kingCord =  4
+            let leftRookCord = 0
+            let rightRookCord = 7
+            let blackCelledBishopCord = 2
+            let whiteCelledBishopCord = 5
+            let firstKnightCord = 1
+            let secondKnightCord = 6
+            let queenCord = 3
 
-            const kingCord = Math.floor(Math.random()*6)+1
-            lastLine.splice(lastLine.indexOf(kingCord),1);
+            if (action.payload[1]) {
 
-            const leftRookCord = Math.floor(Math.random()*kingCord)
-            lastLine.splice(lastLine.indexOf(leftRookCord),1);
+                const lastLine = [0, 1, 2, 3, 4, 5, 6, 7]
 
-            const rightRookCord = Math.floor(Math.random()*(7-kingCord))+kingCord+1
-            lastLine.splice(lastLine.indexOf(rightRookCord),1);
+                kingCord = Math.floor(Math.random() * 6) + 1
+                lastLine.splice(lastLine.indexOf(kingCord), 1);
 
-            let blackCelledBishopCord = Math.floor(Math.random()*4)*2
-            while(!lastLine.includes(blackCelledBishopCord)){
-                blackCelledBishopCord = Math.floor(Math.random()*4)*2
+                leftRookCord = Math.floor(Math.random() * kingCord)
+                lastLine.splice(lastLine.indexOf(leftRookCord), 1);
+
+                rightRookCord = Math.floor(Math.random() * (7 - kingCord)) + kingCord + 1
+                lastLine.splice(lastLine.indexOf(rightRookCord), 1);
+
+                blackCelledBishopCord = Math.floor(Math.random() * 4) * 2
+                while (!lastLine.includes(blackCelledBishopCord)) {
+                    blackCelledBishopCord = Math.floor(Math.random() * 4) * 2
+                }
+                lastLine.splice(lastLine.indexOf(blackCelledBishopCord), 1);
+
+                whiteCelledBishopCord = Math.floor(Math.random() * 4) * 2 + 1
+                while (!lastLine.includes(whiteCelledBishopCord)) {
+                    whiteCelledBishopCord = Math.floor(Math.random() * 4) * 2 + 1
+                }
+                lastLine.splice(lastLine.indexOf(whiteCelledBishopCord), 1);
+
+                firstKnightCord = lastLine[Math.floor(Math.random() * 3)]
+                lastLine.splice(lastLine.indexOf(firstKnightCord), 1)
+
+                secondKnightCord = lastLine[Math.floor(Math.random() * 2)]
+                lastLine.splice(lastLine.indexOf(secondKnightCord), 1)
+
+                queenCord = lastLine[0]
             }
-            lastLine.splice(lastLine.indexOf(blackCelledBishopCord),1);
-
-            let whiteCelledBishopCord = Math.floor(Math.random()*4)*2+1
-            while(!lastLine.includes(whiteCelledBishopCord)){
-                whiteCelledBishopCord = Math.floor(Math.random()*4)*2+1
-            }
-            lastLine.splice(lastLine.indexOf(whiteCelledBishopCord),1);
-
-            const firstKnightCord = lastLine[Math.floor(Math.random()*3)]
-            lastLine.splice(lastLine.indexOf(firstKnightCord),1)
-
-            const secondKnightCord = lastLine[Math.floor(Math.random()*2)]
-            lastLine.splice(lastLine.indexOf(secondKnightCord),1)
-
-            const queenCord = lastLine[0]
-            // console.log(whiteCelledBishopCord,blackCelledBishopCord,lastLine,leftRookCord,rightRookCord);
-
-            // let firstKnightCord = Math.floor(Math.random()*7)
-            // while(lastLine.includes(wh)){
-            //     firstKnightCord = Math.floor(Math.random()*7)
-            // }
-            // lastLine.splice(lastLine.indexOf(firstKnightCord),1);
 
             matrix[0][rightRookCord].fig = { name: "Rook", color: 'black', checkDirections: [], untouched: true }
-            matrix[7][leftRookCord].fig  = { name: "Rook", color: 'white', checkDirections: [], untouched: true }
-            matrix[0][leftRookCord].fig  = { name: "Rook", color: 'black', checkDirections: [], untouched: true }
+            matrix[7][leftRookCord].fig = { name: "Rook", color: 'white', checkDirections: [], untouched: true }
+            matrix[0][leftRookCord].fig = { name: "Rook", color: 'black', checkDirections: [], untouched: true }
             matrix[7][rightRookCord].fig = { name: "Rook", color: 'white', checkDirections: [], untouched: true }
 
 
@@ -112,11 +116,10 @@ export const matrixSlice = createSlice({
             matrix[7][kingCord].fig = { name: "King", color: 'white', checkDirections: [], untouched: true }
 
             matrix[0][secondKnightCord].fig = { name: 'Knight', color: 'black', checkDirections: [] }
-            matrix[7][firstKnightCord].fig  = { name: 'Knight', color: 'white', checkDirections: [] }
-            matrix[0][firstKnightCord].fig  = { name: 'Knight', color: 'black', checkDirections: [] }
+            matrix[7][firstKnightCord].fig = { name: 'Knight', color: 'white', checkDirections: [] }
+            matrix[0][firstKnightCord].fig = { name: 'Knight', color: 'black', checkDirections: [] }
             matrix[7][secondKnightCord].fig = { name: 'Knight', color: 'white', checkDirections: [] }
 
-            state.status = 'none';
             state.value = matrix;
             state.chosen = null;
             state.checkDirectionsBlack = [];
@@ -125,8 +128,8 @@ export const matrixSlice = createSlice({
             state.checkRay = [{}];
             state.promotionName = 'Pawn';
             state.checkInitator = null;
-            state.blackTimer = 600;
-            state.whiteTimer = 600;
+            state.blackTimer = action.payload[0];
+            state.whiteTimer = action.payload[0];
             state.pinScan = false;
             state.pinsBlack = []
             state.pinsWhite = []
@@ -153,7 +156,7 @@ export const matrixSlice = createSlice({
         },
 
 
-        calculateCheckDirections(state, action) {
+        calculateCheckDirections(state) {
             let whitePinArr = []
             let blackPinArr = []
             state.value.forEach(row => {
@@ -305,7 +308,7 @@ export const matrixSlice = createSlice({
             }
 
 
-            if (state.blackTimer <= 0) {
+            if (state.blackTimer === 0) {
                 if (isCheckMatePossible(whiteMaterial, 1)) {
                     state.status = 'draw by lack of material';
                     new Audio(drawSound).play()
@@ -316,7 +319,7 @@ export const matrixSlice = createSlice({
                 new Audio(winSound).play();
                 return;
             }
-            if (state.whiteTimer <= 0) {
+            if (state.whiteTimer === 0) {
                 if (isCheckMatePossible(blackMaterial, 1)) {
                     state.status = 'draw by lack of material';
                     new Audio(drawSound).play()
@@ -356,13 +359,17 @@ export const matrixSlice = createSlice({
             state.promotionName = action.payload
         },
         whiteDecrement(state) {
-            state.whiteTimer--
+            if (state.whiteTimer > 0) {
+                state.whiteTimer--
+            }
             if (state.whiteTimer === 60) {
                 new Audio(lowTimeSound).play()
             }
         },
         blackDecrement(state) {
-            state.blackTimer--
+            if (state.blackTimer > 0) {
+                state.blackTimer--
+            }
             if (state.blackTimer === 60) {
                 new Audio(lowTimeSound).play()
             }

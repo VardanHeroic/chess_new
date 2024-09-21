@@ -26,9 +26,9 @@ class Board extends Component {
         }
     }
 
-    componentDidMount() {
-        this.props.initMatrix()
-    }
+    // componentDidMount() {
+    //     this.props.initMatrix()
+    // }
 
     move(props) {
         if(!(props.status === 'none' || props.status === 'check')){
@@ -62,7 +62,7 @@ class Board extends Component {
            return null;
         }
         return (
-            <div className="board">
+            <div className={`board ${this.props.whiteTimer >= 0 ? "float" : ""}`}>
                 {
                     this.props.matrix.map((row, i) => {
                         return <div className="row" key={i}>{
@@ -86,8 +86,6 @@ class Board extends Component {
 export default connect(
     (state) => ({
         matrix: state.matrixReducer.value,
+        whiteTimer: state.matrixReducer.whiteTimer
     }),
-    (dispatch) => ({
-        initMatrix: () => dispatch(matrixActions.initMatrix()),
-    })
 )(Board)

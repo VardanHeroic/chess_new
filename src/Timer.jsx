@@ -4,10 +4,10 @@ import {actions as matrixActions } from './store/matrixSlice'
 
 class Timer extends Component {
 	componentDidMount(){
-		let timer = setInterval(() => {
-			if (this.props.whiteTimer <= 0 || this.props.blackTimer <= 0) {
-				this.props.findStaleMate()
+		const timer = setInterval(() => {
+			if (this.props.whiteTimer === 0 || this.props.blackTimer === 0) {
 				clearInterval(timer)
+				this.props.findStaleMate()
 			}
 			if (this.props.status === 'none' || this.props.status === 'check') {
 				if (this.props.current ===  'white') {
@@ -21,7 +21,7 @@ class Timer extends Component {
 	}
 
 	render() {
-        if (this.props.matrix.length === 0) {
+        if (this.props.matrix.length === 0 || this.props.whiteTimer < 0) {
            return null;
         }
 		return (

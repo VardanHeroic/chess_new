@@ -91,11 +91,13 @@ body{
     width: calc(50px * 8);
     display: block;
     font-family: 'Conv_Chess Regular';
-	float: left;
     border: 7px #F4F7FA solid;
     border-radius: 8px
 }
 
+.float{
+    float: left;
+}
 
 .modal-bg{
 	width: 100vw;
@@ -104,6 +106,14 @@ body{
 	position: fixed;
 	z-index: 20;
 	animation: modal-bg-transition 0.5s;
+}
+
+.promotion-box{
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 1fr);
+	grid-column-gap: 30px;
+	grid-row-gap: 30px;
 }
 
 .modal-box{
@@ -116,14 +126,10 @@ body{
 	top: 0;
 	bottom: 0;
 	margin: auto;
-	background: #F4F7FA;
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-template-rows: repeat(2, 1fr);
-	grid-column-gap: 30px;
-	grid-row-gap: 30px;
+	background: #e5e5e5;
 	padding: 30px;
 	animation: modal-box-transition 0.5s;
+    /*f4f7fa*/
 }
 
 .modal-btn{
@@ -216,7 +222,7 @@ body{
 	color: #F4F7FA;
 	background: #34364C;
 	width: 100px;
-text-align: center;
+    text-align: center;
 	display: block;
 	border-radius: 10px;
     padding: 6px 0;

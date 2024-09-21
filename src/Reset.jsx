@@ -7,13 +7,7 @@ const Reset = () => {
     if (matrix.length === 0) {
         return null;
     }
-    return <button className="reset" onClick={() => {
-        if (window.confirm('sure?')) {
-            dispatch(matrixActions.initMatrix())
-            dispatch(matrixActions.calculateCheckDirections())
-        }
-    }
-    }>Reset</button>
+    return <button className="reset" onClick={() => dispatch(matrixActions.setStatus('begin'))}>Reset</button>
 }
 
 export default Reset
