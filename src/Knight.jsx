@@ -34,7 +34,7 @@ class Knight extends Component {
             row.forEach((cell) => {
                 pseudoDirections.forEach(cord => {
                     if (cord.x === cell.x && cord.y === cell.y) {
-                        directions.push(cell)
+                        directions.push({x: cell.x,y: cell.y})
                     }
                 })
             })
@@ -42,7 +42,7 @@ class Knight extends Component {
 
         props.matrix.forEach((row) => {
             row.forEach((cell) => {
-                if ((cell.fig?.color !== props.color) && directions.includes(cell)) {
+                if ((cell.fig?.color !== props.color) && directions.some(directionCell => directionCell.x*10+directionCell.y === cell.x*10+cell.y)) {
                     attackedCells.push(cell)
 
                 }
@@ -53,7 +53,7 @@ class Knight extends Component {
             row.forEach((cell) => {
                 props.checkRay.forEach(checkRayCell => {
                     if (
-                        directions.includes(cell) &&
+                        directions.some(directionCell => directionCell.x*10+directionCell.y === cell.x*10+cell.y) &&
                         (attackedCells.includes(cell) || !cell.fig) &&
                         (
                             props.status !== 'check' ||

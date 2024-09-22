@@ -30,7 +30,7 @@ class King extends Component {
             row.forEach((cell, cellY) => {
                 pseudoDirections.forEach(cord => {
                     if (cord.x === cellX && cord.y === cellY) {
-                        directions.push(cell)
+                        directions.push({x: cell.x,y: cell.y})
                     }
                 })
             })
@@ -38,7 +38,7 @@ class King extends Component {
 
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
-                if (!(cell.fig?.color === props.color) && directions.includes(cell)) {
+                if (!(cell.fig?.color === props.color) && directions.some(directionCell => directionCell.x*10+directionCell.y === cell.x*10+cell.y)) {
                     attackedCells.push(cell)
                 }
             })
@@ -46,7 +46,7 @@ class King extends Component {
 
         props.matrix.forEach((row, cellX) => {
             row.forEach((cell, cellY) => {
-                if (directions.includes(cell) && (!cell.fig || attackedCells.includes(cell))) {
+                if (directions.some(directionCell => directionCell.x*10+directionCell.y === cell.x*10+cell.y) && (!cell.fig || attackedCells.includes(cell))) {
                     freeCells.push({ x: cell.x, y: cell.y })
                 }
             })

@@ -59,7 +59,7 @@ class Pawn extends Component {
 
                 }
 
-                if (moveDirections.includes(cell)) {
+                if (moveDirections.some(movecell => movecell.x*10+movecell.y === cell.x*10+cell.y)) {
                     if (cell.fig && cell.fig.name !== 'Step') {
                         blockCells.push(cell)
                     }
@@ -103,7 +103,7 @@ class Pawn extends Component {
                                 (!cell.fig || cell.fig.name === 'Step')
                             ) || (
                                 cell.fig &&
-                                attackedCells.includes(cell) &&
+                                attackedCells.some(attackedCell => attackedCell.x*10+attackedCell.y === cell.x*10+cell.y) &&
                                 (props.status !== 'check' || props.checkInitator.x * 10 + props.checkInitator.y === cell.x * 10 + cell.y)
                             )
                         ) &&
@@ -137,7 +137,6 @@ class Pawn extends Component {
                 freeCells = freeCells.filter(freeCell => pin.some(pinCell => pinCell.x === freeCell.x && pinCell.y === freeCell.y))
             }
         })
-
         return { freeCells: freeCells, checkDirections: attackDirections }
     }
 

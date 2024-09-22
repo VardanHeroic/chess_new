@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { actions as matrixActions } from './store/matrixSlice'
 import Cell from './Cell'
 import Knight from './Knight'
 import Step from './Step'
@@ -25,10 +24,6 @@ class Board extends Component {
             "Queen": Queen,
         }
     }
-
-    // componentDidMount() {
-    //     this.props.initMatrix()
-    // }
 
     move(props) {
         if(!(props.status === 'none' || props.status === 'check')){

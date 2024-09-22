@@ -228,6 +228,22 @@ body{
     padding: 6px 0;
 }
 
+.begin-select{
+    background:  #f4f7fa;
+    border: none;
+    border-radius: 10px;
+    height: 30px;
+    margin: 5px 0;
+}
+
+.modal-box label{
+    font-size: 1.3em;
+}
+
+.begin-select option{
+    background-color: #7b61ff
+}
+
 @media all and (max-width: 720px){
     .game{
         margin: 0;
