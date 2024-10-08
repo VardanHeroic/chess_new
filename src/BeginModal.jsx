@@ -23,7 +23,7 @@ const BeginModal = () => {
                     <option value="1">Fischer Random(Chess960)</option>
                 </select><br />
                 <label >Time in seconds(write -1 to turn off timer)</label><br />
-                <input max="7200" type="number" name="" className="begin-select" onInput={e => setTime(+e.target.value)} />
+                <input max="7200" type="number" name="" className="begin-select" onInput={e => setTime(+e.target.value === 0 ? -1 : +e.target.value )} />
                 <button onClick={start} className={"reset"}>Start</button>
             </div>
         </div>

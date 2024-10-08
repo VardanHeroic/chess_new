@@ -11,6 +11,6 @@ export const store = configureStore({
         immutableCheck: false,
         serializableCheck: false,
 
-    }).concat([logger,componentActionTrackerMiddleware]),
+    }).concat([componentActionTrackerMiddleware]),
 
 });
