@@ -40,7 +40,7 @@ class Step extends Component {
         play()
 
         this.props.changeCurrent()
-        this.props.setLastMove({ x: this.props.x, y: this.props.y })
+        this.props.setLastMove([{ x: this.props.x, y: this.props.y },{ x: x, y: y}])
         this.pressed = false
         this.isEnPassant = false
     }
@@ -86,8 +86,8 @@ class Step extends Component {
                         break;
                     }
 
-                    if (this.props.lastMove?.y === this.props.y && this.props.lastMove?.x + 1 === this.props.x && !this.props.victim) {
-                        this.props.changeFig([this.props.lastMove.x, this.props.lastMove.y, null])
+                    if (this.props.lastMove[0]?.y === this.props.y && this.props.lastMove[0]?.x + 1 === this.props.x && !this.props.victim) {
+                        this.props.changeFig([this.props.lastMove[0].x, this.props.lastMove[0].y, null])
                         this.isEnPassant = true
                     }
 
@@ -99,8 +99,8 @@ class Step extends Component {
                         break;
                     }
 
-                    if (this.props.lastMove?.y === this.props.y && this.props.lastMove?.x - 1 === this.props.x && !this.props.victim) {
-                        this.props.changeFig([this.props.lastMove.x, this.props.lastMove.y, null])
+                    if (this.props.lastMove[0]?.y === this.props.y && this.props.lastMove[0]?.x - 1 === this.props.x && !this.props.victim) {
+                        this.props.changeFig([this.props.lastMove[0].x, this.props.lastMove[0].y, null])
                         this.isEnPassant = true
                     }
 

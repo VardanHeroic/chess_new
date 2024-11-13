@@ -23,7 +23,7 @@ export const matrixSlice = createSlice({
         pinScan: false,
         allFreeCells: [],
         seventyFiveMoveCounter: 0,
-        lastMove: null,
+        lastMove: [{},{}],
     },
     reducers: {
         chooseFigure: (state, action) => {
@@ -35,12 +35,7 @@ export const matrixSlice = createSlice({
             for (let i = 0; i < 8; i++) {
                 matrix[i] = []
                 for (let j = 0; j < 8; j++) {
-                    if (i % 2 === j % 2) {
-                        matrix[i][j] = { color: 'wcell', x: i, y: j, key: (i * 10 + j), fig: null }
-                    }
-                    else {
-                        matrix[i][j] = { color: 'bcell', x: i, y: j, key: (i * 10 + j), fig: null }
-                    }
+                        matrix[i][j] = { color: i % 2 === j % 2 ? 'wcell' : 'bcell', x: i, y: j, key: (i * 10 + j), fig: null }
                 }
             }
 
@@ -96,10 +91,10 @@ export const matrixSlice = createSlice({
                 queenCord = lastLine[0]
             }
 
-            matrix[0][rightRookCord].fig = { name: "Rook", color: 'black', checkDirections: [], untouched: true }
-            matrix[7][leftRookCord].fig = { name: "Rook", color: 'white', checkDirections: [], untouched: true }
-            matrix[0][leftRookCord].fig = { name: "Rook", color: 'black', checkDirections: [], untouched: true }
-            matrix[7][rightRookCord].fig = { name: "Rook", color: 'white', checkDirections: [], untouched: true }
+            matrix[0][rightRookCord].fig = { name: "Rook", color: 'black',  untouched: true }
+            matrix[7][leftRookCord].fig = { name: "Rook", color: 'white',  untouched: true }
+            matrix[0][leftRookCord].fig = { name: "Rook", color: 'black',  untouched: true }
+            matrix[7][rightRookCord].fig = { name: "Rook", color: 'white',  untouched: true }
 
 
             matrix[0][whiteCelledBishopCord].fig = { name: "Bishop", color: 'black' }
@@ -109,16 +104,16 @@ export const matrixSlice = createSlice({
 
 
 
-            matrix[0][queenCord].fig = { name: "Queen", color: 'black', checkDirections: [] }
-            matrix[7][queenCord].fig = { name: "Queen", color: 'white', checkDirections: [] }
+            matrix[0][queenCord].fig = { name: "Queen", color: 'black',  }
+            matrix[7][queenCord].fig = { name: "Queen", color: 'white',  }
 
-            matrix[0][kingCord].fig = { name: "King", color: 'black', checkDirections: [], untouched: true }
-            matrix[7][kingCord].fig = { name: "King", color: 'white', checkDirections: [], untouched: true }
+            matrix[0][kingCord].fig = { name: "King", color: 'black',  untouched: true }
+            matrix[7][kingCord].fig = { name: "King", color: 'white',  untouched: true }
 
-            matrix[0][secondKnightCord].fig = { name: 'Knight', color: 'black', checkDirections: [] }
-            matrix[7][firstKnightCord].fig = { name: 'Knight', color: 'white', checkDirections: [] }
-            matrix[0][firstKnightCord].fig = { name: 'Knight', color: 'black', checkDirections: [] }
-            matrix[7][secondKnightCord].fig = { name: 'Knight', color: 'white', checkDirections: [] }
+            matrix[0][secondKnightCord].fig = { name: 'Knight', color: 'black',  }
+            matrix[7][firstKnightCord].fig = { name: 'Knight', color: 'white',  }
+            matrix[0][firstKnightCord].fig = { name: 'Knight', color: 'black',  }
+            matrix[7][secondKnightCord].fig = { name: 'Knight', color: 'white',  }
 
             state.value = matrix;
             state.chosen = null;
@@ -135,7 +130,7 @@ export const matrixSlice = createSlice({
             state.pinsWhite = []
             state.allFreeCells = []
             state.seventyFiveMoveCounter = 0
-            state.lastMove = null
+            state.lastMove = [{},{}]
 
         },
 

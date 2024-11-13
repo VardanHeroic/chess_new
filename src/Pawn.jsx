@@ -117,17 +117,17 @@ class Pawn extends Component {
             })
         })
 
-        if (props.matrix?.[props.lastMove?.x]?.[props.lastMove?.y].fig.name === 'Pawn') {
+        if (props.matrix?.[props.lastMove[0].x]?.[props.lastMove[0].y]?.fig.name === 'Pawn' && Math.abs(props.lastMove[0].x - props.lastMove[1].x) === 2) {
             switch (props.color) {
                 case 'white':
-                    if (props.x === 3 && props.lastMove.x === 3 && (props.lastMove.y === props.y + 1 || props.lastMove.y === props.y - 1)) {
-                        freeCells.push({ x: props.x - 1, y: props.lastMove.y })
+                    if (props.x === 3 && props.lastMove[0].x === 3 && (props.lastMove[0].y === props.y + 1 || props.lastMove[0].y === props.y - 1)) {
+                        freeCells.push({ x: props.x - 1, y: props.lastMove[0].y })
                     }
                     break;
 
                 case 'black':
-                    if (props.x === 4 && props.lastMove.x === 4 && (props.lastMove.y === props.y + 1 || props.lastMove.y === props.y - 1)) {
-                        freeCells.push({ x: props.x + 1, y: props.lastMove.y })
+                    if (props.x === 4 && props.lastMove[0].x === 4 && (props.lastMove[0].y === props.y + 1 || props.lastMove[0].y === props.y - 1)) {
+                        freeCells.push({ x: props.x + 1, y: props.lastMove[0].y })
                     }
                     break;
             }
