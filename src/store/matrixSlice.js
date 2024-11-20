@@ -236,6 +236,8 @@ export const matrixSlice = createSlice({
                         case 'black':
                             blackMaterial.push(cellProps)
                             break;
+                        default:
+                            break;
                     }
                     cellProps.fig?.freeCells?.forEach(checkCell => {
                         if (cellProps.fig?.color === 'white') {
