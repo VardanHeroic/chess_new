@@ -26,6 +26,7 @@ class Step extends Component {
 		this.props.chooseFigure(10 * this.props.x + this.props.y)
 		let play = async () => {
 			let sound = null
+			// let audio;
 			if ((this.props.victim && this.props.victim.name !== "Step") || this.isEnPassant) {
 				sound = await import(`./audio/Capture.ogg`)
 			} else if (initiatorProps.name === "King" && Math.abs(y - this.props.y) === 2) {
@@ -33,6 +34,7 @@ class Step extends Component {
 			} else {
 				sound = await import(`./audio/Move.ogg`)
 			}
+			// audio = new Audio(sound.default)
 			new Audio(sound.default).play()
 		}
 		play()
@@ -49,9 +51,9 @@ class Step extends Component {
 	change() {
 		this.pressed = true
 		const { y, untouched } = this.props.initiatorProps
-
 		const isWhite = this.props.initiatorProps.color === "white"
 		const isY2 = this.props.y === 2
+
 		if (this.props.initiatorProps.name === "King" && Math.abs(y - this.props.y) === 2) {
 			this.props.changeFig([
 				this.props.x,
@@ -143,12 +145,8 @@ export default connect(
 		killSteps: () => dispatch(matrixActions.killSteps()),
 		chooseFigure: fig => dispatch(matrixActions.chooseFigure(fig)),
 		setSeventyFiveMoveCounter: number => dispatch(matrixActions.setSeventyFiveMoveCounter(number)),
-		setStatus: name => {
-			dispatch(matrixActions.setStatus(name))
-		},
-		setPromotionName: name => {
-			dispatch(matrixActions.setPromotionName(name))
-		},
+		setStatus: name => dispatch(matrixActions.setStatus(name)),
+		setPromotionName: name => dispatch(matrixActions.setPromotionName(name)),
 		setLastMove: cords => dispatch(matrixActions.setLastMove(cords)),
 	}),
 )(Step)
