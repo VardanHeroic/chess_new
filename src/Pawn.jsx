@@ -22,14 +22,10 @@ class Pawn extends Component {
 	findFreeCells(props) {
 		let freeCells = []
 		let moveDirections = []
-		let blockCells = []
 		let attackDirections = []
 		let attackedCells = []
-		let blockXmin = -1
-		let blockXmax = 8
-		let blockYmin = -1
-		let blockYmax = 8
 		let isWhite = props.color === "white"
+		let blockCell = props.matrix[this.props.x + (isWhite ? -1 : 1)][this.props.y].fig
 		let pins = !isWhite ? props.pinsWhite : props.pinsBlack
 
 		props.matrix.forEach((row, cellX) => {
@@ -37,31 +33,11 @@ class Pawn extends Component {
 				if (cellX === this.props.x + (isWhite ? -1 : 1) && this.props.y === cellY) {
 					moveDirections.push({ x: cell.x, y: cell.y })
 				}
-				if (cellX === this.props.x + (isWhite ? -2 : 2) && this.props.y === cellY && this.props.isStart) {
+				if (cellX === this.props.x + (isWhite ? -2 : 2) && this.props.y === cellY && this.props.isStart && !blockCell) {
 					moveDirections.push({ x: cell.x, y: cell.y })
 				}
 				if (cellX === this.props.x + (isWhite ? -1 : 1) && Math.abs(this.props.y - cellY) === 1) {
 					attackDirections.push({ x: cell.x, y: cell.y })
-				}
-
-				if (moveDirections.some(movecell => movecell.x * 10 + movecell.y === cell.x * 10 + cell.y)) {
-					if (cell.fig && cell.fig.name !== "Step") {
-						blockCells.push(cell)
-					}
-					blockCells.forEach(cell => {
-						if (blockXmin < cell.x && cell.x < this.props.x) {
-							blockXmin = cell.x - 1
-						}
-						if (blockXmax > cell.x && cell.x > this.props.x) {
-							blockXmax = cell.x + 1
-						}
-						if (blockYmin < cell.y && cell.y < this.props.y) {
-							blockYmin = cell.y - 1
-						}
-						if (blockYmax > cell.y && cell.y > this.props.y) {
-							blockYmax = cell.y + 1
-						}
-					})
 				}
 			})
 		})
@@ -83,17 +59,12 @@ class Pawn extends Component {
 			row.forEach((cell, cellY) => {
 				props.checkRay.forEach(checkRayCell => {
 					if (
-						((moveDirections.some(movecell => movecell.x * 10 + movecell.y === cell.x * 10 + cell.y) &&
+						(moveDirections.some(movecell => movecell.x * 10 + movecell.y === cell.x * 10 + cell.y) &&
 							(props.status !== "check" || checkRayCell.x * 10 + checkRayCell.y === cell.x * 10 + cell.y) &&
 							(!cell.fig || cell.fig.name === "Step")) ||
-							(cell.fig &&
-								attackedCells.some(attackedCell => attackedCell.x * 10 + attackedCell.y === cell.x * 10 + cell.y) &&
-								(props.status !== "check" ||
-									props.checkInitator.x * 10 + props.checkInitator.y === cell.x * 10 + cell.y))) &&
-						cellX > blockXmin &&
-						cellX < blockXmax &&
-						cellY > blockYmin &&
-						cellY < blockYmax
+						(cell.fig &&
+							attackedCells.some(attackedCell => attackedCell.x * 10 + attackedCell.y === cell.x * 10 + cell.y) &&
+							(props.status !== "check" || props.checkInitator.x * 10 + props.checkInitator.y === cell.x * 10 + cell.y))
 					) {
 						freeCells.push({ x: cell.x, y: cell.y })
 					}
@@ -129,11 +100,8 @@ class Pawn extends Component {
 	}
 
 	render() {
-		let newProps = { ...this.props }
-		newProps.checkDirections = this.cells.checkDirections
-		newProps.freeCells = this.cells.freeCells
 		return (
-			<i className={this.props.color} role={"button"} onClick={() => this.props.move(newProps)}>
+			<i className={this.props.color} role={"button"} onClick={() => this.props.move(this.props)}>
 				o
 			</i>
 		)

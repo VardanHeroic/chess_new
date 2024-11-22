@@ -47,7 +47,7 @@ class Rook extends Component {
 
 		props.matrix.forEach((row, cellX) => {
 			row.forEach((cell, cellY) => {
-				if ((props.y === cellY) ^ (props.x === cellX)) {
+				if ((props.y === cellY) !== (props.x === cellX)) {
 					directions.push(cell)
 					if (cell.fig && cell.fig.name !== "Step") {
 						if (!(cell.fig.name === "King" && cell.fig.color !== props.color)) {
@@ -247,13 +247,8 @@ class Rook extends Component {
 	}
 
 	render() {
-		let newProps = { ...this.props }
-		this.cells = this.cells = this.findFreeCells(this.props)
-		newProps.checkDirections = this.cells.checkDirections
-		newProps.freeCells = this.cells.freeCells
-		newProps.checkRays = this.cells.checkRays
 		return (
-			<i className={this.props.color} onClick={() => this.props.move(newProps)} role={"button"}>
+			<i className={this.props.color} onClick={() => this.props.move(this.props)} role={"button"}>
 				t
 			</i>
 		)

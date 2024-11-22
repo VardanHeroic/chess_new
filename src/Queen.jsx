@@ -483,11 +483,7 @@ class Queen extends Component {
     }
 
     render() {
-        let newProps = { ...this.props }
-        newProps.checkDirections = this.cells.checkDirections
-        newProps.freeCells = this.cells.freeCells
-        newProps.checkRays = this.cells.checkRays
-        return <i className={this.props.color} role={"button"} onClick={() => this.props.move(newProps)} >w</i>
+        return <i className={this.props.color} role={"button"} onClick={() => this.props.move(this.props)} >w</i>
     }
 }
 
