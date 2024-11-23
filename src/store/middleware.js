@@ -1,60 +1,41 @@
-let key = 0
-let pinkey = 0
-
 const componentActionTrackerMiddleware = store => next => action => {
-    let matrixReducer = store.getState().matrixReducer
-    let lastFig = null
-    let penultimateFig = null
-    if (action.type === 'matrixReducer/changeFigProps') {
+	let matrix = store.getState().matrixReducer.value
+	let chosen = store.getState().matrixReducer.chosen
+	let lastFig = null
+	let penultimateFig = null
 
-        for (const row of matrixReducer.value.toReversed()) {
-            if (row.filter(cell => cell.fig)) {
-                if (!lastFig && row.some(cell => cell.fig) ){
-                    lastFig = row.toReversed().filter(cell => cell.fig)[0].key
-                }
+	if (action.type === "matrixReducer/changeFigProps") {
+		const [x, y, , property] = action.payload
 
-                if (row.filter(cell => cell.fig).length > 1) {
-                    if (row.filter(cell => cell.fig).some(cell => cell.key === lastFig)) {
-                        penultimateFig = row.toReversed().filter(cell => cell.fig)[1].key
-                        break
-                    }
-                    else {
-                        penultimateFig = row.toReversed().filter(cell => cell.fig)[0].key
-                        break
-                    }
-                }
-                else if (row.filter(cell => cell.fig)[0] && row.filter(cell => cell.fig)[0].key !== lastFig) {
-                    penultimateFig = row.filter(cell => cell.fig)[0].key
-                    break
+		for (const row of matrix.toReversed()) {
+			const filteredRow = row.filter(cell => cell.fig).toReversed()
+			if (filteredRow.length > 0) {
+				if (!lastFig) {
+					lastFig = filteredRow[0].key
+				}
 
+				if (filteredRow.length > 1) {
+					penultimateFig = filteredRow[filteredRow[0].key === lastFig ? 1 : 0].key
+					break
+				} else if (filteredRow[0].key !== lastFig) {
+					penultimateFig = filteredRow[0].key
+					break
+				}
+			}
+		}
 
-                }
-            }
-        }
+		if (property === "checkDirections" || property === "freeCells") {
+			if (x * 10 + y === (chosen === lastFig ? penultimateFig : lastFig)) {
+				next(action)
+				store.dispatch({
+					type: `matrixReducer/${property === "checkDirections" ? "calculateCheckDirections" : "findStaleMate"}`,
+				})
+				// } else {
+				// 	console.log(x * 10 + y)
+			}
+		}
+	}
+	next(action)
+}
 
-        if (action?.payload[3] === 'checkDirections') {
-            if ( (matrixReducer.chosen === lastFig && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== penultimateFig) || (matrixReducer.chosen !== lastFig && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== lastFig) ) {
-                pinkey = Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key)
-            }
-            else  {
-                pinkey = 0
-                next(action);
-                store.dispatch({ type: 'matrixReducer/calculateCheckDirections' });
-            }
-        }
-        else if (action?.payload[3] === 'freeCells') {
-            if ((matrixReducer.chosen === lastFig && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== penultimateFig) || (matrixReducer.chosen !== lastFig && Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key) !== lastFig) ) {
-                key = Number(matrixReducer.value[action?.payload[0]][action?.payload[1]].key)
-            }
-            else {
-                key = 0
-                next(action);
-                store.dispatch({ type: 'matrixReducer/findStaleMate' });
-            }
-
-        }
-    }
-    next(action);
-};
-
-export default componentActionTrackerMiddleware;
+export default componentActionTrackerMiddleware
