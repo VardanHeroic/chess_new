@@ -7,7 +7,6 @@ class Rook extends Component {
 		super(props)
 		this.x = this.props.x
 		this.y = this.props.y
-		this.cells = this.findFreeCells(this.props)
 		this.isVictim = this.props.isVictim
 	}
 
@@ -228,22 +227,25 @@ class Rook extends Component {
 
 	UNSAFE_componentWillReceiveProps(props) {
 		if (this.props.current !== props.current) {
-			this.cells = this.findFreeCells(props)
-			this.props.changeFigProps([this.x, this.y, this.cells.checkRays, "checkRays"])
-			this.props.changeFigProps([this.x, this.y, this.cells.pinRays, "pinRays"])
-			this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, "checkDirections"])
+			const { checkRays, pinRays, checkDirections } = this.findFreeCells(props)
+			this.props.changeFigProps([this.x, this.y, checkRays, "checkRays"])
+			this.props.changeFigProps([this.x, this.y, pinRays, "pinRays"])
+			this.props.changeFigProps([this.x, this.y, checkDirections, "checkDirections"])
 		}
 		if (props.pinScan) {
-			this.cells = this.findFreeCells(props)
-			this.props.changeFigProps([this.x, this.y, this.cells.freeCells, "freeCells"])
+			const { freeCells } = this.findFreeCells(props)
+			this.props.changeFigProps([this.x, this.y, freeCells, "freeCells"])
 		}
 	}
 
 	componentDidMount() {
-		this.cells = this.findFreeCells(this.props)
-		this.props.changeFigProps([this.x, this.y, this.cells.checkRays, "checkRays"])
-		this.props.changeFigProps([this.x, this.y, this.cells.pinRays, "pinRays"])
-		this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, "checkDirections"])
+		if (!this.isVictim) {
+			const { checkRays, pinRays, checkDirections } = this.findFreeCells(this.props)
+			this.props.changeFigProps([this.x, this.y, checkRays, "checkRays"])
+			this.props.changeFigProps([this.x, this.y, pinRays, "pinRays"])
+			this.props.changeFigProps([this.x, this.y, checkDirections, "checkDirections"])
+			this.isVictim = false
+		}
 	}
 
 	render() {

@@ -7,7 +7,6 @@ class King extends Component {
 		super(props)
 		this.x = this.props.x
 		this.y = this.props.y
-		this.cells = this.findFreeCells(this.props)
 	}
 
 	findFreeCells(props) {
@@ -82,19 +81,19 @@ class King extends Component {
 	}
 
 	UNSAFE_componentWillReceiveProps(props) {
-		if (props.pinScan) {
-			this.cells = this.findFreeCells(props)
-			this.props.changeFigProps([this.x, this.y, this.cells.freeCells, "freeCells"])
-		}
 		if (this.props.current !== props.current) {
-			this.cells = this.findFreeCells(props)
-			this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, "checkDirections"])
+			const { checkDirections } = this.findFreeCells(props)
+			this.props.changeFigProps([this.x, this.y, checkDirections, "checkDirections"])
+		}
+		if (props.pinScan) {
+			const { freeCells } = this.findFreeCells(props)
+			this.props.changeFigProps([this.x, this.y, freeCells, "freeCells"])
 		}
 	}
 
 	componentDidMount() {
-		this.cells = this.findFreeCells(this.props)
-		this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, "checkDirections"])
+		const { checkDirections } = this.findFreeCells(this.props)
+		this.props.changeFigProps([this.x, this.y, checkDirections, "checkDirections"])
 	}
 
 	render() {

@@ -8,7 +8,6 @@ class Knight extends Component {
 		this.x = this.props.x
 		this.y = this.props.y
 		this.isVictim = this.props.isVictim
-		this.cells = this.findFreeCells(this.props)
 	}
 
 	findFreeCells(props) {
@@ -75,20 +74,20 @@ class Knight extends Component {
 
 	componentDidMount() {
 		if (!this.isVictim) {
-			this.cells = this.findFreeCells(this.props)
-			this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, "checkDirections"])
+			const { checkDirections } = this.findFreeCells(this.props)
+			this.props.changeFigProps([this.x, this.y, checkDirections, "checkDirections"])
 			this.isVictim = false
 		}
 	}
 
 	UNSAFE_componentWillReceiveProps(props) {
 		if (props.pinScan) {
-			this.cells = this.findFreeCells(props)
-			this.props.changeFigProps([this.x, this.y, this.cells.freeCells, "freeCells"])
+			const { freeCells } = this.findFreeCells(props)
+			this.props.changeFigProps([this.x, this.y, freeCells, "freeCells"])
 		}
 		if (this.props.current !== props.current) {
-			this.cells = this.findFreeCells(props)
-			this.props.changeFigProps([this.x, this.y, this.cells.checkDirections, "checkDirections"])
+			const { checkDirections } = this.findFreeCells(props)
+			this.props.changeFigProps([this.x, this.y, checkDirections, "checkDirections"])
 		}
 	}
 
