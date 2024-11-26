@@ -81,7 +81,7 @@ class King extends Component {
 	}
 
 	UNSAFE_componentWillReceiveProps(props) {
-		if (this.props.current !== props.current) {
+		if (this.props.current !== props.current || (this.props.status === "begin" && props.status === "none")) {
 			const { checkDirections } = this.findFreeCells(props)
 			this.props.changeFigProps([this.x, this.y, checkDirections, "checkDirections"])
 		}

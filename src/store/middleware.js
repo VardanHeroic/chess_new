@@ -26,13 +26,13 @@ const componentActionTrackerMiddleware = store => next => action => {
 
 		if (property === "checkDirections" || property === "freeCells") {
 			if (x * 10 + y === (chosen === lastFig ? penultimateFig : lastFig)) {
-				console.log(x * 10 + y, property)
+				// console.log(x * 10 + y, property)
 				next(action)
 				store.dispatch({
 					type: `matrixReducer/${property === "checkDirections" ? "calculateCheckDirections" : "findStaleMate"}`,
 				})
-			} else {
-				console.log(x * 10 + y)
+				// } else {
+				// 	console.log(x * 10 + y)
 			}
 		}
 	}
