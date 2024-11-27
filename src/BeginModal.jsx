@@ -9,7 +9,7 @@ const BeginModal = () => {
 	const dispatch = useDispatch()
 	function start() {
 		dispatch(matrixActions.initMatrix([time, is960]))
-		setTimeout(() => dispatch(matrixActions.setStatus("none")), 50)
+		setTimeout(() => dispatch(matrixActions.setStatus("none")), 500)
 		setAnimation("reverse")
 	}
 

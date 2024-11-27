@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
-import logger from "redux-logger"
+// import logger from "redux-logger"
 import { reducer as matrixReducer } from "./matrixSlice"
 import componentActionTrackerMiddleware from "./middleware"
 

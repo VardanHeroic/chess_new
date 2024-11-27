@@ -58,10 +58,10 @@ class King extends Component {
 		})
 
 		if (props.status !== "check" && props.untouched && props.matrix[line][7].fig?.untouched) {
-			if (props.matrix[0][1].fig === null && props.matrix[0][2].fig === null && props.matrix[0][3].fig === null) {
+			if (props.matrix[line][1].fig === null && props.matrix[line][2].fig === null && props.matrix[line][3].fig === null) {
 				freeCells.push({ x: line, y: 2 })
 			}
-			if (props.matrix[0][6].fig === null && props.matrix[0][5].fig === null) {
+			if (props.matrix[line][6].fig === null && props.matrix[line][5].fig === null) {
 				freeCells.push({ x: line, y: 6 })
 			}
 		}

@@ -8,7 +8,9 @@ class Timer extends Component {
 			const timer = setInterval(() => {
 				if (this.props.whiteTimer === 0 || this.props.blackTimer === 0 || this.props.status === "begin") {
 					clearInterval(timer)
-					this.props.findStaleMate()
+					if (this.props.status !== "begin") {
+						this.props.findStaleMate()
+					}
 				}
 				if (this.props.status === "none" || this.props.status === "check") {
 					if (this.props.current === "white") {
@@ -28,7 +30,7 @@ class Timer extends Component {
 		}
 		return (
 			<div className="timer">
-				{["blackTimer", "whiteTimer"].map(color => {
+				{["blackTimer", "whiteTimer"].map((color, i) => {
 					const seconds = this.props[color]
 					const hours = Math.floor(seconds / 3600)
 					const minutes = Math.floor((seconds % 3600) / 60)
@@ -37,7 +39,11 @@ class Timer extends Component {
 					if (hours > 0) {
 						baseString = `${hours}:${baseString}`
 					}
-					return <div className={color}>{baseString}</div>
+					return (
+						<div key={i} className={color}>
+							{baseString}
+						</div>
+					)
 				})}
 			</div>
 		)
