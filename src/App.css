@@ -1,105 +1,109 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 @font-face {
-	font-family: 'Conv_Chess Regular';
-	src: url('../font/Chess Regular.eot');
-	src: local('☺'), url('../font/Chess Regular.woff') format('woff'), url('../font/Chess Regular.ttf') format('truetype'), url('../font/Chess Regular.svg') format('svg');
+	font-family: "Conv_Chess Regular";
+	src: url("../font/Chess Regular.eot");
+	src:
+		local("☺"),
+		url("../font/Chess Regular.woff") format("woff"),
+		url("../font/Chess Regular.ttf") format("truetype"),
+		url("../font/Chess Regular.svg") format("svg");
 	font-weight: normal;
 	font-style: normal;
 }
 
-i{
-    font-style: normal;
-    display: inline;
-    vertical-align:top ;
+i {
+	font-style: normal;
+	display: inline;
+	vertical-align: top;
 }
 
-body{
-    background: #e5e5e5;
+body {
+	background: #e5e5e5;
 	margin: 0;
-    font-family: "Ubuntu Mono", monospace;
+	font-family: "Ubuntu Mono", monospace;
 }
 
-.wcell{
-    width: 50px;
-    height: 50px;
-    background: #E8EDF9;
-    font-size: 46px;
-    text-align: center;
-    user-select: none;
-    -moz-user-select: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
+.wcell {
+	width: 50px;
+	height: 50px;
+	background: #e8edf9;
+	font-size: 46px;
+	text-align: center;
+	user-select: none;
+	-moz-user-select: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
 }
 
-.bcell{
-    width: 50px;
-    height: 50px;
-    background: #B7C0D8;
-    font-size: 46px;
-    text-align: center;
-    user-select: none;
-    -moz-user-select: none;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    align-items: center;
-
+.bcell {
+	width: 50px;
+	height: 50px;
+	background: #b7c0d8;
+	font-size: 46px;
+	text-align: center;
+	user-select: none;
+	-moz-user-select: none;
+	display: flex;
+	justify-content: center;
+	position: relative;
+	align-items: center;
 }
 
-.step, .capture-step{
-    position: absolute;
-    z-index: 10;
-    background: #7B61FF;
-    opacity: 0.5;
-    border-radius: 50%;
-    cursor: pointer;
+.step,
+.capture-step {
+	position: absolute;
+	z-index: 10;
+	background: #7b61ff;
+	opacity: 0.5;
+	border-radius: 50%;
+	cursor: pointer;
 }
 
-.step{
-    width: 20px;
-    height: 20px;
+.step {
+	width: 20px;
+	height: 20px;
 }
 
-.capture-step{
-    width: 47px;
-    height: 47px;
+.capture-step {
+	width: 47px;
+	height: 47px;
 }
 
-.black{
-    color: #34364C;
-    -webkit-text-stroke:1.7px #F4F7FA ;
+.black {
+	color: #34364c;
+	-webkit-text-stroke: 1.7px #f4f7fa;
 }
 
-.white{
-    color: #F4F7FA;
-    -webkit-text-stroke:1.7px #34364C ;
+.white {
+	color: #f4f7fa;
+	-webkit-text-stroke: 1.7px #34364c;
 }
 
-.bcell i , .wcell i{
-    cursor: pointer;
+.bcell i,
+.wcell i {
+	cursor: pointer;
 }
 
-.row{
-    display: flex;
+.row {
+	display: flex;
 }
 
-.board{
-    width: calc(50px * 8);
-    display: block;
-    font-family: 'Conv_Chess Regular';
-    border: 7px #F4F7FA solid;
-    border-radius: 8px
+.board {
+	width: calc(50px * 8);
+	display: block;
+	font-family: "Conv_Chess Regular";
+	border: 7px #f4f7fa solid;
+	border-radius: 8px;
 }
 
-.float{
-    float: left;
+.float {
+	float: left;
 }
 
-.modal-bg{
+.modal-bg {
 	width: 100vw;
 	height: 100vh;
 	background: #00000088;
@@ -108,7 +112,7 @@ body{
 	animation: modal-bg-transition 0.5s;
 }
 
-.promotion-box{
+.promotion-box {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-rows: repeat(2, 1fr);
@@ -116,7 +120,7 @@ body{
 	grid-row-gap: 30px;
 }
 
-.modal-box{
+.modal-box {
 	width: 60vh;
 	height: 60vh;
 	position: absolute;
@@ -129,74 +133,90 @@ body{
 	background: #e5e5e5;
 	padding: 30px;
 	animation: modal-box-transition 0.5s;
-    /*f4f7fa*/
+	/*f4f7fa*/
 }
 
-.modal-btn{
-	font-family: 'Conv_Chess Regular';
-	color: #7B61FF;
+.modal-btn {
+	font-family: "Conv_Chess Regular";
+	color: #7b61ff;
 	font-size: 20vh;
 	border: none;
 	border-radius: 15px;
-	background: #F4F7FA;
+	background: #f4f7fa;
 	transition: 0.5s;
 }
 
-.modal-btn:hover{
-	background-color: #7B61FF;
-	color:#F4F7FA;
+.modal-btn:hover {
+	background-color: #7b61ff;
+	color: #f4f7fa;
 }
 
-.reverse{
-	animation: modal-bg-transition-reverse 0.5s ;
+.reverse {
+	animation: modal-bg-transition-reverse 0.5s;
 }
 
-@keyframes modal-bg-transition{
-	from {background: #00000000;}
-	to {background: #00000088;}
+@keyframes modal-bg-transition {
+	from {
+		background: #00000000;
+	}
+
+	to {
+		background: #00000088;
+	}
 }
 
-@keyframes modal-bg-transition-reverse{
-	to {opacity: 0;}
-	from {opacity: 1;}
+@keyframes modal-bg-transition-reverse {
+	to {
+		opacity: 0;
+	}
+
+	from {
+		opacity: 1;
+	}
 }
 
+@keyframes modal-box-transition {
+	from {
+		bottom: 40vh;
+		opacity: 0;
+	}
 
-@keyframes modal-box-transition{
-	from{bottom: 40vh;opacity: 0;}
-	to {bottom: 0;opacity: 1;}
+	to {
+		bottom: 0;
+		opacity: 1;
+	}
 }
 
-.reset{
+.reset {
 	transition: 0.25s;
 	display: block;
 	margin: 0 auto;
 	margin-top: 40px;
 	border: none;
-	background: #7B61FF;
-	color: #F4F7FA;
+	background: #7b61ff;
+	color: #f4f7fa;
 	height: 40px;
 	width: 80px;
 	border-radius: 10px;
 	cursor: pointer;
-    font-family: "Ubuntu Mono", monospace;
+	font-family: "Ubuntu Mono", monospace;
 	font-size: 1.4em;
-	clear:both;
-
-}
-.reset:hover{
-	background: #F4F7FA;
-	color: #34364C;
+	clear: both;
 }
 
-.game{
-	margin-left: calc(50vw - 200px );
+.reset:hover {
+	background: #f4f7fa;
+	color: #34364c;
+}
+
+.game {
+	margin-left: calc(50vw - 200px);
 	padding-top: 10vh;
 }
 
-.timer{
-    font-family: "Ubuntu Mono", monospace;
-    font-style: normal;
+.timer {
+	font-family: "Ubuntu Mono", monospace;
+	font-style: normal;
 	padding-left: 20px;
 	display: flex;
 	flex-wrap: wrap;
@@ -207,58 +227,58 @@ body{
 	height: 400px;
 }
 
-
-.whiteTimer{
-	color: #34364C;
-	background: #F4F7FA;
+.whiteTimer {
+	color: #34364c;
+	background: #f4f7fa;
 	width: 100px;
 	text-align: center;
 	display: block;
 	border-radius: 10px;
-    padding: 6px 0;
+	padding: 6px 0;
 }
 
-.blackTimer{
-	color: #F4F7FA;
-	background: #34364C;
+.blackTimer {
+	color: #f4f7fa;
+	background: #34364c;
 	width: 100px;
-    text-align: center;
+	text-align: center;
 	display: block;
 	border-radius: 10px;
-    padding: 6px 0;
+	padding: 6px 0;
 }
 
-.begin-select{
-    background:  #f4f7fa;
-    border: none;
-    border-radius: 10px;
-    height: 30px;
-    margin: 5px 0;
+.begin-select {
+	background: #f4f7fa;
+	border: none;
+	border-radius: 10px;
+	height: 30px;
+	margin: 5px 0;
 }
 
-.modal-box label{
-    font-size: 1.3em;
+.modal-box label {
+	font-size: 1.3em;
 }
 
-.begin-select option{
-    background-color: #7b61ff
+.begin-select option {
+	background: #e5e5e5;
 }
 
-@media all and (max-width: 720px){
-    .game{
-        margin: 0;
-    }
+@media all and (max-width: 720px) {
+	.game {
+		margin: 0;
+	}
 
-    .board{
-        float: none;
-        margin: 0 auto;
-    }
-    .timer{
-        flex-wrap: nowrap;
-        width: 100%;
-        padding-top: 40px;
-        padding-left: 0;
-        height: fit-content;
-        justify-content: space-around;
-    }
+	.board {
+		float: none;
+		margin: 0 auto;
+	}
+
+	.timer {
+		flex-wrap: nowrap;
+		width: 100%;
+		padding-top: 40px;
+		padding-left: 0;
+		height: fit-content;
+		justify-content: space-around;
+	}
 }
