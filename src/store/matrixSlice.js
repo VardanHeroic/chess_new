@@ -37,7 +37,7 @@ export const matrixSlice = createSlice({
 			for (let i = 0; i < 8; i++) {
 				matrix[i] = []
 				for (let j = 0; j < 8; j++) {
-					matrix[i][j] = { color: i % 2 === j % 2 ? "wcell" : "bcell", x: i, y: j, key: i * 10 + j, fig: null }
+					matrix[i][j] = { color: (i + j) % 2 === 0 ? "wcell" : "bcell", x: i, y: j, key: i * 10 + j, fig: null }
 				}
 			}
 
@@ -153,27 +153,23 @@ export const matrixSlice = createSlice({
 			state.pinsWhite = whitePinArr
 			state.pinsBlack = blackPinArr
 
-			let isRayChosen = false
 			let checkCount = 0
 			let whiteArr = []
 			let blackArr = []
 			state.value.forEach(row => {
 				row.forEach(cellProps => {
 					cellProps.fig?.checkDirections?.forEach(checkCellCord => {
-						let checkCell = state.value[checkCellCord.x][checkCellCord.y]
+						const checkCell = state.value[checkCellCord.x][checkCellCord.y]
 						if (checkCell.fig?.name === "King" && checkCell.fig.color !== cellProps.fig.color) {
 							state.status = "check"
 							checkCount++
 							state.checkInitator = { x: cellProps.x, y: cellProps.y }
-							if (cellProps.fig.checkRays && checkCount < 2) {
-								cellProps.fig.checkRays.forEach(ray => {
-									ray.forEach(cell => {
-										if (cell.x * 10 + cell.y === checkCell.key && !isRayChosen) {
-											state.checkRay = ray
-											isRayChosen = true
-										}
-									})
+							if (checkCount === 1) {
+								cellProps.fig.checkRays?.forEach(ray => {
+									state.checkRay = ray.some(cell => cell.x * 10 + cell.y === checkCell.key) ? ray : state.checkRay
 								})
+							} else {
+								state.checkRay = [{}]
 							}
 						} else if (!checkCount && state.status === "check") {
 							state.status = "none"

@@ -85,24 +85,15 @@ class Board extends Component {
 		}
 		return (
 			<div className={`board ${this.props.whiteTimer >= 0 ? "float" : ""}`}>
-				{this.props.matrix.map((row, i) => {
-					return (
-						<div className="row" key={i}>
-							{row.map(props => {
-								let { fig, ...rest } = props
-								if (fig) {
-									let Tagname = this.components[fig.name]
-									return (
-										<Cell {...rest}>
-											<Tagname {...fig} move={this.move}></Tagname>
-										</Cell>
-									)
-								}
-								return <Cell {...rest}></Cell>
-							})}
-						</div>
-					)
-				})}
+				{this.props.matrix.map((row, i) => (
+					<div className="row" key={i}>
+						{row.map(props => {
+							const { fig, ...rest } = props
+							const Tagname = this.components?.[fig?.name]
+							return <Cell {...rest}>{fig ? <Tagname {...fig} move={this.move}></Tagname> : null}</Cell>
+						})}
+					</div>
+				))}
 			</div>
 		)
 	}
