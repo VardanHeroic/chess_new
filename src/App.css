@@ -42,7 +42,7 @@ body {
 	width: 50px;
 	height: 50px;
 	background: #b7c0d8;
-	font-size: 46px;
+	font-size: 2.875rem;
 	text-align: center;
 	user-select: none;
 	-moz-user-select: none;
@@ -121,8 +121,8 @@ body {
 }
 
 .modal-box {
-	width: 60vh;
-	height: 60vh;
+	width: 30vw;
+	height: 30vw;
 	position: absolute;
 	border-radius: 15px;
 	right: 0;
@@ -271,6 +271,28 @@ body {
 	.board {
 		float: none;
 		margin: 0 auto;
+		width: calc(12vw * 8);
+	}
+
+	.modal-box {
+		width: 90vw;
+		height: 30vh;
+		padding: 15px;
+	}
+
+	.bcell,
+	.wcell {
+		width: 12vw;
+		height: 12vw;
+		font-size: 11vw;
+	}
+
+	.black {
+		-webkit-text-stroke: calc(12vw / 27) #f4f7fa;
+	}
+
+	.white {
+		-webkit-text-stroke: calc(12vw / 27) #34364c;
 	}
 
 	.timer {
