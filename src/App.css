@@ -12,36 +12,16 @@
 	font-style: normal;
 }
 
-i {
-	font-style: normal;
-	display: inline;
-	vertical-align: top;
-}
-
 body {
 	background: #e5e5e5;
 	margin: 0;
 	font-family: "Ubuntu Mono", monospace;
 }
 
-.wcell {
-	width: 50px;
-	height: 50px;
-	background: #e8edf9;
-	font-size: 46px;
-	text-align: center;
-	user-select: none;
-	-moz-user-select: none;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-}
-
+.wcell,
 .bcell {
 	width: 50px;
 	height: 50px;
-	background: #b7c0d8;
 	font-size: 2.875rem;
 	text-align: center;
 	user-select: none;
@@ -50,6 +30,15 @@ body {
 	justify-content: center;
 	position: relative;
 	align-items: center;
+	transition: ease 1s;
+}
+
+.wcell {
+	background: #e8edf9;
+}
+
+.bcell {
+	background: #b7c0d8;
 }
 
 .step,
@@ -85,6 +74,9 @@ body {
 .bcell i,
 .wcell i {
 	cursor: pointer;
+	font-style: normal;
+	display: inline;
+	vertical-align: top;
 }
 
 .row {
@@ -97,6 +89,11 @@ body {
 	font-family: "Conv_Chess Regular";
 	border: 7px #f4f7fa solid;
 	border-radius: 8px;
+	transition: ease 1s;
+}
+
+.rotated {
+	transform: rotate(180deg);
 }
 
 .float {
