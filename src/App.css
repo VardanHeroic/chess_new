@@ -18,6 +18,16 @@ body {
 	font-family: "Ubuntu Mono", monospace;
 }
 
+.status-wrapper {
+	text-align: center;
+	padding-top: 2vh;
+}
+
+.status-span {
+	font-size: 1.4em;
+	text-transform: capitalize;
+}
+
 .wcell,
 .bcell {
 	width: 50px;
@@ -212,6 +222,10 @@ body {
 	color: #34364c;
 }
 
+.switch-container {
+	font-size: 1.4em;
+}
+
 .switch {
 	position: relative;
 	display: inline-block;
@@ -266,7 +280,7 @@ input:checked+.slider:before {
 
 .game {
 	margin-left: calc(50vw - 200px);
-	padding-top: 10vh;
+	padding-top: 5vh;
 }
 
 .timer {

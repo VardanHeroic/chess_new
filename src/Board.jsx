@@ -79,6 +79,12 @@ class Board extends Component {
 		})
 	}
 
+	componentDidUpdate() {
+		if (this.props.autoRotate) {
+			setTimeout(() => this.props.setisRotated(this.props.current !== "white"), 200)
+		}
+	}
+
 	render() {
 		if (this.props.matrix.length === 0) {
 			return null
@@ -106,4 +112,5 @@ class Board extends Component {
 export default connect(state => ({
 	matrix: state.matrixReducer.value,
 	whiteTimer: state.matrixReducer.whiteTimer,
+	current: state.matrixReducer.current,
 }))(Board)

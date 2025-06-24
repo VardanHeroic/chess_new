@@ -6,7 +6,7 @@ class Timer extends Component {
 	UNSAFE_componentWillReceiveProps(props) {
 		if (this.props.status === "begin" && props.status !== this.props.status) {
 			const timer = setInterval(() => {
-				if (this.props.whiteTimer === 0 || this.props.blackTimer === 0 || this.props.status === "begin") {
+				if (this.props.whiteTimer <= 0 || this.props.blackTimer <= 0 || this.props.status === "begin") {
 					clearInterval(timer)
 					if (this.props.status !== "begin") {
 						this.props.findStaleMate()

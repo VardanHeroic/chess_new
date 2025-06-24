@@ -110,7 +110,7 @@ class Bishop extends Component {
 			}
 			if (cell.x > props.x && cell.y > props.y) {
 				checkBlockBR.x = Math.min(cell.x, checkBlockBR.x)
-				checkBlockBR.x = Math.min(cell.y, checkBlockBR.y)
+				checkBlockBR.y = Math.min(cell.y, checkBlockBR.y)
 			}
 			if (cell.x < props.x && cell.y > props.y) {
 				checkBlockTR.x = Math.max(cell.x, checkBlockTR.x)
