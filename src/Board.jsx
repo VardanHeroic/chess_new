@@ -92,7 +92,7 @@ class Board extends Component {
 							const Tagname = this.components?.[fig?.name]
 							return (
 								<Cell {...rest} isRotated={this.props.isRotated}>
-									{fig ? <Tagname {...fig} move={this.move}></Tagname> : null}
+									{fig && <Tagname {...fig} move={this.move}></Tagname>}
 								</Cell>
 							)
 						})}

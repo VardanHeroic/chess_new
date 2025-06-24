@@ -6,8 +6,8 @@ const Cell = props => {
 		fig = React.cloneElement(props.children, { x: props.x, y: props.y })
 	}
 	return (
-		<div className={props.color + (props.isRotated ? " rotated" : "")} x={props.x} y={props.y}>
-			{fig}
+		<div className={props.color} x={props.x} y={props.y}>
+			{fig && <div className={"figure-container" + (props.isRotated ? " rotated" : "")}>{fig}</div>}
 		</div>
 	)
 }

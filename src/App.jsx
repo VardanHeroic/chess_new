@@ -20,8 +20,9 @@ export default function App() {
 				<Timer />
 			</div>
 			<div className="Reset-container">
-				<Switch setisRotated={() => setisRotated(!isRotated)} isRotated={isRotated} />
 				<Reset />
+				<br />
+				<Switch setisRotated={() => setisRotated(!isRotated)} isRotated={isRotated} />
 			</div>
 		</div>
 	)

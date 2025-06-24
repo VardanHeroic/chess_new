@@ -26,11 +26,6 @@ body {
 	text-align: center;
 	user-select: none;
 	-moz-user-select: none;
-	display: flex;
-	justify-content: center;
-	position: relative;
-	align-items: center;
-	transition: ease 1s;
 }
 
 .wcell {
@@ -39,6 +34,15 @@ body {
 
 .bcell {
 	background: #b7c0d8;
+}
+
+.figure-container {
+	transition: ease 1s;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .step,
@@ -184,11 +188,13 @@ body {
 	}
 }
 
+.Reset-container {
+	margin-top: 85px;
+	text-align: center;
+}
+
 .reset {
 	transition: 0.25s;
-	display: block;
-	margin: 0 auto;
-	margin-top: 40px;
 	border: none;
 	background: #7b61ff;
 	color: #f4f7fa;
@@ -204,6 +210,58 @@ body {
 .reset:hover {
 	background: #f4f7fa;
 	color: #34364c;
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+	margin-top: 20px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	transition: 0.4s;
+	border-radius: 34px;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	transition: 0.4s;
+	border-radius: 50%;
+}
+
+input:checked+.slider {
+	background-color: #7b61ff;
+}
+
+input:focus+.slider {
+	box-shadow: 0 0 1px #7b61ff;
+}
+
+input:checked+.slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
 }
 
 .game {
@@ -224,24 +282,22 @@ body {
 	height: 400px;
 }
 
-.whiteTimer {
-	color: #34364c;
-	background: #f4f7fa;
-	width: 100px;
+.whiteTimer,
+.blackTimer {
 	text-align: center;
 	display: block;
 	border-radius: 10px;
-	padding: 6px 0;
+	padding: 6px 10px;
+}
+
+.whiteTimer {
+	color: #34364c;
+	background: #f4f7fa;
 }
 
 .blackTimer {
 	color: #f4f7fa;
 	background: #34364c;
-	width: 100px;
-	text-align: center;
-	display: block;
-	border-radius: 10px;
-	padding: 6px 0;
 }
 
 .begin-select {
@@ -258,6 +314,19 @@ body {
 
 .begin-select option {
 	background: #e5e5e5;
+}
+
+.modal-box select {
+	width: 154px;
+}
+
+.modal-box input {
+	width: 150px;
+}
+
+.begin-button {
+	margin-top: 40px;
+	text-align: center;
 }
 
 @media all and (max-width: 720px) {

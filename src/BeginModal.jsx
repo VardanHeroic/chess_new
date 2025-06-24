@@ -32,9 +32,11 @@ const BeginModal = () => {
 					className="begin-select"
 					onInput={e => setTime(+e.target.value === 0 ? -1 : +e.target.value)}
 				/>
-				<button onClick={start} className={"reset"}>
-					Start
-				</button>
+				<div className="begin-button">
+					<button onClick={start} className={"reset"}>
+						Start
+					</button>
+				</div>
 			</div>
 		</div>
 	)
