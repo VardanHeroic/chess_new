@@ -123,11 +123,11 @@ export const matrixSlice = createSlice({
 			state.value.forEach(row => {
 				row.forEach(cellProps => {
 					if (cellProps.fig?.name === "Step") {
-						if (cellProps.fig.victim?.name === "Step") {
+						if (!cellProps.fig.victim || cellProps.fig.victim.name === "Step") {
 							cellProps.fig = null
 							return
 						}
-						cellProps.fig = cellProps.fig.victim
+						cellProps.fig = Object.assign(cellProps.fig.victim, { isVictim: false })
 					}
 				})
 			})
