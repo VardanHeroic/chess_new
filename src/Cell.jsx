@@ -7,7 +7,7 @@ const Cell = props => {
 	}
 	return (
 		<div className={props.color} x={props.x} y={props.y}>
-			{fig && <div className={"figure-container" + (props.isRotated ? " rotated" : "")}>{fig}</div>}
+			{fig && <div className={"figure-container" + (props.isRotated ? " back-rotated" : "")}>{fig}</div>}
 		</div>
 	)
 }

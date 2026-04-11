@@ -110,6 +110,10 @@ body {
 	transform: rotate(180deg);
 }
 
+.back-rotated {
+	transform: rotate(-180deg);
+}
+
 .float {
 	float: left;
 }
