@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkchess=self.webpackChunkchess||[]).push([[967],{967:function(e,s,c){e.exports=c.p+"static/media/Move.001db4e5be4d81ed8dc3.ogg"}}]);
